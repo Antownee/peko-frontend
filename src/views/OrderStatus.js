@@ -33,14 +33,14 @@ class OrderStatus extends React.Component {
                 <Steps current={3} style={{ marginTop: 40 }}>
                   <Step title="Start" description="Samples dipatched" />
                   <Step title="Second" description="Documents with Cup of Joe" />
-                  <Step title= "Third" description="Documents on client server" />
+                  <Step title="Third" description="Documents on client server" />
                   <Step title="Fourth" description="Tea enroute" />
                 </Steps>
               </CardBody>
             </Card>
             <Card small className="mb-4">
               <CardHeader className="border-bottom">
-                <h6 className="m-0">Active Users</h6>
+                <h6 className="m-0">Documents submitted</h6>
               </CardHeader>
               <CardBody className="p-0 pb-3">
                 <table className="table mb-0">
@@ -50,19 +50,13 @@ class OrderStatus extends React.Component {
                         #
                   </th>
                       <th scope="col" className="border-0">
-                        First Name
+                        Name
                   </th>
                       <th scope="col" className="border-0">
-                        Last Name
+                        Link
                   </th>
                       <th scope="col" className="border-0">
-                        Country
-                  </th>
-                      <th scope="col" className="border-0">
-                        City
-                  </th>
-                      <th scope="col" className="border-0">
-                        Phone
+                        Date
                   </th>
                     </tr>
                   </thead>
@@ -70,34 +64,38 @@ class OrderStatus extends React.Component {
                     <tr>
                       <td>1</td>
                       <td>Ali</td>
-                      <td>Kerry</td>
-                      <td>Russian Federation</td>
-                      <td>Gdańsk</td>
-                      <td>107-0339</td>
+                      <td>
+                        <a href="http://google.com">
+                          BillOfLading12032018.pdf
+                        </a>
+                      </td>
+                      <td>13/06/2018</td>
                     </tr>
                     <tr>
                       <td>2</td>
                       <td>Clark</td>
-                      <td>Angela</td>
-                      <td>Estonia</td>
-                      <td>Borghetto di Vara</td>
-                      <td>1-660-850-1647</td>
+                      <td>
+                        <a href="http://google.com">
+                          CertificateOfInspection12032018.pdf
+                        </a>
+                      </td>
+                      <td>17/06/2018</td>
                     </tr>
                     <tr>
                       <td>3</td>
                       <td>Jerry</td>
-                      <td>Nathan</td>
-                      <td>Cyprus</td>
-                      <td>Braunau am Inn</td>
-                      <td>214-4225</td>
+                      <td>CertificateOfInspection120320198.pdf</td>
+                      <td>25/06/2018</td>
                     </tr>
                     <tr>
                       <td>4</td>
                       <td>Colt</td>
-                      <td>Angela</td>
-                      <td>Liberia</td>
-                      <td>Bad Hersfeld</td>
-                      <td>1-848-473-7416</td>
+                      <td>
+                        <a href="http://google.com">
+                          Manifestmain12032018.pdf
+                        </a>
+                      </td>
+                      <td>26/06/2018</td>
                     </tr>
                   </tbody>
                 </table>

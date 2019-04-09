@@ -9,7 +9,6 @@ import {
   Badge } from "shards-react";
 
 import PageTitle from "../components/common/PageTitle";
-import UserDetails from "../components/user-profile-lite/UserDetails";
 import UserAccountDetails from "../components/user-profile-lite/UserAccountDetails";
 
 class PlaceOrder extends React.Component {
@@ -19,10 +18,10 @@ class PlaceOrder extends React.Component {
     this.teaListItemClickable = this.teaListItemClickable.bind(this);
 
     this.state = {
-      // First list of posts.
+      selectedTeaItem: 1,
       teaList: [
         {
-          backgroundImage: require("../images/content-management/1.jpeg"),
+          backgroundImage: require("../images/content-management/17.jpg"),
           category: "Business",
           categoryTheme: "dark",
           title: "Black Tea",
@@ -31,7 +30,7 @@ class PlaceOrder extends React.Component {
           date: "28 February 2019"
         },
         {
-          backgroundImage: require("../images/content-management/2.jpeg"),
+          backgroundImage: require("../images/content-management/17.jpg"),
           category: "Travel",
           categoryTheme: "info",
           title: "Green Tea",
@@ -40,7 +39,7 @@ class PlaceOrder extends React.Component {
             date: "29 February 2019"
         },
         {
-          backgroundImage: require("../images/content-management/3.jpeg"),
+          backgroundImage: require("../images/content-management/17.jpg"),
           category: "Technology",
           categoryTheme: "royal-blue",
           title: "Yellow Tea",
@@ -49,7 +48,7 @@ class PlaceOrder extends React.Component {
             date: "29 February 2019"
         },
         {
-          backgroundImage: require("../images/content-management/4.jpeg"),
+          backgroundImage: require("../images/content-management/17.jpg"),
           category: "Business",
           categoryTheme: "warning",
           author: "John James",
@@ -64,11 +63,15 @@ class PlaceOrder extends React.Component {
 
   }
 
-  teaListItemClickable(){
-    console.log("Clicked")
+  teaListItemClickable(e){
+    console.log("Clicked");
+    console.log(e)
+    //change badge colour
+    //this.state.selectedTeaItem
   }
 
-//Card clockable callback onClick={siteSelectedCallback}             
+//Card clickable callback onClick={siteSelectedCallback}    
+         
 
   render() {
     return (
