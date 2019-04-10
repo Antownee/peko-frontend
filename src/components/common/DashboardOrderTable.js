@@ -1,42 +1,23 @@
 import React from "react";
-import { Container, Row, Col, Card, CardHeader, CardBody } from "shards-react";
+import PropTypes from "prop-types";
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  ListGroup,
+  ListGroupItem,
+  CardFooter,
+  Row,
+  Col,
+  FormSelect
+} from "shards-react";
 
-import Steps, { Step } from "rc-steps"
-
-import PageTitle from "../components/common/PageTitle";
-
-const VALUES = [ /* The date strings go here */];
-
-class OrderStatus extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { value: 0, previous: 0 }
-  }
-
-  render() {
-
-    return (
-      <Container fluid className="main-content-container px-4">
-        {/* Page Header */}
-        <Row noGutters className="page-header py-4">
-          <PageTitle sm="4" title="Track order status" subtitle="Order Status" className="text-sm-left" />
-        </Row>
-
-        {/* Default Light Table */}
-        <Row>
-          <Col>
+const TopReferrals = ({ title, referralData }) => (
+  <Col>
             <Card small className="mb-4">
               <CardHeader className="border-bottom">
                 <h6 className="m-0">Details</h6>
               </CardHeader>
-              <CardBody>
-                <Steps current={3} style={{ marginTop: 40 }}>
-                  <Step title="Start" description="Samples dipatched" />
-                  <Step title="Second" description="Documents with Cup of Joe" />
-                  <Step title="Third" description="Documents on client server" />
-                  <Step title="Fourth" description="Tea enroute" />
-                </Steps>
-              </CardBody>
             </Card>
             <Card small className="mb-4">
               <CardHeader className="border-bottom">
@@ -86,7 +67,7 @@ class OrderStatus extends React.Component {
                       <td>Jerry</td>
                       <td>
                         <a href="http://google.com">
-                          CertificateOfValidity12032018.pdf
+                          CertificateOfInspection12032018.pdf
                         </a>
                       </td>
                       <td>25/06/2018</td>
@@ -106,11 +87,55 @@ class OrderStatus extends React.Component {
               </CardBody>
             </Card>
           </Col>
-        </Row>
-      </Container>
+);
 
-    )
-  }
-}
+TopReferrals.propTypes = {
+  /**
+   * The component's title.
+   */
+  title: PropTypes.string,
+  /**
+   * The referral data.
+   */
+  referralData: PropTypes.array
+};
 
-export default OrderStatus;
+TopReferrals.defaultProps = {
+  title: "Top Referrals",
+  referralData: [
+    {
+      title: "GitHub",
+      value: "19,291"
+    },
+    {
+      title: "Stack Overflow",
+      value: "11,201"
+    },
+    {
+      title: "Hacker News",
+      value: "9,291"
+    },
+    {
+      title: "Reddit",
+      value: "8,281"
+    },
+    {
+      title: "The Next Web",
+      value: "7,128"
+    },
+    {
+      title: "Tech Crunch",
+      value: "6,218"
+    },
+    {
+      title: "YouTube",
+      value: "1,218"
+    },
+    {
+      title: "Adobe",
+      value: "1,171"
+    }
+  ]
+};
+
+export default TopReferrals;
