@@ -14,7 +14,8 @@ export default function() {
       title: "Order Status",
       htmlBefore: '<i class="material-icons">error</i>',
       to: "/order-status",
-    },{
+    },
+    {
       title: "Forms & Components",
       htmlBefore: '<i class="material-icons">view_module</i>',
       to: "/components-overview",

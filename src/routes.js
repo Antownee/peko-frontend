@@ -72,5 +72,5 @@ export default [
     path: "/dashboard",
     layout: DefaultLayout,
     component: Dashboard
-  },
+  }
 ];

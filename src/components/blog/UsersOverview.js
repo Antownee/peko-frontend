@@ -35,7 +35,17 @@ class UsersOverview extends React.Component {
               ticks: {
                 callback(tick, index) {
                   // Jump every 7 values on the X axis labels to avoid clutter.
-                  return index % 7 !== 0 ? "" : tick;
+                  //return index % 7 !== 0 ? "" : tick;
+                  let monthNames = ["Jan", "Feb", "March", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                  var today = new Date();
+                  var n = []
+                  for(var i = 5; i > 0; i -= 1) {
+                    var d = new Date(today.getFullYear(), today.getMonth() - i, 1);
+                    var month = monthNames[d.getMonth()];
+                    n.push(month);
+                  }
+                  console.log(n);
+                  return n[tick];
                 }
               }
             }
@@ -93,7 +103,7 @@ class UsersOverview extends React.Component {
           <h6 className="m-0">{title}</h6>
         </CardHeader>
         <CardBody className="pt-0">
-          <Row className="border-bottom py-2 bg-light">
+          {/* <Row className="border-bottom py-2 bg-light">
             <Col sm="6" className="d-flex mb-2 mb-sm-0">
               <RangeDatePicker />
             </Col>
@@ -105,7 +115,7 @@ class UsersOverview extends React.Component {
                 View Full Report &rarr;
               </Button>
             </Col>
-          </Row>
+          </Row> */}
           <canvas
             height="120"
             ref={this.canvasRef}
@@ -133,44 +143,19 @@ UsersOverview.propTypes = {
 };
 
 UsersOverview.defaultProps = {
-  title: "Price of Tea ",
+  title: "Price of Tea over the last 5 months",
   chartData: {
-    labels: Array.from(new Array(30), (_, i) => (i === 0 ? 1 : i)),
+    labels: Array.from(new Array(5), (_, i) => (i === 0 ? 0 : i)),
     datasets: [
       {
-        label: "Current Month",
+        label: "Price",
         fill: "start",
         data: [
-          500,
-          800,
+          185,
+          180,
           320,
           180,
-          240,
-          320,
-          230,
-          650,
-          590,
-          1200,
-          750,
-          940,
-          1420,
-          1200,
-          960,
-          1450,
-          1820,
-          2800,
-          2102,
-          1920,
-          3920,
-          3202,
-          3140,
-          2800,
-          3200,
-          3200,
-          3400,
-          2910,
-          3100,
-          4250
+          240
         ],
         backgroundColor: "rgba(0,123,255,0.1)",
         borderColor: "rgba(0,123,255,1)",
@@ -179,51 +164,6 @@ UsersOverview.defaultProps = {
         borderWidth: 1.5,
         pointRadius: 0,
         pointHoverRadius: 3
-      },
-      {
-        label: "Past Month",
-        fill: "start",
-        data: [
-          380,
-          430,
-          120,
-          230,
-          410,
-          740,
-          472,
-          219,
-          391,
-          229,
-          400,
-          203,
-          301,
-          380,
-          291,
-          620,
-          700,
-          300,
-          630,
-          402,
-          320,
-          380,
-          289,
-          410,
-          300,
-          530,
-          630,
-          720,
-          780,
-          1200
-        ],
-        backgroundColor: "rgba(255,65,105,0.1)",
-        borderColor: "rgba(255,65,105,1)",
-        pointBackgroundColor: "#ffffff",
-        pointHoverBackgroundColor: "rgba(255,65,105,1)",
-        borderDash: [3, 3],
-        borderWidth: 1,
-        pointRadius: 0,
-        pointHoverRadius: 2,
-        pointBorderColor: "rgba(255,65,105,1)"
       }
     ]
   }

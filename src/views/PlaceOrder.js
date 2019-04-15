@@ -78,14 +78,19 @@ class PlaceOrder extends React.Component {
     })
   }
 
-  //Card clickable callback onClick={siteSelectedCallback}    
-
 
   render() {
     return (
       <Container fluid className="main-content-container px-4">
         <Row noGutters className="page-header py-4">
-          <PageTitle title="Place Order" subtitle="Overview" md="12" className="ml-sm-auto mr-sm-auto" />
+          <PageTitle title="Place Order" md="12" className="ml-sm-auto mr-sm-auto" />
+        </Row>
+        <Row>
+          <Col lg="12">
+            <span style={{ fontSize: "16px" }} className="d-block mb-2 text-muted">
+              <strong>Select the blend of tea by clicking on the cards below:</strong>
+            </span>
+          </Col>
         </Row>
         <Row>
           {this.state.teaList.map((post, idx) => (
@@ -100,13 +105,13 @@ class PlaceOrder extends React.Component {
 
                     {
                       idx === this.state.selectedTeaItem ?
-                      <Badge
-                        pill
-                        className={`card-post__category bg-${post.categoryTheme}`}
-                      >
-                        {post.category}
-                      </Badge>
-                      : ""
+                        <Badge
+                          pill
+                          className={`card-post__category bg-${post.categoryTheme}`}
+                        >
+                          {post.category}
+                        </Badge>
+                        : ""
                     }
 
 
