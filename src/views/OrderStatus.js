@@ -1,34 +1,45 @@
 import React from "react";
 import OrderDetails from "./OrderDetails";
-import SearchField from "react-search-field";
+import OrderSearchTable from './OrderSearchTable';
+import { Container } from "shards-react";
 
-import { Container, Row, Col, Card, CardHeader, CardBody } from "shards-react";
-
-const VALUES = [ /* The date strings go here */];
 
 class OrderStatus extends React.Component {
   constructor(props) {
     super(props);
+
+    this.handleSearchState = this.handleSearchState.bind(this);
+
     this.state = {
       value: 0,
       previous: 0,
-      isSearch: false
+      isSearch: false,
+
     }
   }
 
-  render() {
-    //Conditional rendering. Search bar that then brings up the order status complete with all informantion required
-    return (
-      // <div>
-      //   {
-      //     this.state.isSearch ? <SearchField /> : <OrderDetails />
-      //   }
-      // </div>
+  componentDidMount() {
+    this.setState({
+      isSearch: true
+    })
 
-      <div>
-        <SearchField/>
-        <OrderDetails/>
-      </div>
+  }
+
+  handleSearchState(searchState, selectedRow){
+    console.log(selectedRow);
+    this.setState({
+      isSearch: !searchState
+    })
+
+  }
+
+  render() {
+    return (
+      <Container fluid className="main-content-container">
+        {
+          this.state.isSearch ? <OrderSearchTable handleSearchState={this.handleSearchState} /> : <OrderDetails />
+        }
+      </Container>
 
     )
   }

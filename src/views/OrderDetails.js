@@ -5,7 +5,7 @@ import Steps, { Step } from "rc-steps"
 import PageTitle from "../components/common/PageTitle";
 
 const OrderDetails = () => (
-    <Container fluid className="main-content-container px-4">
+    <Container fluid className="main-content-container">
         {/* Page Header */}
         <Row noGutters className="page-header py-4">
             <PageTitle sm="4" title="Track order status" subtitle="Order Status" className="text-sm-left" />
