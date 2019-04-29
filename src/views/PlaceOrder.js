@@ -16,6 +16,9 @@ class PlaceOrder extends React.Component {
   constructor(props) {
     super(props);
 
+    const { dispatch } = this.props;
+    console.log(dispatch);
+
     //this.teaListItemClickable = this.teaListItemClickable.bind(this);
 
     this.state = {

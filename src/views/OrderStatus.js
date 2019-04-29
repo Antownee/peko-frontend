@@ -2,6 +2,7 @@ import React from "react";
 import OrderDetails from "./OrderDetails";
 import OrderSearchTable from './OrderSearchTable';
 import { Container } from "shards-react";
+import { connect } from "react-redux"
 
 
 class OrderStatus extends React.Component {
@@ -45,4 +46,12 @@ class OrderStatus extends React.Component {
   }
 }
 
-export default OrderStatus;
+const mapStateToProps = state => {
+  return state
+}
+
+const mapActionsToProps = {
+  
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(OrderStatus);
