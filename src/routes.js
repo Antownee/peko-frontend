@@ -15,8 +15,6 @@ import BlogPosts from "./views/BlogPosts";
 import PlaceOrder from "./views/PlaceOrder";
 import OrderStatus from './views/OrderStatus';
 import Dashboard from "./views/Dashboard";
-import RegisterPage from "./views/RegisterPage";
-import LoginPage from "./views/LoginPage";
 
 export default [
   {
@@ -74,15 +72,5 @@ export default [
     path: "/dashboard",
     layout: DefaultLayout,
     component: Dashboard
-  },
-  {
-    path: "/login",
-    layout: LoginRegisterLayout,
-    component: LoginPage
-  },
-  {
-    path: "/register",
-    layout: LoginRegisterLayout,
-    component: RegisterPage
   }
 ];
