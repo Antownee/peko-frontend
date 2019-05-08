@@ -1,6 +1,8 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Router, Route } from "react-router-dom";
 import { PrivateRoute } from "./views/PrivateRoute";
+import { history } from './redux/helpers/history'
+import LoginPage from './views/LoginPage';
 import Dashboard from "./views/Dashboard";
 
 import routes from "./routes";
@@ -10,9 +12,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./shards-dashboard/styles/shards-dashboards.1.1.0.min.css";
 
 export default () => (
-  <Router basename={process.env.REACT_APP_BASENAME || ""}>
+  <Router basename={process.env.REACT_APP_BASENAME || ""} history={history}>
     <div>
-      <PrivateRoute exact path="/" component={Dashboard} />
+      <PrivateRoute exact path="/" component={LoginPage} />
       {routes.map((route, index) => {
         return (
           <Route

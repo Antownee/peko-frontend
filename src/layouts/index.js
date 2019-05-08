@@ -1,3 +1,4 @@
 import DefaultLayout from "./Default";
+import LoginRegisterLayout from "./LoginRegister"
 
-export { DefaultLayout };
+export { DefaultLayout, LoginRegisterLayout };
