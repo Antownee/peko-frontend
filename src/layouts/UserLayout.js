@@ -8,7 +8,7 @@ import MainFooter from "../components/layout/MainFooter";
 import "../assets/steps.css"
 
 
-const DefaultLayout = ({ children, noNavbar, noFooter }) => (
+const UserLayout = ({ children, noNavbar, noFooter }) => (
   <Container fluid>
     <Row>
       <MainSidebar />
@@ -27,7 +27,7 @@ const DefaultLayout = ({ children, noNavbar, noFooter }) => (
   </Container>
 );
 
-DefaultLayout.propTypes = {
+UserLayout.propTypes = {
   /**
    * Whether to display the navbar, or not.
    */
@@ -38,9 +38,9 @@ DefaultLayout.propTypes = {
   noFooter: PropTypes.bool
 };
 
-DefaultLayout.defaultProps = {
+UserLayout.defaultProps = {
   noNavbar: false,
   noFooter: false
 };
 
-export default DefaultLayout;
+export default UserLayout;

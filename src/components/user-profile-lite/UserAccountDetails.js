@@ -8,76 +8,60 @@ import {
   Row,
   Col,
   Form,
-  
+  FormFeedback,
   FormTextarea,
   Button,
   InputGroup,
   FormInput
 } from "shards-react";
 
+class UserAccountDetails extends React.Component {
+  constructor(props) {
+    super(props);
 
-const UserAccountDetails = ({ title, userDetails }) => (
-  <Card small className="mb-4">
-    <CardHeader className="border-bottom">
-      <h6 className="m-0">{title}</h6>
-    </CardHeader>
-    <ListGroup flush>
-      <ListGroupItem className="p-3">
-        <Row>
-          
-
-        </Row>
-
-        <Row>
-          <Col>
-            <Form>
-              <Row form>
-                {/* Amount (Kilogrammes) */}
-                <Col md="12" className="form-group">
-                  <label htmlFor="feAmount">Amount (Kilogrammes)</label>
-                  <FormInput
-                    id="feAmount"
-                    placeholder="Amount"
-                    onChange={() => { }}
-                  />
-                </Col>
-              </Row>
-
-              <Row form>
-                {/* Notes */}
-                <Col md="12" className="form-group">
-                  <label htmlFor="feNotes">Notes (Add any special instructions for your order)</label>
-                  <FormTextarea id="feNotes" rows="5" />
-                </Col>
-              </Row>
-              <Button theme="accent">Place Order</Button>
-            </Form>
-          </Col>
-        </Row>
-      </ListGroupItem>
-    </ListGroup>
-  </Card>
-);
-
-UserAccountDetails.propTypes = {
-  /**
-   * The component's title.
-   */
-  title: PropTypes.string
-};
-
-UserAccountDetails.defaultProps = {
-  title: "Order Details",
-  userDetails: {
-    name: "Sierra Brooks",
-    avatar: require("./../../images/avatars/0.jpg"),
-    jobTitle: "Project Manager",
-    performanceReportTitle: "Workload",
-    performanceReportValue: 74,
-    metaTitle: "Description",
-    metaValue:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio eaque, quidem, commodi soluta qui quae minima obcaecati quod dolorum sint alias, possimus illum assumenda eligendi cumque?"
   }
-};
+
+  render() {
+    const { handleChange, amount, description, handleSubmit, submitted } = this.props;
+
+    return (
+      <Card small className="mb-4">
+        <CardHeader className="border-bottom">
+          <h6 className="m-0"></h6>
+        </CardHeader>
+        <ListGroup flush>
+          <ListGroupItem className="p-3">
+            <Row>
+              <Col>
+                <Row form>
+                  {/* Amount (Kilogrammes) */}
+                  <Col md="12" className="form-group">
+                    <label htmlFor="feAmount">Amount (Kilogrammes)</label>
+                    <FormInput
+                      id="feAmount"
+                      name="amount"
+                      value={amount}
+                      placeholder="Amount"
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Row>
+
+                <Row form>
+                  {/* Notes */}
+                  <Col md="12" className="form-group">
+                    <label htmlFor="feNotes">Notes (Add any special instructions for your order)</label>
+                    <FormTextarea id="feNotes" name="description" value={description} rows="5" onChange={handleChange} />
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+          </ListGroupItem>
+        </ListGroup>
+      </Card>
+    )
+  }
+
+}
 
 export default UserAccountDetails;

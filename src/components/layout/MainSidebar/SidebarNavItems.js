@@ -3,33 +3,23 @@ import { Nav } from "shards-react";
 
 import SidebarNavItem from "./SidebarNavItem";
 import { Store } from "../../../flux";
+import getSidebarNavItems  from "../../../data/sidebar-nav-items";
 
 class SidebarNavItems extends React.Component {
   constructor(props) {
     super(props)
 
+    const data = JSON.parse(localStorage.getItem("user"));
+    const currentUser = data.data;
+
+    const navbarItems = getSidebarNavItems(currentUser.role);
+
     this.state = {
-      navItems: Store.getSidebarItems()
+      navItems: navbarItems
     };
-
-    this.onChange = this.onChange.bind(this);
   }
 
-  componentWillMount() {
-    Store.addChangeListener(this.onChange);
-  }
-
-  componentWillUnmount() {
-    Store.removeChangeListener(this.onChange);
-  }
-
-  onChange() {
-    this.setState({
-      ...this.state,
-      navItems: Store.getSidebarItems()
-    });
-  }
-
+ 
   render() {
     const { navItems: items } = this.state;
     return (

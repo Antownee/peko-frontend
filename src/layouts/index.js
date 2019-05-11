@@ -1,4 +1,4 @@
-import DefaultLayout from "./Default";
-import LoginRegisterLayout from "./LoginRegister"
+import UserLayout from "./UserLayout";
+import AdminLayout from "./AdminLayout";
 
-export { DefaultLayout, LoginRegisterLayout };
+export { UserLayout, AdminLayout };

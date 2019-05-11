@@ -2,16 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Container, Row, Col, Card, CardHeader, CardBody } from "shards-react";
 
-import PageTitle from "./../components/common/PageTitle";
-import SmallStats from "./../components/common/SmallStats";
-import UsersOverview from "./../components/blog/UsersOverview";
+import PageTitle from "../components/common/PageTitle";
+import SmallStats from "../components/common/SmallStats";
+import UsersOverview from "../components/blog/UsersOverview";
 import DashboardOrderTable from "../components/common/DashboardOrderTable";
 
-const Dashboard = ({ smallStats }) => (
+const AdminDashboard = ({ smallStats }) => (
   <Container fluid className="main-content-container px-4">
     {/* Page Header */}
     <Row noGutters className="page-header py-4">
-      <PageTitle title="Account Overview" subtitle="Dashboard" className="text-sm-left mb-3" />
+      <PageTitle title="ADMIN DASHBOARD " subtitle="ADMIN" className="text-sm-left mb-3" />
     </Row>
 
     {/* Small Stats Blocks */}
@@ -61,14 +61,14 @@ const Dashboard = ({ smallStats }) => (
   </Container>
 );
 
-Dashboard.propTypes = {
+AdminDashboard.propTypes = {
   /**
    * The small stats dataset.
    */
   smallStats: PropTypes.array
 };
 
-Dashboard.defaultProps = {
+AdminDashboard.defaultProps = {
   smallStats: [
     {
       label: "No. of orders made",
@@ -126,4 +126,4 @@ Dashboard.defaultProps = {
   ]
 };
 
-export default Dashboard;
+export default AdminDashboard;

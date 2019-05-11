@@ -17,9 +17,13 @@ function login(username, password) {
 
         userService.login(username, password)
             .then(
-                user => { 
+                user => {
+                    if (user.data.role == "User") {
+                        dispatch(success(user));
+                        return history.push('/user/dashboard');
+                    }
                     dispatch(success(user));
-                    history.push('/dashboard');
+                    return history.push('/admin/dashboard');
                 },
                 error => {
                     dispatch(failure(error.toString()));
@@ -44,10 +48,15 @@ function register(user) {
 
         userService.register(user)
             .then(
-                user => { 
-                    dispatch(success());
-                    history.push('/dashboard');
+                user => {
                     dispatch(alertActions.success('Registration successful'));
+                    
+                    if (user.data.role == "User") {
+                        dispatch(success(user));
+                        return history.push('/user/dashboard');
+                    }
+                    dispatch(success(user));
+                    return history.push('/admin/dashboard');
                 },
                 error => {
                     dispatch(failure(error.toString()));

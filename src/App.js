@@ -4,6 +4,9 @@ import { PrivateRoute } from "./views/PrivateRoute";
 import { history } from './redux/helpers/history'
 import LoginPage from './views/LoginPage';
 import RegisterPage from "./views/RegisterPage";
+import AdminDashboard from "./views/AdminDashboard";
+import { AdminLayout, UserLayout } from "./layouts";
+import { Role } from "./redux/helpers/role";
 
 import routes from "./routes";
 import withTracker from "./withTracker";
@@ -16,12 +19,14 @@ export default () => (
     <div>
       <Route path="/login" component={LoginPage} />
       <Route path="/register" component={RegisterPage} />
+
       {routes.map((route, index) => {
         return (
           <PrivateRoute
             key={index}
             path={route.path}
             exact={route.exact}
+            role={[Role.User]}
             component={withTracker(props => {
               return (
                 <route.layout {...props}>

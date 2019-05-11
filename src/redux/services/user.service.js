@@ -1,4 +1,6 @@
 import { authHeader } from '../helpers';
+import { BehaviorSubject } from 'rxjs';
+
 const config = {
     apiUrl: 'http://localhost:4895'
 }
@@ -10,8 +12,14 @@ export const userService = {
     getAll,
     getById,
     update,
-    delete: _delete
+    delete: _delete,
+    currentUser: currentUser
 };
+
+function currentUser(){
+    const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
+    return currentUserSubject.asObservable().value
+}
 
 function login(username, password) {
     const requestOptions = {
@@ -28,6 +36,23 @@ function login(username, password) {
 
             return user;
         });
+}
+
+
+function register(user) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(user)
+    };
+
+    return fetch(`${config.apiUrl}/users/auth/register`, requestOptions)
+        .then(handleResponse)
+        .then(user => {
+            localStorage.setItem('user', JSON.stringify(user));
+
+            return user;
+        })
 }
 
 function logout() {
@@ -51,16 +76,6 @@ function getById(id) {
     };
 
     return fetch(`${config.apiUrl}/users/${id}`, requestOptions).then(handleResponse);
-}
-
-function register(user) {
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(user)
-    };
-
-    return fetch(`${config.apiUrl}/users/auth/register`, requestOptions).then(handleResponse);
 }
 
 function update(user) {
