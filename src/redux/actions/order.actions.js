@@ -16,7 +16,7 @@ function addOrder(order) {
             .then(
                 order => { 
                     dispatch(success());
-                    history.push('/order-status');
+                    history.push('/user/place-order');
                     dispatch(alertActions.success('Order successfuly added'));
                 },
                 error => {

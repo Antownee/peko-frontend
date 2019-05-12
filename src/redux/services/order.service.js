@@ -4,7 +4,8 @@ const config = {
 }
 
 export const orderService = {
-    addOrder
+    addOrder,
+    getAll
 };
 
 
@@ -17,11 +18,19 @@ function addOrder(order) {
 
     return fetch(`${config.apiUrl}/users/order-request`, requestOptions)
         .then(handleResponse)
-        .then(user => {
-            // localStorage.setItem('user', JSON.stringify(user));
+        .then(msg => { return msg })
+}
 
-            // return user;
-        })
+function getAll(user) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { ...authHeader(), 'Content-Type': 'application/json' },
+        body: JSON.stringify(user)
+    };
+
+    return fetch(`${config.apiUrl}/users/order-request/all`, requestOptions)
+        .then(handleResponse)
+        .then(msg => { return msg })
 }
 
 function logout() {

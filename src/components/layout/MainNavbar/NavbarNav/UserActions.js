@@ -22,7 +22,6 @@ class UserActions extends React.Component {
 
     this.toggleUserActions = this.toggleUserActions.bind(this);
     this.logout = this.logout.bind(this);
-    this.clicked = this.clicked.bind(this);
   }
 
   toggleUserActions() {
@@ -31,18 +30,16 @@ class UserActions extends React.Component {
     });
   }
 
-  logout(){
+  logout() {
     //Clear the local storage
     const { dispatch } = this.props;
     dispatch(userActions.logout());
   }
 
-  clicked(){
-    console.log("Clicked!")
-  }
-
   render() {
+    const { currentUser } = this.props;
     return (
+
       <NavItem tag={Dropdown} caret toggle={this.toggleUserActions}>
         <DropdownToggle caret tag={NavLink} className="text-nowrap px-3">
           <img
@@ -50,7 +47,7 @@ class UserActions extends React.Component {
             src={require("./../../../../images/avatars/2.png")}
             alt="User Avatar"
           />{" "}
-          <span className="d-none d-md-inline-block">Mwangi Kamau</span>
+          <span className="d-none d-md-inline-block">{`${currentUser.firstName} ${currentUser.lastName}`}</span>
         </DropdownToggle>
         <Collapse tag={DropdownMenu} right small open={this.state.visible}>
           <DropdownItem tag={Link} to="user-profile">
@@ -67,10 +64,9 @@ class UserActions extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { loggingIn } = state.authentication;
-  return {
-      loggingIn
-  };
+  const { user } = state.authentication;
+  return user ? { currentUser: user.data } : {};
+
 }
 
 export default connect(mapStateToProps)(UserActions);

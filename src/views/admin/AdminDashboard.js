@@ -2,10 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Container, Row, Col, Card, CardHeader, CardBody } from "shards-react";
 
-import PageTitle from "../components/common/PageTitle";
-import SmallStats from "../components/common/SmallStats";
-import UsersOverview from "../components/blog/UsersOverview";
-import DashboardOrderTable from "../components/common/DashboardOrderTable";
+import PageTitle from "../../components/common/PageTitle";
+import SmallStats from "../../components/common/SmallStats";
+import UsersOverview from "../../components/blog/UsersOverview";
+import DashboardOrderTable from "../../components/common/DashboardOrderTable";
 
 const AdminDashboard = ({ smallStats }) => (
   <Container fluid className="main-content-container px-4">

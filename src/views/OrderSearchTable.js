@@ -1,9 +1,10 @@
 import React from "react";
 import { Container, Row, Col, Card, CardHeader, CardBody } from "shards-react";
-
+import { connect } from "react-redux";
 import BootstrapTable from 'react-bootstrap-table-next';
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit'
 import PageTitle from "../components/common/PageTitle";
+import { orderService } from "../redux/services/order.service";
 
 const { SearchBar } = Search;
 
@@ -15,26 +16,21 @@ class OrderSearchTable extends React.Component {
 
         this.state = {
             columns: [{
-                dataField: 'id',
-                text: 'Product ID'
+                dataField: 'orderRequestID',
+                text: 'Order ID'
             }, {
-                dataField: 'name',
-                text: 'Product Name'
+                dataField: 'amount',
+                text: 'Price (USD)'
             }, {
-                dataField: 'price',
-                text: 'Product Price'
+                dataField: 'requestDate',
+                text: 'Date '
             }],
-            products: [
-                {
-                    id: 5454,
-                    name: 'car',
-                    price: 50
-                },
-                {
-                    id: 9986,
-                    name: 'shoes',
-                    price: 140
-                }
+            orders: [
+                // {
+                //     orderRequestID: "ORQ-fqcYjEpbY",
+                //     amount: '50000',
+                //     requestDate: "12/5/2019 08:56AM"
+                // }
             ]
         }
 
@@ -48,6 +44,17 @@ class OrderSearchTable extends React.Component {
         };
     }
 
+    componentDidMount() {
+        //Fetch orders
+        orderService.getAll(this.props.user)
+            .then((orders) => {
+                this.setState({
+                    orders: orders
+                })
+            })
+    }
+
+
     render() {
         return (
             <Container fluid className="main-content-container px-4">
@@ -57,7 +64,7 @@ class OrderSearchTable extends React.Component {
                 <Card>
                     <ToolkitProvider
                         keyField="id"
-                        data={this.state.products}
+                        data={this.state.orders}
                         columns={this.state.columns}
                         search
                     >
@@ -81,4 +88,12 @@ class OrderSearchTable extends React.Component {
     }
 }
 
-export default OrderSearchTable;
+
+const mapStateToProps = state => {
+    const { user } = state.authentication;
+    return {
+        user: user.data
+    };
+}
+
+export default connect(mapStateToProps)(OrderSearchTable);

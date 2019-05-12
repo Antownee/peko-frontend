@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom"
-
 import { connect } from 'react-redux';
 import {
   Container,
@@ -12,10 +11,12 @@ import {
   Button,
   Form
 } from "shards-react";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import PageTitle from "../components/common/PageTitle";
 import UserAccountDetails from "../components/user-profile-lite/UserAccountDetails";
 import { orderActions } from '../redux/actions';
+import { orderService } from '../redux/services/order.service';
 
 class PlaceOrder extends React.Component {
   constructor(props) {
@@ -31,8 +32,10 @@ class PlaceOrder extends React.Component {
     this.state = {
       amount: '',
       description: '',
-      submitted: false,
+      teaID: '',
+      userID: '',
       selectedTeaItem: null,
+      submitted: false,
       teaList: [
         {
           index: 0,
@@ -41,9 +44,8 @@ class PlaceOrder extends React.Component {
           categoryTheme: "warning",
           title: "Black Tea",
           body:
-            "To be brewed in 100 degrees boiling water",
-          date: "28 February 2019",
-          selected: false
+            "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
+          teaID: "COJ-CHAI-002",
         },
         {
           index: 1,
@@ -52,9 +54,8 @@ class PlaceOrder extends React.Component {
           categoryTheme: "warning",
           title: "Green Tea",
           body:
-            "To be brewed in 100 degrees boiling water",
-          date: "29 February 2019",
-          selected: false
+            "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
+          teaID: "COJ-CHAI-003",
         },
         {
           index: 2,
@@ -63,9 +64,8 @@ class PlaceOrder extends React.Component {
           categoryTheme: "warning",
           title: "Yellow Tea",
           body:
-            "To be brewed in 100 degrees boiling water",
-          date: "29 February 2019",
-          selected: false
+            "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
+          teaID: "COJ-CHAI-004",
         },
         {
           index: 3,
@@ -75,9 +75,8 @@ class PlaceOrder extends React.Component {
           author: "John James",
           title: "White Tea",
           body:
-            "To be brewed in 100 degrees boiling water",
-          date: "29 February 2019",
-          selected: true
+            "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
+          teaID: "COJ-CHAI-005",
         }
       ],
     }
@@ -86,7 +85,9 @@ class PlaceOrder extends React.Component {
   }
 
   teaListItemClickable(index) {
+    const teaID = this.state.teaList[index].teaID;
     this.setState({
+      teaID: teaID,
       selectedTeaItem: index
     })
   }
@@ -100,19 +101,42 @@ class PlaceOrder extends React.Component {
     e.preventDefault();
 
     this.setState({ submitted: true });
-    // const { username, password } = this.state;
-    // const { dispatch } = this.props;
-    // if (username && password) {
-    //   dispatch(userActions.login(username, password));
-    // }
+    const { amount, description, teaID } = this.state;
+    const { dispatch, user } = this.props;
+    const order = {
+      amount,
+      description,
+      teaID,
+      userID: user.userID
+    }
+    if (amount && description && teaID) {
+      orderService.addOrder(order)
+        .then(
+          msg => {
+            toast.success(msg);
+            this.clearState();
+          },
+          error => {
+            toast.error(error.message);
+          }
+        );
+    }
   }
 
+  clearState() {
+    this.setState({
+      amount: '',
+      description: '',
+      teaID: '',
+    })
+  }
 
   render() {
     const { amount, description } = this.state;
 
     return (
       <Container fluid className="main-content-container px-4">
+        <ToastContainer />
         <Form name="form" onSubmit={this.handleSubmit}>
           <Row noGutters className="page-header py-4">
             <PageTitle title="Place Order" md="12" className="ml-sm-auto mr-sm-auto" />
@@ -127,28 +151,28 @@ class PlaceOrder extends React.Component {
             </Col>
           </Row>
           <Row>
-            {this.state.teaList.map((post, idx) => (
+            {this.state.teaList.map((tea, idx) => (
               <Col lg="3" md="6" sm="12" className="mb-4" key={idx}>
 
                 <a style={{ cursor: 'pointer' }} onClick={this.teaListItemClickable.bind(this, idx)}>
                   <Card small className="card-post card-post--1">
                     <div
                       className="card-post__image"
-                      style={{ backgroundImage: `url(${post.backgroundImage})` }}
+                      style={{ backgroundImage: `url(${tea.backgroundImage})` }}
                     >
                       {
                         idx === this.state.selectedTeaItem ?
-                          <Badge pill className={`card-post__category bg-${post.categoryTheme}`}> {post.category}</Badge> : ""
+                          <Badge pill className={`card-post__category bg-${tea.categoryTheme}`}>{tea.category}</Badge> : ""
                       }
                     </div>
                     <CardBody>
                       <h5 className="card-title">
                         <a href="#" className="text-fiord-blue">
-                          {post.title}
+                          {tea.title}
                         </a>
                       </h5>
-                      <p className="card-text d-inline-block mb-3">{post.body}</p>
-                      <span className="text-muted">{post.date}</span>
+                      <p className="card-text d-inline-block mb-3">{tea.body}</p>
+                      <span className="text-muted">{tea.teaID}</span>
                     </CardBody>
                   </Card>
                 </a>
@@ -174,7 +198,10 @@ class PlaceOrder extends React.Component {
 }
 
 function mapStateToProps(state) {
-
+  const { user } = state.authentication;
+  return {
+    user: user.data
+  };
 }
 
 

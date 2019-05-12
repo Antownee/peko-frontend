@@ -28,6 +28,11 @@ export default function (role) {
         title: "Dashboard",
         htmlBefore: '<i class="material-icons">error</i>',
         to: "/admin/dashboard",
+      },
+      {
+        title: "Order List",
+        htmlBefore: '<i class="material-icons">error</i>',
+        to: "/admin/orders",
       }
     ]
   }

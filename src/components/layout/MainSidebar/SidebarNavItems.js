@@ -1,17 +1,15 @@
 import React from "react";
 import { Nav } from "shards-react";
+import { connect } from 'react-redux';
 
 import SidebarNavItem from "./SidebarNavItem";
-import { Store } from "../../../flux";
-import getSidebarNavItems  from "../../../data/sidebar-nav-items";
+import getSidebarNavItems from "../../../data/sidebar-nav-items";
 
 class SidebarNavItems extends React.Component {
   constructor(props) {
     super(props)
 
-    const data = JSON.parse(localStorage.getItem("user"));
-    const currentUser = data.data;
-
+    const currentUser = this.props.currentUser;
     const navbarItems = getSidebarNavItems(currentUser.role);
 
     this.state = {
@@ -19,7 +17,7 @@ class SidebarNavItems extends React.Component {
     };
   }
 
- 
+
   render() {
     const { navItems: items } = this.state;
     return (
@@ -34,4 +32,10 @@ class SidebarNavItems extends React.Component {
   }
 }
 
-export default SidebarNavItems;
+function mapStateToProps(state) {
+  const { user } = state.authentication;
+  return user ? { currentUser: user.data } : {};
+}
+
+export default connect(mapStateToProps)(SidebarNavItems);
+

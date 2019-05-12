@@ -42,6 +42,7 @@ class UserAccountDetails extends React.Component {
                       name="amount"
                       value={amount}
                       placeholder="Amount"
+                      type="number"
                       onChange={handleChange}
                     />
                   </Col>

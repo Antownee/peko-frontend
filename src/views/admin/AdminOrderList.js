@@ -1,11 +1,11 @@
 import React from "react";
-import OrderDetails from "./OrderDetails";
-import OrderSearchTable from './OrderSearchTable';
+import OrderDetails from "../OrderDetails";
+import OrderSearchTable from '../OrderSearchTable';
 import { Container } from "shards-react";
-import { connect } from "react-redux";
+import { connect } from "react-redux"
 
 
-class OrderStatus extends React.Component {
+class AdminOrderList extends React.Component {
   constructor(props) {
     super(props);
 
@@ -15,7 +15,7 @@ class OrderStatus extends React.Component {
       value: 0,
       previous: 0,
       isSearch: false,
-      orders: []
+
     }
   }
 
@@ -23,9 +23,10 @@ class OrderStatus extends React.Component {
     this.setState({
       isSearch: true
     })
+
   }
 
-  handleSearchState(searchState, selectedRow) {
+  handleSearchState(searchState, selectedRow){
     console.log(selectedRow);
     this.setState({
       isSearch: !searchState
@@ -46,10 +47,11 @@ class OrderStatus extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const { user } = state.authentication;
-  return {
-    user: user.data
-  };
+  return state
 }
 
-export default connect(mapStateToProps)(OrderStatus);
+const mapActionsToProps = {
+  
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(AdminOrderList);

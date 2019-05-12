@@ -15,7 +15,8 @@ import BlogPosts from "./views/BlogPosts";
 import PlaceOrder from "./views/PlaceOrder";
 import OrderStatus from './views/OrderStatus';
 import Dashboard from "./views/Dashboard";
-import AdminDashboard from "./views/AdminDashboard";
+import AdminDashboard from "./views/admin/AdminDashboard";
+import AdminOrderList from "./views/admin/AdminOrderList";
 
 const routes = [
   {
@@ -87,7 +88,7 @@ const routes = [
     path: "/admin/orders",
     exact: true,
     layout: AdminLayout,
-    component: AdminDashboard
+    component: AdminOrderList
   }
 ];
 
