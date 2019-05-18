@@ -2,7 +2,8 @@ import React from "react";
 import OrderDetails from "../OrderDetails";
 import OrderSearchTable from '../OrderSearchTable';
 import { Container } from "shards-react";
-import { connect } from "react-redux"
+import { connect } from "react-redux";
+
 
 
 class AdminOrderList extends React.Component {
@@ -15,7 +16,8 @@ class AdminOrderList extends React.Component {
       value: 0,
       previous: 0,
       isSearch: false,
-
+      orders: [],
+      selectedOrder: {}
     }
   }
 
@@ -23,22 +25,21 @@ class AdminOrderList extends React.Component {
     this.setState({
       isSearch: true
     })
-
   }
 
-  handleSearchState(searchState, selectedRow){
-    console.log(selectedRow);
+  handleSearchState(searchState, selectedRow) {
     this.setState({
-      isSearch: !searchState
+      isSearch: !searchState,
+      selectedOrder: selectedRow
     })
 
   }
 
   render() {
-    return (
+    return (      
       <Container fluid className="main-content-container">
         {
-          this.state.isSearch ? <OrderSearchTable handleSearchState={this.handleSearchState} /> : <OrderDetails />
+          this.state.isSearch ? <OrderSearchTable handleSearchState={this.handleSearchState} /> : <OrderDetails order={this.state.selectedOrder} />
         }
       </Container>
 
@@ -51,7 +52,7 @@ const mapStateToProps = state => {
 }
 
 const mapActionsToProps = {
-  
+
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(AdminOrderList);

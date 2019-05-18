@@ -13,7 +13,7 @@ import ComponentsOverview from "./views/ComponentsOverview";
 import Tables from "./views/Tables";
 import BlogPosts from "./views/BlogPosts";
 import PlaceOrder from "./views/PlaceOrder";
-import OrderStatus from './views/OrderStatus';
+import UserOrderList from './views/UserOrderList';
 import Dashboard from "./views/Dashboard";
 import AdminDashboard from "./views/admin/AdminDashboard";
 import AdminOrderList from "./views/admin/AdminOrderList";
@@ -70,7 +70,7 @@ const routes = [
     path: "/user/order-status",
     exact: true,
     layout: UserLayout,
-    component: OrderStatus
+    component: UserOrderList
   },
   {
     path: "/user/dashboard",

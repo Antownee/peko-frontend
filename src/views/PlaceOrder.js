@@ -14,8 +14,7 @@ import {
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PageTitle from "../components/common/PageTitle";
-import UserAccountDetails from "../components/user-profile-lite/UserAccountDetails";
-import { orderActions } from '../redux/actions';
+import OrderInputDetails from "./OrderInputDetails";
 import { orderService } from '../redux/services/order.service';
 
 class PlaceOrder extends React.Component {
@@ -182,7 +181,7 @@ class PlaceOrder extends React.Component {
 
           <Row>
             <Col lg="12">
-              <UserAccountDetails
+              <OrderInputDetails
                 handleChange={this.handleChange}
                 amount={amount}
                 description={description}

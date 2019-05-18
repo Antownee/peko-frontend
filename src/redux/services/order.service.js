@@ -5,6 +5,7 @@ const config = {
 
 export const orderService = {
     addOrder,
+    getAllByUser,
     getAll
 };
 
@@ -21,7 +22,8 @@ function addOrder(order) {
         .then(msg => { return msg })
 }
 
-function getAll(user) {
+
+function getAllByUser(user) {
     const requestOptions = {
         method: 'POST',
         headers: { ...authHeader(), 'Content-Type': 'application/json' },
@@ -29,6 +31,17 @@ function getAll(user) {
     };
 
     return fetch(`${config.apiUrl}/users/order-request/all`, requestOptions)
+        .then(handleResponse)
+        .then(msg => { return msg })
+}
+
+function getAll() {
+    const requestOptions = {
+        method: 'POST',
+        headers: { ...authHeader() }
+    };
+
+    return fetch(`${config.apiUrl}/admin/order/all`, requestOptions)
         .then(handleResponse)
         .then(msg => { return msg })
 }

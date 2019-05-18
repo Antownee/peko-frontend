@@ -25,13 +25,7 @@ class OrderSearchTable extends React.Component {
                 dataField: 'requestDate',
                 text: 'Date '
             }],
-            orders: [
-                // {
-                //     orderRequestID: "ORQ-fqcYjEpbY",
-                //     amount: '50000',
-                //     requestDate: "12/5/2019 08:56AM"
-                // }
-            ]
+            orders: []
         }
 
 
@@ -39,14 +33,33 @@ class OrderSearchTable extends React.Component {
             mode: 'radio',
             clickToSelect: true,
             onSelect: (row, isSelect, rowIndex, e) => {
-                this.props.handleSearchState(isSelect, row);
+                this.props.handleSearchState(isSelect, this.state.orders[rowIndex]);
             }
         };
     }
 
     componentDidMount() {
         //Fetch orders
-        orderService.getAll(this.props.user)
+        const user = this.props.user;
+        if(user.role == "Admin"){
+            this.getOrdersAdmin();
+        }
+        if(user.role == "User"){
+            this.getOrdersUser();
+        }
+    }
+
+    getOrdersUser() {
+        orderService.getAllByUser(this.props.user)
+            .then((orders) => {
+                this.setState({
+                    orders: orders
+                })
+            })
+    }
+
+    getOrdersAdmin() {
+        orderService.getAll()
             .then((orders) => {
                 this.setState({
                     orders: orders
