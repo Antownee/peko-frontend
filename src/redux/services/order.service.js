@@ -6,7 +6,8 @@ const config = {
 export const orderService = {
     addOrder,
     getAllByUser,
-    getAll
+    getAll,
+    confirmOrder
 };
 
 
@@ -44,6 +45,18 @@ function getAll() {
     return fetch(`${config.apiUrl}/admin/order/all`, requestOptions)
         .then(handleResponse)
         .then(msg => { return msg })
+}
+
+function confirmOrder(order) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { ...authHeader(), 'Content-Type': 'application/json' },
+        body: JSON.stringify(order)
+    };
+
+    return fetch(`${config.apiUrl}/admin/order/confirm`, requestOptions)
+        .then(handleResponse)
+        .then((msg) => { return msg })
 }
 
 function logout() {

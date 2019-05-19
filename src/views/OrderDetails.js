@@ -4,12 +4,16 @@ import { parse } from "date-fns";
 import { connect } from "react-redux";
 import Steps, { Step } from "rc-steps"
 import PageTitle from "../components/common/PageTitle";
+import { orderService } from "../redux/services/order.service";
+import { ToastContainer, toast } from 'react-toastify';
+
 
 class OrderDetails extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            backgroundImage: require("../images/content-management/17.jpg")
+            backgroundImage: require("../images/content-management/17.jpg"),
+            currentOrder: this.props.order
         }
         this.formatDate = this.formatDate.bind(this);
         this.confirmOrder = this.confirmOrder.bind(this);
@@ -20,20 +24,34 @@ class OrderDetails extends React.Component {
     }
 
     confirmOrder() {
-        console.log("clickeddddd order confirmed")
+        orderService.confirmOrder(this.state.currentOrder)
+            .then((res) => {
+                toast.success(res);
+                let order = Object.assign({}, this.state.currentOrder);
+                order["confirmed"] = true;
+                return this.setState({ currentOrder: order });
+            })
+            .catch((e) => {
+                toast.error(e.message);
+            })
+    }
+
+    rejectOrder() {
+        console.log("REJECTED")
     }
 
     render() {
-        const order = this.props.order;
+        const { order, user } = this.props;
         return (
             <Container fluid className="main-content-container">
                 {/* Page Header */}
+                <ToastContainer />
                 <Row noGutters className="page-header py-4">
                     <PageTitle sm="4" title="Track order status" subtitle="Order Status" className="text-sm-left" />
                 </Row>
 
                 {
-                    this.props.user.role === "Admin" ?
+                    user.role === "Admin" && !this.state.currentOrder.confirmed ?
                         (<Row>
                             <Col className="mb-4" />
                             <Col className="mb-4">
@@ -47,14 +65,13 @@ class OrderDetails extends React.Component {
                                 <div
                                     className="bg-danger text-white text-center rounded p-3"
                                     style={{ boxShadow: "inset 0 0 5px rgba(0,0,0,.2)" }}
-                                    onClick={this.confirmOrder}> Reject order?
+                                    onClick={this.rejectOrder}> Reject order?
                                 </div>
                             </Col>
                             <Col className="mb-4" />
                         </Row>)
                         :
                         ""
-
                 }
 
 
