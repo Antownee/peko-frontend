@@ -1,102 +1,27 @@
 import React from "react";
-import { Container, Row, Col, Card, CardHeader, CardBody, Button, ListGroup, ListGroupItem } from "shards-react";
+import { Container, Row, Col, Card, CardHeader, CardBody, Button} from "shards-react";
 import { parse } from "date-fns";
 import { connect } from "react-redux";
 import Steps, { Step } from "rc-steps"
-import PageTitle from "../components/common/PageTitle";
-import { orderService } from "../redux/services/order.service";
+import PageTitle from "../../components/common/PageTitle";
+import { orderService } from "../../redux/services/order.service";
 import { ToastContainer, toast } from 'react-toastify';
-import CustomFileUpload from "../components/components-overview/CustomFileUpload";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
-import { clientUploads, cojUploads } from "../documents";
-
-const ClientDocumentTable = ({ documents }) => (
-    <table className="table mb-0">
-        <thead className="bg-light">
-            <tr>
-                <th scope="col" className="border-0">
-                    Name
-                                            </th>
-                <th scope="col" className="border-0">
-                    Link
-                                            </th>
-                <th scope="col" className="border-0">
-                    Date
-                                            </th>
-                <th scope="col" className="border-0">
-                    Upload document
-                                            </th>
-            </tr>
-        </thead>
-        <tbody>
-            {
-                documents.map((document, idx) => (
-                    <tr>
-                        <td>{document.name}</td>
-                        <td>
-                            {
-                                document.submitted ?
-                                    <a href="http://google.com">
-                                        {document.path}.pdf
-                                    </a> : <span class="badge badge-danger">NOT SUBMITTED</span>
-                            }
-                        </td>
-                        <td>13/06/2018</td>
-                        <td>
-                            <CustomFileUpload />
-                        </td>
-                    </tr>
-                ))
-            }
-        </tbody>
-    </table>
-);
+import { clientUploads, cojUploads } from "../../documents";
+import { SentDocumentsTable, ReceivedDocumentsTable} from "../admin/AdminOrderDocumentTable";
 
 
-const COJDocumentTable = ({ documents }) => (
-    <table className="table mb-0">
-        <thead className="bg-light">
-            <tr>
-                <th scope="col" className="border-0">
-                    Name
-                </th>
-                <th scope="col" className="border-0">
-                    Date
-                                            </th>
-                <th scope="col" className="border-0">
-                    
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            {
-                documents.map((document, idx) => (
-                    <tr>
-                        <td>{document.name}</td>
-                        <td>13/06/2018</td>
-                        <td>
-                        <Button size="sm" theme="primary" className="mb-2 mr-1">
-                            Download
-                        </Button>
-                        </td>
-                    </tr>
-                ))
-            }
-        </tbody>
-    </table>
-);
-
-
-class OrderDetails extends React.Component {
+class UserOrderDetails extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            backgroundImage: require("../images/content-management/17.jpg"),
+            backgroundImage: require("../../images/content-management/17.jpg"),
             currentOrder: this.props.order
         }
         this.formatDate = this.formatDate.bind(this);
         this.confirmOrder = this.confirmOrder.bind(this);
+        this.submitDocuments = this.submitDocuments.bind(this);
     }
 
     formatDate(date) {
@@ -116,8 +41,8 @@ class OrderDetails extends React.Component {
             })
     }
 
-    rejectOrder() {
-        console.log("REJECTED")
+    submitDocuments() {
+        console.log("Documents submitted")
     }
 
     render() {
@@ -161,8 +86,6 @@ class OrderDetails extends React.Component {
                 }
 
 
-
-                {/* Default Light Table */}
                 <Row>
                     <Col>
                         {
@@ -218,11 +141,11 @@ class OrderDetails extends React.Component {
                                 </TabList>
 
                                 <TabPanel>
-                                    <ClientDocumentTable documents={clientUploads}/>
-                                    <Button type="submit" className="m-3">Sumit documents</Button>
+                                    <SentDocumentsTable documents={clientUploads}/>
+                                    <Button type="submit" className="m-3">Submit documents</Button>
                                 </TabPanel>
                                 <TabPanel>
-                                    <COJDocumentTable documents={cojUploads}/>
+                                    <ReceivedDocumentsTable documents={cojUploads}/>
                                 </TabPanel>
                             </Tabs>
                         </Card>
@@ -242,4 +165,4 @@ const mapStateToProps = state => {
     };
 }
 
-export default connect(mapStateToProps)(OrderDetails);
+export default connect(mapStateToProps)(UserOrderDetails);

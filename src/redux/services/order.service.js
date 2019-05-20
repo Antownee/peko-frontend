@@ -7,7 +7,8 @@ export const orderService = {
     addOrder,
     getAllByUser,
     getAll,
-    confirmOrder
+    confirmOrder,
+    adminUploadDocuments
 };
 
 
@@ -36,6 +37,8 @@ function getAllByUser(user) {
         .then(msg => { return msg })
 }
 
+
+//ADMIN
 function getAll() {
     const requestOptions = {
         method: 'POST',
@@ -57,6 +60,23 @@ function confirmOrder(order) {
     return fetch(`${config.apiUrl}/admin/order/confirm`, requestOptions)
         .then(handleResponse)
         .then((msg) => { return msg })
+}
+
+function adminUploadDocuments(documents, orderid) {
+    const formData = new FormData();
+    formData.append('orderID', orderid);
+    for (var x = 0; x < documents.length; x++) {
+        formData.append('file', documents[x].document, orderid + "_" + documents[x].id)
+    }
+
+    const requestOptions = {
+        method: 'POST',
+        headers: { ...authHeader() },
+        body: formData
+    };
+
+    return fetch(`${config.apiUrl}/admin/order/documents`, requestOptions)
+        .then(handleResponse)
 }
 
 function logout() {

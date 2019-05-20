@@ -2,12 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Container, Row, Col, Card, CardHeader, CardBody } from "shards-react";
 
-import PageTitle from "./../components/common/PageTitle";
-import SmallStats from "./../components/common/SmallStats";
-import UsersOverview from "./../components/blog/UsersOverview";
-import DashboardOrderTable from "../components/common/DashboardOrderTable";
+import PageTitle from "../../components/common/PageTitle";
+import SmallStats from "../../components/common/SmallStats";
+import UsersOverview from "../../components/blog/UsersOverview";
+import DashboardOrderTable from "../../components/common/DashboardOrderTable";
 
-const Dashboard = ({ smallStats }) => (
+const UserDashboard = ({ smallStats }) => (
   <Container fluid className="main-content-container px-4">
     {/* Page Header */}
     <Row noGutters className="page-header py-4">
@@ -61,14 +61,14 @@ const Dashboard = ({ smallStats }) => (
   </Container>
 );
 
-Dashboard.propTypes = {
+UserDashboard.propTypes = {
   /**
    * The small stats dataset.
    */
   smallStats: PropTypes.array
 };
 
-Dashboard.defaultProps = {
+UserDashboard.defaultProps = {
   smallStats: [
     {
       label: "No. of orders made",
@@ -126,4 +126,4 @@ Dashboard.defaultProps = {
   ]
 };
 
-export default Dashboard;
+export default UserDashboard;

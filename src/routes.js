@@ -12,9 +12,9 @@ import Errors from "./views/Errors";
 import ComponentsOverview from "./views/ComponentsOverview";
 import Tables from "./views/Tables";
 import BlogPosts from "./views/BlogPosts";
-import PlaceOrder from "./views/PlaceOrder";
-import UserOrderList from './views/UserOrderList';
-import Dashboard from "./views/Dashboard";
+import UserPlaceOrder from "./views/user/UserPlaceOrder";
+import UserOrderList from './views/user/UserOrderList';
+import UserDashboard from "./views/user/UserDashboard";
 import AdminDashboard from "./views/admin/AdminDashboard";
 import AdminOrderList from "./views/admin/AdminOrderList";
 
@@ -64,7 +64,7 @@ const routes = [
     path: "/user/place-order",
     exact: true,
     layout: UserLayout,
-    component: PlaceOrder
+    component: UserPlaceOrder
   },
   {
     path: "/user/order-status",
@@ -76,7 +76,7 @@ const routes = [
     path: "/user/dashboard",
     exact: true,
     layout: UserLayout,
-    component: Dashboard
+    component: UserDashboard
   },
   {
     path: "/admin/dashboard",

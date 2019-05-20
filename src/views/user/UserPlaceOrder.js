@@ -12,11 +12,11 @@ import {
 } from "shards-react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import PageTitle from "../components/common/PageTitle";
-import OrderInputDetails from "./OrderInputDetails";
-import { orderService } from '../redux/services/order.service';
+import PageTitle from "../../components/common/PageTitle";
+import OrderInputDetails from "../OrderInputDetails";
+import { orderService } from '../../redux/services/order.service';
 
-class PlaceOrder extends React.Component {
+class UserPlaceOrder extends React.Component {
   constructor(props) {
     super(props);
 
@@ -37,7 +37,7 @@ class PlaceOrder extends React.Component {
       teaList: [
         {
           index: 0,
-          backgroundImage: require("../images/content-management/17.jpg"),
+          backgroundImage: require("../../images/content-management/17.jpg"),
           category: "Selected",
           categoryTheme: "warning",
           title: "Black Tea",
@@ -47,7 +47,7 @@ class PlaceOrder extends React.Component {
         },
         {
           index: 1,
-          backgroundImage: require("../images/content-management/17.jpg"),
+          backgroundImage: require("../../images/content-management/17.jpg"),
           category: "Selected",
           categoryTheme: "warning",
           title: "Green Tea",
@@ -57,7 +57,7 @@ class PlaceOrder extends React.Component {
         },
         {
           index: 2,
-          backgroundImage: require("../images/content-management/17.jpg"),
+          backgroundImage: require("../../images/content-management/17.jpg"),
           category: "Selected",
           categoryTheme: "warning",
           title: "Yellow Tea",
@@ -67,7 +67,7 @@ class PlaceOrder extends React.Component {
         },
         {
           index: 3,
-          backgroundImage: require("../images/content-management/17.jpg"),
+          backgroundImage: require("../../images/content-management/17.jpg"),
           category: "Selected",
           categoryTheme: "warning",
           author: "John James",
@@ -203,4 +203,4 @@ function mapStateToProps(state) {
 }
 
 
-export default connect(mapStateToProps)(PlaceOrder)
+export default connect(mapStateToProps)(UserPlaceOrder)
