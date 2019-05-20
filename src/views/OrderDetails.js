@@ -1,11 +1,91 @@
 import React from "react";
-import { Container, Row, Col, Card, CardHeader, CardBody } from "shards-react";
+import { Container, Row, Col, Card, CardHeader, CardBody, Button, ListGroup, ListGroupItem } from "shards-react";
 import { parse } from "date-fns";
 import { connect } from "react-redux";
 import Steps, { Step } from "rc-steps"
 import PageTitle from "../components/common/PageTitle";
 import { orderService } from "../redux/services/order.service";
 import { ToastContainer, toast } from 'react-toastify';
+import CustomFileUpload from "../components/components-overview/CustomFileUpload";
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import "react-tabs/style/react-tabs.css";
+import { clientUploads, cojUploads } from "../documents";
+
+const ClientDocumentTable = ({ documents }) => (
+    <table className="table mb-0">
+        <thead className="bg-light">
+            <tr>
+                <th scope="col" className="border-0">
+                    Name
+                                            </th>
+                <th scope="col" className="border-0">
+                    Link
+                                            </th>
+                <th scope="col" className="border-0">
+                    Date
+                                            </th>
+                <th scope="col" className="border-0">
+                    Upload document
+                                            </th>
+            </tr>
+        </thead>
+        <tbody>
+            {
+                documents.map((document, idx) => (
+                    <tr>
+                        <td>{document.name}</td>
+                        <td>
+                            {
+                                document.submitted ?
+                                    <a href="http://google.com">
+                                        {document.path}.pdf
+                                    </a> : <span class="badge badge-danger">NOT SUBMITTED</span>
+                            }
+                        </td>
+                        <td>13/06/2018</td>
+                        <td>
+                            <CustomFileUpload />
+                        </td>
+                    </tr>
+                ))
+            }
+        </tbody>
+    </table>
+);
+
+
+const COJDocumentTable = ({ documents }) => (
+    <table className="table mb-0">
+        <thead className="bg-light">
+            <tr>
+                <th scope="col" className="border-0">
+                    Name
+                </th>
+                <th scope="col" className="border-0">
+                    Date
+                                            </th>
+                <th scope="col" className="border-0">
+                    
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {
+                documents.map((document, idx) => (
+                    <tr>
+                        <td>{document.name}</td>
+                        <td>13/06/2018</td>
+                        <td>
+                        <Button size="sm" theme="primary" className="mb-2 mr-1">
+                            Download
+                        </Button>
+                        </td>
+                    </tr>
+                ))
+            }
+        </tbody>
+    </table>
+);
 
 
 class OrderDetails extends React.Component {
@@ -42,16 +122,22 @@ class OrderDetails extends React.Component {
 
     render() {
         const { order, user } = this.props;
+        const currentOrder = this.state.currentOrder;
         return (
             <Container fluid className="main-content-container">
                 {/* Page Header */}
                 <ToastContainer />
                 <Row noGutters className="page-header py-4">
-                    <PageTitle sm="4" title="Track order status" subtitle="Order Status" className="text-sm-left" />
+                    <PageTitle sm="4" title="Order status" subtitle="Order Status" className="text-sm-left" />
                 </Row>
 
+                {/* Confirmed tab */}
                 {
-                    user.role === "Admin" && !this.state.currentOrder.confirmed ?
+                    currentOrder.confirmed ? <span class="badge badge-success">CONFIRMED</span> : ""
+                }
+
+                {
+                    user.role === "Admin" && !currentOrder.confirmed ?
                         (<Row>
                             <Col className="mb-4" />
                             <Col className="mb-4">
@@ -79,7 +165,6 @@ class OrderDetails extends React.Component {
                 {/* Default Light Table */}
                 <Row>
                     <Col>
-
                         {
                             order ?
                                 <CardBody>
@@ -110,6 +195,7 @@ class OrderDetails extends React.Component {
                                 </CardBody>
 
                         }
+
                         <Card small className="mb-4">
                             <CardHeader className="border-bottom">
                                 <h6 className="m-0">Progress</h6>
@@ -123,73 +209,24 @@ class OrderDetails extends React.Component {
                                 </Steps>
                             </CardBody>
                         </Card>
+
                         <Card small className="mb-4">
-                            <CardHeader className="border-bottom">
-                                <h6 className="m-0">Documents submitted</h6>
-                            </CardHeader>
-                            <CardBody className="p-0 pb-3">
-                                <table className="table mb-0">
-                                    <thead className="bg-light">
-                                        <tr>
-                                            <th scope="col" className="border-0">
-                                                #
-                  </th>
-                                            <th scope="col" className="border-0">
-                                                Name
-                  </th>
-                                            <th scope="col" className="border-0">
-                                                Link
-                  </th>
-                                            <th scope="col" className="border-0">
-                                                Date
-                  </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Ali</td>
-                                            <td>
-                                                <a href="http://google.com">
-                                                    BillOfLading12032018.pdf
-                        </a>
-                                            </td>
-                                            <td>13/06/2018</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Clark</td>
-                                            <td>
-                                                <a href="http://google.com">
-                                                    CertificateOfInspection12032018.pdf
-                        </a>
-                                            </td>
-                                            <td>17/06/2018</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Jerry</td>
-                                            <td>
-                                                <a href="http://google.com">
-                                                    CertificateOfValidity12032018.pdf
-                        </a>
-                                            </td>
-                                            <td>25/06/2018</td>
-                                        </tr>
-                                        <tr>
-                                            <td>4</td>
-                                            <td>Colt</td>
-                                            <td>
-                                                <a href="http://google.com">
-                                                    Manifestmain12032018.pdf
-                        </a>
-                                            </td>
-                                            <td>26/06/2018</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </CardBody>
+                            <Tabs>
+                                <TabList>
+                                    <Tab>Sent documents</Tab>
+                                    <Tab>Received documents</Tab>
+                                </TabList>
+
+                                <TabPanel>
+                                    <ClientDocumentTable documents={clientUploads}/>
+                                    <Button type="submit" className="m-3">Sumit documents</Button>
+                                </TabPanel>
+                                <TabPanel>
+                                    <COJDocumentTable documents={cojUploads}/>
+                                </TabPanel>
+                            </Tabs>
                         </Card>
+
                     </Col>
                 </Row>
             </Container>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row, Col, Card, CardHeader, CardBody } from "shards-react";
+import { Container, Row, Button, Card, CardHeader, CardBody } from "shards-react";
 import { connect } from "react-redux";
 import BootstrapTable from 'react-bootstrap-table-next';
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit'
@@ -16,6 +16,10 @@ class OrderSearchTable extends React.Component {
 
         this.state = {
             columns: [{
+                dataField: 'confirmed',
+                text: 'Status ',
+                formatter: this.statusFormatter
+            },{
                 dataField: 'orderRequestID',
                 text: 'Order ID'
             }, {
@@ -24,7 +28,8 @@ class OrderSearchTable extends React.Component {
             }, {
                 dataField: 'requestDate',
                 text: 'Date '
-            }],
+            }
+            ],
             orders: []
         }
 
@@ -38,13 +43,21 @@ class OrderSearchTable extends React.Component {
         };
     }
 
+    statusFormatter(cell, row) {
+        if (row.confirmed) {
+            return (<Button size="sm" theme="success" className="mb-2 mr-1">CONFIRMED</Button>)
+        } else {
+            return (<Button size="sm" theme="warning" className="mb-2 mr-1">PENDING</Button>)
+        }
+    }
+
     componentDidMount() {
         //Fetch orders
         const user = this.props.user;
-        if(user.role == "Admin"){
+        if (user.role == "Admin") {
             this.getOrdersAdmin();
         }
-        if(user.role == "User"){
+        if (user.role == "User") {
             this.getOrdersUser();
         }
     }

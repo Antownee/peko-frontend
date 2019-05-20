@@ -1,7 +1,7 @@
 import React from "react";
 
 const CustomFileUpload = () => (
-  <div className="custom-file mb-3">
+  <div className="custom-file">
     <input type="file" className="custom-file-input" id="customFile2" />
     <label className="custom-file-label" htmlFor="customFile2">
       Choose file...
