@@ -9,7 +9,8 @@ export const orderService = {
     getAll,
     confirmOrder,
     adminUploadDocuments,
-    addTeaAssets
+    addTeaAssets,
+    addEmailAssets
 };
 
 
@@ -88,6 +89,18 @@ function addTeaAssets(tea) {
     };
 
     return fetch(`${config.apiUrl}/admin/asset/tea`, requestOptions)
+        .then(handleResponse)
+        .then(msg => { return msg })
+}
+
+function addEmailAssets(email) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { ...authHeader(), 'Content-Type': 'application/json' },
+        body: JSON.stringify(email)
+    };
+
+    return fetch(`${config.apiUrl}/admin/asset/email`, requestOptions)
         .then(handleResponse)
         .then(msg => { return msg })
 }
