@@ -8,7 +8,8 @@ export const orderService = {
     getAllByUser,
     getAll,
     confirmOrder,
-    adminUploadDocuments
+    adminUploadDocuments,
+    addTeaAssets
 };
 
 
@@ -77,6 +78,18 @@ function adminUploadDocuments(documents, orderid) {
 
     return fetch(`${config.apiUrl}/admin/order/documents`, requestOptions)
         .then(handleResponse)
+}
+
+function addTeaAssets(tea) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { ...authHeader(), 'Content-Type': 'application/json' },
+        body: JSON.stringify(tea)
+    };
+
+    return fetch(`${config.apiUrl}/admin/asset/tea`, requestOptions)
+        .then(handleResponse)
+        .then(msg => { return msg })
 }
 
 function logout() {

@@ -8,7 +8,7 @@ export function authentication(state = initialState, action) {
     case userConstants.LOGIN_REQUEST:
       return {
         loggingIn: true,
-        user: action.user
+        user: {}
       };
     case userConstants.LOGIN_SUCCESS:
       return {
@@ -16,9 +16,15 @@ export function authentication(state = initialState, action) {
         user: action.user
       };
     case userConstants.LOGIN_FAILURE:
-      return {};
+      return {
+        loggingIn: false,
+        user: {}
+      };
     case userConstants.LOGOUT:
-      return {};
+      return {
+        loggingIn: false,
+        user: {}
+      };
     default:
       return state
   }

@@ -10,25 +10,7 @@ const rootReducer = combineReducers({
   registration,
   users,
   alert,
-
-
-  teaList: [],
-  orders: [
-    {
-      teaRequestID: 1435345,
-      requestDate: "12/04/2019",
-      teaID: "COJ-6456",
-      amount: 3000,
-      notes: "Pack when dry"
-    },
-    {
-      teaRequestID: 14334235,
-      requestDate: "12/04/2019",
-      teaID: "COJ-7524",
-      amount: 7860,
-      notes: "Pack in cool dry place"
-    }
-  ]
+  teaList: []
 });
 
 export default rootReducer;

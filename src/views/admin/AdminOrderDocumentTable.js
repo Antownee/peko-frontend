@@ -1,6 +1,6 @@
 import { Button } from "shards-react";
 import React from "react";
-import CustomFileUpload from "../../components/components-overview/CustomFileUpload";
+import AdminFileUpload from "./AdminFileUpload"
 
 
 
@@ -25,22 +25,21 @@ export const SentDocumentsTable = ({ ...props }) => (
         <tbody>
             {
                 props.documents.map((document, idx) => (
-                    <tr>
+                    <tr key={idx}>
                         <td>{document.name}</td>
                         <td>
                             {
                                 document.submitted ?
                                     <a href="http://google.com">
                                         {document.path}.pdf
-                                    </a> : <span class="badge badge-danger">NOT SUBMITTED</span>
+                                    </a> : <span className="badge badge-danger">NOT SUBMITTED</span>
                             }
                         </td>
                         <td>13/06/2018</td>
                         <td>
-                            <CustomFileUpload
+                            <AdminFileUpload
                                 handlesubmitDocuments={props.handlesubmitDocuments}
-                                document={document}
-                                resetCustomUploadState={props.resetCustomUploadState} />
+                                document={document} />
                         </td>
                     </tr>
                 ))

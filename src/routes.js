@@ -17,6 +17,7 @@ import UserOrderList from './views/user/UserOrderList';
 import UserDashboard from "./views/user/UserDashboard";
 import AdminDashboard from "./views/admin/AdminDashboard";
 import AdminOrderList from "./views/admin/AdminOrderList";
+import AdminAddAssets from "./views/admin/AdminAddAssets";
 
 const routes = [
   {
@@ -89,6 +90,12 @@ const routes = [
     exact: true,
     layout: AdminLayout,
     component: AdminOrderList
+  },
+  {
+    path: "/admin/assets",
+    exact: true,
+    layout: AdminLayout,
+    component: AdminAddAssets
   }
 ];
 

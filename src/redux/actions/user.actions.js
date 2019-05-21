@@ -18,11 +18,10 @@ function login(username, password) {
         userService.login(username, password)
             .then(
                 user => {
+                    dispatch(success(user));
                     if (user.data.role == "User") {
-                        dispatch(success(user));
                         return history.push('/user/dashboard');
                     }
-                    dispatch(success(user));
                     return history.push('/admin/dashboard');
                 },
                 error => {
@@ -50,12 +49,11 @@ function register(user) {
             .then(
                 user => {
                     dispatch(alertActions.success('Registration successful'));
-                    
+                    dispatch(success(user));
+
                     if (user.data.role == "User") {
-                        dispatch(success(user));
                         return history.push('/user/dashboard');
                     }
-                    dispatch(success(user));
                     return history.push('/admin/dashboard');
                 },
                 error => {

@@ -32,45 +32,32 @@ class UserPlaceOrder extends React.Component {
       description: '',
       teaID: '',
       userID: '',
-      selectedTeaItem: null,
+      selectedTeaItem: {},
       submitted: false,
       teaList: [
         {
-          index: 0,
           backgroundImage: require("../../images/content-management/17.jpg"),
-          category: "Selected",
-          categoryTheme: "warning",
           title: "Black Tea",
           body:
             "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
           teaID: "COJ-CHAI-002",
         },
         {
-          index: 1,
           backgroundImage: require("../../images/content-management/17.jpg"),
-          category: "Selected",
-          categoryTheme: "warning",
           title: "Green Tea",
           body:
             "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
           teaID: "COJ-CHAI-003",
         },
         {
-          index: 2,
           backgroundImage: require("../../images/content-management/17.jpg"),
-          category: "Selected",
-          categoryTheme: "warning",
           title: "Yellow Tea",
           body:
             "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
           teaID: "COJ-CHAI-004",
         },
         {
-          index: 3,
           backgroundImage: require("../../images/content-management/17.jpg"),
-          category: "Selected",
-          categoryTheme: "warning",
-          author: "John James",
           title: "White Tea",
           body:
             "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
@@ -86,7 +73,7 @@ class UserPlaceOrder extends React.Component {
     const teaID = this.state.teaList[index].teaID;
     this.setState({
       teaID: teaID,
-      selectedTeaItem: index
+      selectedTeaItem: this.state.teaList[index]
     })
   }
 
@@ -98,9 +85,9 @@ class UserPlaceOrder extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    this.setState({ submitted: true });
+    this.setState({ submitted: true, selectedTeaItem: {} });
     const { amount, description, teaID } = this.state;
-    const { dispatch, user } = this.props;
+    const { user } = this.props;
     const order = {
       amount,
       description,
@@ -156,11 +143,11 @@ class UserPlaceOrder extends React.Component {
                   <Card small className="card-post card-post--1">
                     <div
                       className="card-post__image"
-                      style={{ backgroundImage: `url(${tea.backgroundImage})` }}
+                      style={{ backgroundImage: `url(${tea.backgroundImage})` }} 
                     >
                       {
-                        idx === this.state.selectedTeaItem ?
-                          <Badge pill className={`card-post__category bg-${tea.categoryTheme}`}>{tea.category}</Badge> : ""
+                        this.state.selectedTeaItem.teaID === tea.teaID ?
+                          <Badge pill className={`card-post__category bg-warning`}>SELECTED</Badge> : ""
                       }
                     </div>
                     <CardBody>

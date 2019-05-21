@@ -21,14 +21,9 @@ class AdminOrderDetails extends React.Component {
             currentOrder: this.props.order,
             documentsToSubmit: []
         }
-        this.formatDate = this.formatDate.bind(this);
         this.confirmOrder = this.confirmOrder.bind(this);
         this.handlesubmitDocuments = this.handlesubmitDocuments.bind(this);
         this.submitDocuments = this.submitDocuments.bind(this);
-    }
-
-    formatDate(date) {
-        return parse(date)
     }
 
     confirmOrder() {
@@ -153,9 +148,7 @@ class AdminOrderDetails extends React.Component {
                                 </TabList>
 
                                 <TabPanel>
-                                    <SentDocumentsTable
-                                        documents={cojUploads}
-                                        handlesubmitDocuments={this.handlesubmitDocuments} />
+                                    <SentDocumentsTable documents={cojUploads} handlesubmitDocuments={this.handlesubmitDocuments} />
                                     <Button onClick={this.submitDocuments} className="m-3">Submit documents</Button>
                                 </TabPanel>
                                 <TabPanel>

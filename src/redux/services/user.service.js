@@ -12,14 +12,8 @@ export const userService = {
     getAll,
     getById,
     update,
-    delete: _delete,
-    currentUser: currentUser
+    delete: _delete
 };
-
-function currentUser(){
-    const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
-    return currentUserSubject.asObservable().value
-}
 
 function login(username, password) {
     const requestOptions = {

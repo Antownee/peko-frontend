@@ -163,7 +163,7 @@ const ComponentsOverview = () => (
                 <strong className="text-muted d-block mb-2">
                   Custom File Upload
                 </strong>
-                <CustomFileUpload />
+                {/* <CustomFileUpload /> */}
 
                 <strong className="text-muted d-block mb-2">
                   Dropdown Input Groups

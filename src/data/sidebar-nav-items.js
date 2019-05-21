@@ -3,7 +3,7 @@ export default function (role) {
     return [
       {
         title: "Dashboard",
-        htmlBefore: '<i class="material-icons">error</i>',
+        htmlBefore: '<i class="material-icons">home</i>',
         to: "/user/dashboard",
       },
       {
@@ -12,8 +12,8 @@ export default function (role) {
         to: "/user/place-order",
       },
       {
-        title: "Order Status",
-        htmlBefore: '<i class="material-icons">error</i>',
+        title: "Orders",
+        htmlBefore: '<i class="material-icons">assignment</i>',
         to: "/user/order-status",
       },
       {
@@ -26,13 +26,18 @@ export default function (role) {
     return [
       {
         title: "Dashboard",
-        htmlBefore: '<i class="material-icons">error</i>',
+        htmlBefore: '<i class="material-icons">home</i>',
         to: "/admin/dashboard",
       },
       {
-        title: "Order List",
-        htmlBefore: '<i class="material-icons">error</i>',
+        title: "Orders",
+        htmlBefore: '<i class="material-icons">assignment</i>',
         to: "/admin/orders",
+      },
+      {
+        title: "Assets",
+        htmlBefore: '<i class="material-icons">settings</i>',
+        to: "/admin/assets",
       }
     ]
   }
