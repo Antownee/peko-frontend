@@ -1,19 +1,16 @@
 import React from "react";
-import { Container, Row, Col, Card, CardHeader, CardBody, Button, ListGroup, ListGroupItem } from "shards-react";
-import { parse } from "date-fns";
+import { Container, Row, Col, Card, CardHeader, CardBody, Button } from "shards-react";
 import { connect } from "react-redux";
 import Steps, { Step } from "rc-steps"
 import PageTitle from "../../components/common/PageTitle";
 import { orderService } from "../../redux/services/order.service";
 import { ToastContainer, toast } from 'react-toastify';
-import CustomFileUpload from "../../components/components-overview/CustomFileUpload";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
-import { clientUploads, cojUploads } from "../../documents";
-import { SentDocumentsTable, ReceivedDocumentsTable } from "./AdminOrderDocumentTable";
+import SentDocumentsTable  from "../common/SentDocumentsTable";
+import ReceivedDocumentsTable from "../common/ReceivedDocumentsTable";
 
-
-class AdminOrderDetails extends React.Component {
+class OrderDetails extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -24,7 +21,12 @@ class AdminOrderDetails extends React.Component {
         this.confirmOrder = this.confirmOrder.bind(this);
         this.handlesubmitDocuments = this.handlesubmitDocuments.bind(this);
         this.submitDocuments = this.submitDocuments.bind(this);
+        this.resetUploadFileComponent = this.resetUploadFileComponent.bind(this);
+
+        //Creating a FileUpload ref to trigger the resetState function
+        this.fileUploadClearState = React.createRef();
     }
+
 
     confirmOrder() {
         orderService.confirmOrder(this.state.currentOrder)
@@ -40,48 +42,60 @@ class AdminOrderDetails extends React.Component {
     }
 
     handlesubmitDocuments(document, id) {
-        //This function receives the files from the CustomFileUpload component
-        const doc = {
-            document,
-            id
-        }
+        //This function receives the files from the FileUpload component
         this.setState(state => {
-            const documentsToSubmit = state.documentsToSubmit.concat(doc);
+            const documentsToSubmit = state.documentsToSubmit.concat({ document, id });
             return {
                 documentsToSubmit
             }
         })
     }
 
+    resetUploadFileComponent() {
+        //This function is called to reset the FileUpload component state to enable re-upload
+        this.fileUploadClearState.current.resetState();
+    }
+
     submitDocuments() {
-        orderService.adminUploadDocuments(this.state.documentsToSubmit, this.state.currentOrder.orderRequestID)
-            .then((res) => {
-                toast.success(res.msg); //Successful document upload
-                return this.setState({ documentsToSubmit: [] });
-            })
-            .catch((e) => {
-                toast.error("Try again later");
-            })
+        const docs = this.state.documentsToSubmit
+        if (docs.length > 0) {
+            orderService.uploadDocuments(this.state.documentsToSubmit, this.state.currentOrder.orderRequestID)
+                .then((res) => {
+                    //Successful document upload
+                    toast.success(res.msg);
+
+                    //reset document upload component state
+                    this.resetUploadFileComponent();
+                    return this.setState({ documentsToSubmit: [] });
+                })
+                .catch((e) => {
+                    return toast.error("Try again later");
+                })
+        } else {
+            return toast.error("First select a document");
+        }
+
     }
 
     render() {
         const { order, user } = this.props;
         const currentOrder = this.state.currentOrder;
+
         return (
             <Container fluid className="main-content-container">
                 {/* Page Header */}
                 <ToastContainer />
                 <Row noGutters className="page-header py-4">
-                    <PageTitle sm="4" title="Admin Order status" subtitle="Admin Order Status" className="text-sm-left" />
+                    <PageTitle sm="4" title="Order status" subtitle="Order Status" className="text-sm-left" />
                 </Row>
 
                 {/* Confirmed tab */}
                 {
-                    currentOrder.confirmed ? <span class="badge badge-success">CONFIRMED</span> : ""
+                    currentOrder.confirmed ? <span className="badge badge-success">CONFIRMED</span> : ""
                 }
 
                 {
-                    !currentOrder.confirmed ?
+                    user.role === "Admin" && !currentOrder.confirmed ?
                         (<Row>
                             <Col className="mb-4" />
                             <Col className="mb-4">
@@ -91,6 +105,13 @@ class AdminOrderDetails extends React.Component {
                                     onClick={this.confirmOrder}>Confirm order?
                                 </div>
                             </Col>
+                            <Col className="mb-4">
+                                <div
+                                    className="bg-danger text-white text-center rounded p-3"
+                                    style={{ boxShadow: "inset 0 0 5px rgba(0,0,0,.2)" }}
+                                    onClick={this.rejectOrder}> Reject order?
+                                </div>
+                            </Col>
                             <Col className="mb-4" />
                         </Row>)
                         :
@@ -98,8 +119,6 @@ class AdminOrderDetails extends React.Component {
                 }
 
 
-
-                {/* Default Light Table */}
                 <Row>
                     <Col>
                         <CardBody>
@@ -126,6 +145,8 @@ class AdminOrderDetails extends React.Component {
                             </Col>
                         </CardBody>
 
+
+
                         <Card small className="mb-4">
                             <CardHeader className="border-bottom">
                                 <h6 className="m-0">Progress</h6>
@@ -148,11 +169,15 @@ class AdminOrderDetails extends React.Component {
                                 </TabList>
 
                                 <TabPanel>
-                                    <SentDocumentsTable documents={cojUploads} handlesubmitDocuments={this.handlesubmitDocuments} />
+                                    <SentDocumentsTable
+                                        handlesubmitDocuments={this.handlesubmitDocuments}
+                                        fileUploadClearState={this.fileUploadClearState}
+                                        currentOrder={order}
+                                    />
                                     <Button onClick={this.submitDocuments} className="m-3">Submit documents</Button>
                                 </TabPanel>
                                 <TabPanel>
-                                    <ReceivedDocumentsTable documents={clientUploads} />
+                                    <ReceivedDocumentsTable/>
                                 </TabPanel>
                             </Tabs>
                         </Card>
@@ -172,4 +197,4 @@ const mapStateToProps = state => {
     };
 }
 
-export default connect(mapStateToProps)(AdminOrderDetails);
+export default connect(mapStateToProps)(OrderDetails);

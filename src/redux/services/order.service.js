@@ -5,10 +5,9 @@ const config = {
 
 export const orderService = {
     addOrder,
-    getAllByUser,
-    getAll,
+    getAllOrders,
     confirmOrder,
-    adminUploadDocuments,
+    uploadDocuments,
     addTeaAssets,
     addEmailAssets
 };
@@ -27,30 +26,25 @@ function addOrder(order) {
 }
 
 
-function getAllByUser(user) {
+function getAllOrders(user) {
     const requestOptions = {
         method: 'POST',
         headers: { ...authHeader(), 'Content-Type': 'application/json' },
         body: JSON.stringify(user)
     };
 
-    return fetch(`${config.apiUrl}/users/order-request/all`, requestOptions)
-        .then(handleResponse)
-        .then(msg => { return msg })
+    if (user.role === "Admin") {
+        return fetch(`${config.apiUrl}/admin/order/all`, requestOptions)
+            .then(handleResponse)
+            .then(msg => { return msg })
+    } else {
+
+        return fetch(`${config.apiUrl}/users/order-request/all`, requestOptions)
+            .then(handleResponse)
+            .then(msg => { return msg })
+    }
 }
 
-
-//ADMIN
-function getAll() {
-    const requestOptions = {
-        method: 'POST',
-        headers: { ...authHeader() }
-    };
-
-    return fetch(`${config.apiUrl}/admin/order/all`, requestOptions)
-        .then(handleResponse)
-        .then(msg => { return msg })
-}
 
 function confirmOrder(order) {
     const requestOptions = {
@@ -64,7 +58,7 @@ function confirmOrder(order) {
         .then((msg) => { return msg })
 }
 
-function adminUploadDocuments(documents, orderid) {
+function uploadDocuments(documents, orderid) {
     const formData = new FormData();
     formData.append('orderID', orderid);
     for (var x = 0; x < documents.length; x++) {

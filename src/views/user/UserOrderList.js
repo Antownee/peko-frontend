@@ -1,6 +1,6 @@
 import React from "react";
-import UserOrderDetails from "./UserOrderDetails";
 import OrderSearchTable from '../OrderSearchTable';
+import OrderDetails from "../common/OrderDetails"
 import { Container } from "shards-react";
 import { connect } from "react-redux";
 
@@ -39,7 +39,7 @@ class UserOrderList extends React.Component {
     return (
       <Container fluid className="main-content-container">
         {
-          this.state.isSearch ? <OrderSearchTable handleSearchState={this.handleSearchState} /> : <UserOrderDetails order={this.state.selectedOrder} />
+          this.state.isSearch ? <OrderSearchTable handleSearchState={this.handleSearchState} /> : <OrderDetails order={this.state.selectedOrder} />
         }
       </Container>
 

@@ -54,32 +54,17 @@ class OrderSearchTable extends React.Component {
     componentDidMount() {
         //Fetch orders
         const user = this.props.user;
-        if (user.role == "Admin") {
-            this.getOrdersAdmin();
-        }
-        if (user.role == "User") {
-            this.getOrdersUser();
-        }
+        this.getAllOrders(user);
     }
 
-    getOrdersUser() {
-        orderService.getAllByUser(this.props.user)
+    getAllOrders(user) {
+        orderService.getAllOrders(user)
             .then((orders) => {
                 this.setState({
                     orders: orders
                 })
             })
     }
-
-    getOrdersAdmin() {
-        orderService.getAll()
-            .then((orders) => {
-                this.setState({
-                    orders: orders
-                })
-            })
-    }
-
 
     render() {
         return (
