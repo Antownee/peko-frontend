@@ -7,7 +7,7 @@ import { orderService } from "../../redux/services/order.service";
 import { ToastContainer, toast } from 'react-toastify';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
-import SentDocumentsTable  from "../common/SentDocumentsTable";
+import SentDocumentsTable from "../common/SentDocumentsTable";
 import ReceivedDocumentsTable from "../common/ReceivedDocumentsTable";
 
 class OrderDetails extends React.Component {
@@ -162,24 +162,36 @@ class OrderDetails extends React.Component {
                         </Card>
 
                         <Card small className="mb-4">
-                            <Tabs>
-                                <TabList>
-                                    <Tab>Sent documents</Tab>
-                                    <Tab>Received documents</Tab>
-                                </TabList>
+                            {
+                                true ?
+                                    <Tabs>
+                                        <TabList>
+                                            <Tab>Sent documents</Tab>
+                                            <Tab>Received documents</Tab>
+                                        </TabList>
 
-                                <TabPanel>
-                                    <SentDocumentsTable
-                                        handlesubmitDocuments={this.handlesubmitDocuments}
-                                        fileUploadClearState={this.fileUploadClearState}
-                                        currentOrder={order}
-                                    />
-                                    <Button onClick={this.submitDocuments} className="m-3">Submit documents</Button>
-                                </TabPanel>
-                                <TabPanel>
-                                    <ReceivedDocumentsTable/>
-                                </TabPanel>
-                            </Tabs>
+                                        <TabPanel>
+                                            <SentDocumentsTable
+                                                handlesubmitDocuments={this.handlesubmitDocuments}
+                                                fileUploadClearState={this.fileUploadClearState}
+                                                currentOrder={order}
+                                            />
+                                            <Button onClick={this.submitDocuments} className="m-3">Submit documents</Button>
+                                        </TabPanel>
+                                        <TabPanel>
+                                            <ReceivedDocumentsTable />
+                                        </TabPanel>
+                                    </Tabs> :
+                                    <CardBody>
+                                        <h6 className="card-title">
+                                            <i className="material-icons">search</i>
+                                            <a className="text-fiord-blue" href="#">
+                                                You cannot view any documents yet because the order is yet to be confirmed.
+                                            </a>
+                                        </h6>
+                                    </CardBody>
+                            }
+
                         </Card>
 
                     </Col>

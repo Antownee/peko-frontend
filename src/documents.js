@@ -17,6 +17,5 @@ export const cojUploads = [
     { name: "Packing list", abbrev: "PCKLST", submitted: false },
     { name: "Analysis certificate", abbrev: "ALSYSCRT", submitted: false },
     { name: "Bill of lading", abbrev: "BOL", submitted: false },
-    { name: "Phytosanitary certificate", abbrev: "CRTPHY", submitted: false },
-
+    { name: "Phytosanitary certificate", abbrev: "CRTPHY", submitted: false }
 ]
