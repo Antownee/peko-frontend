@@ -9,7 +9,8 @@ export const orderService = {
     confirmOrder,
     uploadDocuments,
     addTeaAssets,
-    addEmailAssets
+    addEmailAssets,
+    populateAdminDashboard
 };
 
 
@@ -97,6 +98,18 @@ function addEmailAssets(email) {
     return fetch(`${config.apiUrl}/admin/asset/email`, requestOptions)
         .then(handleResponse)
         .then(msg => { return msg })
+}
+
+function populateAdminDashboard(user){
+    const requestOptions = {
+        method: 'POST',
+        headers: { ...authHeader(), 'Content-Type': 'application/json' },
+        body: JSON.stringify(user)
+    };
+
+    return fetch(`${config.apiUrl}/admin/asset/dashboard`, requestOptions)
+    .then(handleResponse)
+    .then(msg => { return msg })
 }
 
 function logout() {
