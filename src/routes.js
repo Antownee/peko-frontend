@@ -14,10 +14,9 @@ import Tables from "./views/Tables";
 import BlogPosts from "./views/BlogPosts";
 import UserPlaceOrder from "./views/user/UserPlaceOrder";
 import UserOrderList from './views/user/UserOrderList';
-import UserDashboard from "./views/user/UserDashboard";
-import AdminDashboard from "./views/admin/AdminDashboard";
 import AdminOrderList from "./views/admin/AdminOrderList";
 import AdminAddAssets from "./views/admin/AdminAddAssets";
+import Dashboard from "./views/common/Dashboard";
 
 const routes = [
   {
@@ -77,13 +76,13 @@ const routes = [
     path: "/user/dashboard",
     exact: true,
     layout: UserLayout,
-    component: UserDashboard
+    component: Dashboard
   },
   {
     path: "/admin/dashboard",
     exact: true,
     layout: AdminLayout,
-    component: AdminDashboard
+    component: Dashboard
   },
   {
     path: "/admin/orders",

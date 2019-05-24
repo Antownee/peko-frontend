@@ -4,8 +4,6 @@ import { PrivateRoute } from "./views/PrivateRoute";
 import { history } from './redux/helpers/history'
 import LoginPage from './views/LoginPage';
 import RegisterPage from "./views/RegisterPage";
-import AdminDashboard from "./views/admin/AdminDashboard";
-import { AdminLayout, UserLayout } from "./layouts";
 import { Role } from "./redux/helpers/role";
 
 import routes from "./routes";

@@ -4,12 +4,12 @@ import { Container, Row, Col, Card, CardHeader, CardBody } from "shards-react";
 import { connect } from "react-redux";
 import PageTitle from "../../components/common/PageTitle";
 import SmallStats from "../../components/common/SmallStats";
-import DashboardGraph from "../common/DashboardGraph";
-import DashboardOrderTable from "../../components/common/DashboardOrderTable";
+import DashboardGraph from "./DashboardGraph";
+import DashboardOrderTable from "./DashboardOrderTable";
 import { orderService } from "../../redux/services/order.service";
 
 
-class AdminDashboard extends React.Component {
+class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,15 +18,22 @@ class AdminDashboard extends React.Component {
       priceOfTea: 0,
       smallStats: this.props.smallStats,
       recentOrders: [],
-      historicalPrices: {}
+      historicalPrices: [],
+      chartData: [
+        { month: "Dec", price: 2.67 },
+        { month: "Jan", price: 2.91 },
+        { month: "Feb", price: 2.15 },
+        { month: "Mar", price: 2.23 },
+        { month: "Apr", price: 2.59 }
+      ]
     }
   }
 
   componentDidMount() {
     const { user, recentOrders } = this.props;
-    orderService.populateAdminDashboard(user)
+    orderService.populateDashboard(user)
       .then((res) => {
-        const { smallStats, recentOrders } = this.state;
+        const { smallStats } = this.state;
         //number of orders made
         smallStats[0].value = res.numberOfOrders;
         //pending orders
@@ -37,7 +44,7 @@ class AdminDashboard extends React.Component {
         this.setState({
           smallStats,
           recentOrders: [...res.recentOrders],
-          historicalPrices: { ...res.historicalPrices }
+          historicalPrices: [...res.historicalPrices]
         });
 
       })
@@ -53,7 +60,7 @@ class AdminDashboard extends React.Component {
       <Container fluid className="main-content-container px-4">
         {/* Page Header */}
         <Row noGutters className="page-header py-4">
-          <PageTitle title="ADMIN DASHBOARD " subtitle="ADMIN" className="text-sm-left mb-3" />
+          <PageTitle title="Dashboard" className="text-sm-left mb-3" />
         </Row>
 
         {/* Small Stats Blocks */}
@@ -77,7 +84,7 @@ class AdminDashboard extends React.Component {
         <Row>
           {/* Users Overview */}
           <Col lg="12" md="12" sm="12" className="mb-4">
-            <DashboardGraph  historicalPrices={historicalPrices}/>
+            <DashboardGraph historicalPrices={historicalPrices} chartData={this.state.chartData}/>
           </Col>
         </Row>
 
@@ -100,17 +107,17 @@ const mapStateToProps = state => {
   };
 }
 
-export default connect(mapStateToProps)(AdminDashboard);
+export default connect(mapStateToProps)(Dashboard);
 
 
-AdminDashboard.propTypes = {
+Dashboard.propTypes = {
   /**
    * The small stats dataset.
    */
   smallStats: PropTypes.array
 };
 
-AdminDashboard.defaultProps = {
+Dashboard.defaultProps = {
   smallStats: [
     {
       label: "No. of orders made",

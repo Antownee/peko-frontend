@@ -10,7 +10,7 @@ export const orderService = {
     uploadDocuments,
     addTeaAssets,
     addEmailAssets,
-    populateAdminDashboard
+    populateDashboard
 };
 
 
@@ -100,7 +100,7 @@ function addEmailAssets(email) {
         .then(msg => { return msg })
 }
 
-function populateAdminDashboard(user){
+function populateDashboard(user){
     const requestOptions = {
         method: 'POST',
         headers: { ...authHeader(), 'Content-Type': 'application/json' },

@@ -2,12 +2,14 @@ import React from "react";
 import { Container, Row, Col, Card, CardHeader, CardBody, Button } from "shards-react";
 import { connect } from "react-redux";
 import Steps, { Step } from "rc-steps"
+import { format } from 'date-fns';
 import PageTitle from "../../components/common/PageTitle";
 import { orderService } from "../../redux/services/order.service";
 import { ToastContainer, toast } from 'react-toastify';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
 import SentDocumentsTable from "../common/SentDocumentsTable";
+import { history } from '../../redux/helpers';
 import ReceivedDocumentsTable from "../common/ReceivedDocumentsTable";
 
 class OrderDetails extends React.Component {
@@ -22,6 +24,7 @@ class OrderDetails extends React.Component {
         this.handlesubmitDocuments = this.handlesubmitDocuments.bind(this);
         this.submitDocuments = this.submitDocuments.bind(this);
         this.resetUploadFileComponent = this.resetUploadFileComponent.bind(this);
+        this.goBack = this.goBack.bind(this);
 
         //Creating a FileUpload ref to trigger the resetState function
         this.fileUploadClearState = React.createRef();
@@ -77,6 +80,11 @@ class OrderDetails extends React.Component {
 
     }
 
+    goBack(){
+        //Change state
+        this.props.handleSearchState(false)
+    }
+
     render() {
         const { order, user } = this.props;
         const currentOrder = this.state.currentOrder;
@@ -85,9 +93,11 @@ class OrderDetails extends React.Component {
             <Container fluid className="main-content-container">
                 {/* Page Header */}
                 <ToastContainer />
+                <Button className="mt-4" pill onClick={this.goBack}>&larr; Go Back</Button>
                 <Row noGutters className="page-header py-4">
                     <PageTitle sm="4" title="Order status" subtitle="Order Status" className="text-sm-left" />
                 </Row>
+
 
                 {/* Confirmed tab */}
                 {
@@ -139,7 +149,7 @@ class OrderDetails extends React.Component {
 
                                         <p className="card-text d-inline-block mb-3">{order.teaID}</p><br />
                                         <p className="card-text d-inline-block mb-3">{order.notes}</p><br />
-                                        <span className="text-muted">{order.requestDate}</span>
+                                        <span className="text-muted">{format(order.requestDate, 'd-MMM-YYYY')}</span>
                                     </CardBody>
                                 </Card>
                             </Col>

@@ -2,9 +2,10 @@ import React from "react";
 import { Container, Row, Button, Card, CardHeader, CardBody } from "shards-react";
 import { connect } from "react-redux";
 import BootstrapTable from 'react-bootstrap-table-next';
-import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit'
-import PageTitle from "../components/common/PageTitle";
-import { orderService } from "../redux/services/order.service";
+import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
+import { format } from 'date-fns';
+import PageTitle from "../../components/common/PageTitle";
+import { orderService } from "../../redux/services/order.service";
 
 const { SearchBar } = Search;
 
@@ -19,15 +20,17 @@ class OrderSearchTable extends React.Component {
                 dataField: 'confirmed',
                 text: 'Status ',
                 formatter: this.statusFormatter
-            },{
+            }, {
                 dataField: 'orderRequestID',
                 text: 'Order ID'
             }, {
                 dataField: 'amount',
-                text: 'Price (USD)'
+                text: 'Weight (kg)',
+                formatter: this.weightFormatter
             }, {
                 dataField: 'requestDate',
-                text: 'Date '
+                text: 'Date ',
+                formatter: this.dateFormatter
             }
             ],
             orders: []
@@ -48,6 +51,18 @@ class OrderSearchTable extends React.Component {
             return (<Button size="sm" theme="success" className="mb-2 mr-1">CONFIRMED</Button>)
         } else {
             return (<Button size="sm" theme="warning" className="mb-2 mr-1">PENDING</Button>)
+        }
+    }
+
+    dateFormatter(cell, row) {
+        if (row.requestDate) {
+            return format(row.requestDate, 'd-MMM-YYYY')
+        }
+    }
+
+    weightFormatter(cell,row){
+        if (row.amount) {
+            return row.amount.toLocaleString()
         }
     }
 

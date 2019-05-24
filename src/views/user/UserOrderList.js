@@ -1,5 +1,5 @@
 import React from "react";
-import OrderSearchTable from '../OrderSearchTable';
+import OrderSearchTable from '../common/OrderSearchTable';
 import OrderDetails from "../common/OrderDetails"
 import { Container } from "shards-react";
 import { connect } from "react-redux";
