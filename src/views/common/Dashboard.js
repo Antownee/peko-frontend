@@ -56,6 +56,7 @@ class Dashboard extends React.Component {
 
   render() {
     const { smallStats, recentOrders, historicalPrices } = this.state;
+
     return (
       <Container fluid className="main-content-container px-4">
         {/* Page Header */}
@@ -102,8 +103,10 @@ class Dashboard extends React.Component {
 
 const mapStateToProps = state => {
   const { user } = state.authentication;
+  const { isLoading } = state;
   return {
-    user: user.data
+    user: user.data,
+    isLoading
   };
 }
 
