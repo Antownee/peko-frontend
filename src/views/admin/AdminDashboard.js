@@ -4,7 +4,7 @@ import { Container, Row, Col, Card, CardHeader, CardBody } from "shards-react";
 import { connect } from "react-redux";
 import PageTitle from "../../components/common/PageTitle";
 import SmallStats from "../../components/common/SmallStats";
-import UsersOverview from "../../components/blog/UsersOverview";
+import DashboardGraph from "../common/DashboardGraph";
 import DashboardOrderTable from "../../components/common/DashboardOrderTable";
 import { orderService } from "../../redux/services/order.service";
 
@@ -16,24 +16,30 @@ class AdminDashboard extends React.Component {
       numberOfOrders: 0,
       pendingOrders: 0,
       priceOfTea: 0,
-      smallStats: this.props.smallStats
+      smallStats: this.props.smallStats,
+      recentOrders: [],
+      historicalPrices: {}
     }
   }
 
   componentDidMount() {
-    const { user } = this.props;
+    const { user, recentOrders } = this.props;
     orderService.populateAdminDashboard(user)
       .then((res) => {
-
-        const { smallStats } = this.state;
+        const { smallStats, recentOrders } = this.state;
         //number of orders made
         smallStats[0].value = res.numberOfOrders;
         //pending orders
         smallStats[1].value = res.pendingOrders;
+        //price of tea
+        smallStats[2].value = res.priceOfTea;
 
         this.setState({
-          smallStats
-        })
+          smallStats,
+          recentOrders: [...res.recentOrders],
+          historicalPrices: { ...res.historicalPrices }
+        });
+
       })
       .catch((e) => {
         var f = e
@@ -42,7 +48,7 @@ class AdminDashboard extends React.Component {
 
 
   render() {
-    const { smallStats } = this.state;
+    const { smallStats, recentOrders, historicalPrices } = this.state;
     return (
       <Container fluid className="main-content-container px-4">
         {/* Page Header */}
@@ -71,29 +77,16 @@ class AdminDashboard extends React.Component {
         <Row>
           {/* Users Overview */}
           <Col lg="12" md="12" sm="12" className="mb-4">
-            <UsersOverview />
+            <DashboardGraph  historicalPrices={historicalPrices}/>
           </Col>
         </Row>
 
         <Row>
           <Col lg="12" md="12" sm="12" className="mb-4">
-            <DashboardOrderTable />
+            <DashboardOrderTable recentOrders={recentOrders} />
           </Col>
         </Row>
 
-        <Row>
-          {/* Users by Device */}
-          <Col lg="4" md="6" sm="12" className="mb-4">
-          </Col>
-
-          {/* New Draft */}
-          <Col lg="4" md="6" sm="12" className="mb-4">
-          </Col>
-
-          {/* Discussions */}
-          <Col lg="5" md="12" sm="12" className="mb-4">
-          </Col>
-        </Row>
       </Container>
 
     )
@@ -147,15 +140,15 @@ AdminDashboard.defaultProps = {
           label: "Today",
           fill: "start",
           borderWidth: 1.5,
-          backgroundColor: "rgba(23,198,113,0.1)",
-          borderColor: "rgb(23,198,113)",
-          data: [1, 2, 3, 3, 3, 4, 4]
+          backgroundColor: "rgba(0, 184, 216, 0.1)",
+          borderColor: "rgb(0, 184, 216)",
+          data: [1, 2, 1, 3, 5, 4, 7]
         }
       ]
     },
     {
       label: "Average auction price of Kenyan tea ($ per kg)",
-      value: "2.07",
+      value: "0",
       percentage: "3.8%",
       increase: false,
       decrease: true,
@@ -166,9 +159,9 @@ AdminDashboard.defaultProps = {
           label: "Today",
           fill: "start",
           borderWidth: 1.5,
-          backgroundColor: "rgba(255,180,0,0.1)",
-          borderColor: "rgb(255,180,0)",
-          data: [2, 3, 3, 3, 4, 3, 3]
+          backgroundColor: "rgba(0, 184, 216, 0.1)",
+          borderColor: "rgb(0, 184, 216)",
+          data: [1, 2, 1, 3, 5, 4, 7]
         }
       ]
     }
