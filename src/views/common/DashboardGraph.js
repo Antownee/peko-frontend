@@ -8,7 +8,7 @@ export default class DashboardGraph extends React.Component {
   }
 
   render() {
-    const { title, chartData, historicalPrices } = this.props;
+    const { historicalPrices } = this.props;
     return (
       <Card small >
         <CardHeader className="border-bottom">

@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import MainNavbar from "../components/layout/MainNavbar/MainNavbar";
 import MainSidebar from "../components/layout/MainSidebar/MainSidebar";
 import MainFooter from "../components/layout/MainFooter";
-import Loading from "../views/common/Loading";
 
 import "../assets/steps.css"
 
@@ -16,12 +15,11 @@ export class AdminLayout extends React.Component {
     this.state = {
       noNavbar: false,
       noFooter: false,
-      isLoading: false
     }
   }
 
   render() {
-    const { children } = this.props;
+    const { children, isLoading } = this.props;
     const { noNavbar, noFooter } = this.state;
     return (
       <Container fluid>
@@ -35,7 +33,6 @@ export class AdminLayout extends React.Component {
             tag="main"
           >
             {
-              false ? <Loading /> :
                 <div>
                   {!noNavbar && <MainNavbar />}
                   {children}
@@ -52,7 +49,9 @@ export class AdminLayout extends React.Component {
 
 function mapStateToProps(state) {
   const { user } = state.authentication;
-  return user ? { currentUser: user.data } : {};
+  const { isLoading } = state.loadState
+
+  return user ? { currentUser: user.data, isLoading } : {};
 
 }
 

@@ -6,8 +6,9 @@ import PageTitle from "../../components/common/PageTitle";
 import SmallStats from "../../components/common/SmallStats";
 import DashboardGraph from "./DashboardGraph";
 import DashboardOrderTable from "./DashboardOrderTable";
+import { loadingActions } from "../../redux/actions"
 import { orderService } from "../../redux/services/order.service";
-
+import Loading from "../common/Loading";
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -19,20 +20,15 @@ class Dashboard extends React.Component {
       smallStats: this.props.smallStats,
       recentOrders: [],
       historicalPrices: [],
-      chartData: [
-        { month: "Dec", price: 2.67 },
-        { month: "Jan", price: 2.91 },
-        { month: "Feb", price: 2.15 },
-        { month: "Mar", price: 2.23 },
-        { month: "Apr", price: 2.59 }
-      ]
     }
   }
 
   componentDidMount() {
-    const { user, recentOrders } = this.props;
+    const { user } = this.props;
+    this.props.dispatch(loadingActions.toggleLoad(true)); //show 
     orderService.populateDashboard(user)
       .then((res) => {
+        this.props.dispatch(loadingActions.toggleLoad(false)); //hide
         const { smallStats } = this.state;
         //number of orders made
         smallStats[0].value = res.numberOfOrders;
@@ -56,58 +52,58 @@ class Dashboard extends React.Component {
 
   render() {
     const { smallStats, recentOrders, historicalPrices } = this.state;
-
+    const { isLoading } = this.props;
     return (
-      <Container fluid className="main-content-container px-4">
-        {/* Page Header */}
-        <Row noGutters className="page-header py-4">
-          <PageTitle title="Dashboard" className="text-sm-left mb-3" />
-        </Row>
+      <div>
+        {
+          isLoading ? <Loading /> :
+            <Container fluid className="main-content-container px-4">
+              {/* Page Header */}
+              <Row noGutters className="page-header py-4">
+                <PageTitle title="Dashboard" className="text-sm-left mb-3" />
+              </Row>
 
-        {/* Small Stats Blocks */}
-        <Row>
-          {smallStats.map((stats, idx) => (
-            <Col className="col-lg mb-4" key={idx} {...stats.attrs}>
-              <SmallStats
-                id={`small-stats-${idx}`}
-                variation="1"
-                chartData={stats.datasets}
-                chartLabels={stats.chartLabels}
-                label={stats.label}
-                value={stats.value}
-                increase={stats.increase}
-                decrease={stats.decrease}
-              />
-            </Col>
-          ))}
-        </Row>
+              {/* Small Stats Blocks */}
+              <Row>
+                {smallStats.map((stats, idx) => (
+                  <Col className="col-lg mb-4" key={idx} {...stats.attrs}>
+                    <SmallStats
+                      id={`small-stats-${idx}`}
+                      variation="1"
+                      chartData={stats.datasets}
+                      chartLabels={stats.chartLabels}
+                      label={stats.label}
+                      value={stats.value}
+                      increase={stats.increase}
+                      decrease={stats.decrease}
+                    />
+                  </Col>
+                ))}
+              </Row>
 
-        <Row>
-          {/* Users Overview */}
-          <Col lg="12" md="12" sm="12" className="mb-4">
-            <DashboardGraph historicalPrices={historicalPrices} chartData={this.state.chartData}/>
-          </Col>
-        </Row>
+              <Row>
+                {/* Users Overview */}
+                <Col lg="12" md="12" sm="12" className="mb-4">
+                  <DashboardGraph historicalPrices={historicalPrices} />
+                </Col>
+              </Row>
 
-        <Row>
-          <Col lg="12" md="12" sm="12" className="mb-4">
-            <DashboardOrderTable recentOrders={recentOrders} />
-          </Col>
-        </Row>
-
-      </Container>
-
+              <Row>
+                <Col lg="12" md="12" sm="12" className="mb-4">
+                  <DashboardOrderTable recentOrders={recentOrders} />
+                </Col>
+              </Row>
+            </Container>
+        }
+      </div>
     )
   }
 }
 
 const mapStateToProps = state => {
   const { user } = state.authentication;
-  const { isLoading } = state;
-  return {
-    user: user.data,
-    isLoading
-  };
+  const { isLoading } = state.loadState;
+  return { user: user.data, isLoading };
 }
 
 export default connect(mapStateToProps)(Dashboard);

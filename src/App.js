@@ -2,8 +2,8 @@ import React from "react";
 import { Router, Route } from "react-router-dom";
 import { PrivateRoute } from "./views/PrivateRoute";
 import { history } from './redux/helpers/history'
-import LoginPage from './views/LoginPage';
-import RegisterPage from "./views/RegisterPage";
+import LoginPage from './views/common/LoginPage';
+import RegisterPage from "./views/common/RegisterPage";
 import { Role } from "./redux/helpers/role";
 
 import routes from "./routes";

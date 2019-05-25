@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
-import { userActions } from '../redux/actions';
+import { userActions } from '../../redux/actions';
 
 class LoginPage extends React.Component {
     constructor(props) {
@@ -34,8 +34,6 @@ class LoginPage extends React.Component {
         const { dispatch } = this.props;
         if (username && password) {
             dispatch(userActions.login(username, password));
-            //invalid
-            toast.error("Incorrect username or password")
         }
     }
 

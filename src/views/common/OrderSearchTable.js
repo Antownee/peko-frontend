@@ -6,6 +6,8 @@ import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
 import { format } from 'date-fns';
 import PageTitle from "../../components/common/PageTitle";
 import { orderService } from "../../redux/services/order.service";
+import Loading from "../common/Loading";
+import { loadingActions } from "../../redux/actions"
 
 const { SearchBar } = Search;
 
@@ -60,7 +62,7 @@ class OrderSearchTable extends React.Component {
         }
     }
 
-    weightFormatter(cell,row){
+    weightFormatter(cell, row) {
         if (row.amount) {
             return row.amount.toLocaleString()
         }
@@ -69,12 +71,14 @@ class OrderSearchTable extends React.Component {
     componentDidMount() {
         //Fetch orders
         const user = this.props.user;
+        this.props.dispatch(loadingActions.toggleLoad(true)); //show 
         this.getAllOrders(user);
     }
 
     getAllOrders(user) {
         orderService.getAllOrders(user)
             .then((orders) => {
+                this.props.dispatch(loadingActions.toggleLoad(false)); //hide
                 this.setState({
                     orders: orders
                 })
@@ -82,44 +86,51 @@ class OrderSearchTable extends React.Component {
     }
 
     render() {
-        return (
-            <Container fluid className="main-content-container px-4">
-                <Row noGutters className="page-header py-4">
-                    <PageTitle sm="4" title="Search orders" subtitle="Order Status" className="text-sm-left" />
-                </Row>
-                <Card>
-                    <ToolkitProvider
-                        keyField="id"
-                        data={this.state.orders}
-                        columns={this.state.columns}
-                        search
-                    >
-                        {
-                            props => (
-                                <div>
-                                    <SearchBar {...props.searchProps} className="mt-4 ml-4" />
-                                    <hr />
-                                    <BootstrapTable
-                                        {...props.baseProps}
+        const { isLoading } = this.props;
 
-                                        selectRow={selectRow}
-                                    />
-                                </div>
-                            )
-                        }
-                    </ToolkitProvider>
-                </Card>
-            </Container>
+        return (
+            <div>
+                {
+                    isLoading ? <Loading /> :
+                        <Container fluid className="main-content-container px-4">
+                            <Row noGutters className="page-header py-4">
+                                <PageTitle sm="4" title="Search orders" subtitle="Order Status" className="text-sm-left" />
+                            </Row>
+                            <Card>
+                                <ToolkitProvider
+                                    keyField="id"
+                                    data={this.state.orders}
+                                    columns={this.state.columns}
+                                    search
+                                >
+                                    {
+                                        props => (
+                                            <div>
+                                                <SearchBar {...props.searchProps} className="mt-4 ml-4" />
+                                                <hr />
+                                                <BootstrapTable
+                                                    {...props.baseProps}
+
+                                                    selectRow={selectRow}
+                                                />
+                                            </div>
+                                        )
+                                    }
+                                </ToolkitProvider>
+                            </Card>
+                        </Container>
+                }
+            </div>
         )
     }
 }
 
 
+
 const mapStateToProps = state => {
     const { user } = state.authentication;
-    return {
-        user: user.data
-    };
+    const { isLoading } = state.loadState;
+    return { user: user.data, isLoading };
 }
 
 export default connect(mapStateToProps)(OrderSearchTable);

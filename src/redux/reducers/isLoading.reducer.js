@@ -1,12 +1,9 @@
 import { loadingConstants } from '../constants';
 
-export function isLoading(state = {}, action) {
+export function loadState(state = {}, action) {
   switch (action.type) {
     case loadingConstants.SUCCESS:
-      return {
-        type: 'load-success',
-        message: action.message
-      };
+      return { isLoading: action.message };
     case loadingConstants.ERROR:
       return {
         type: 'load-danger',

@@ -2,8 +2,7 @@ import React from "react";
 import OrderSearchTable from '../common/OrderSearchTable';
 import OrderDetails from "../common/OrderDetails"
 import { Container } from "shards-react";
-import { connect } from "react-redux"
-
+import { connect } from "react-redux";
 
 class AdminOrderList extends React.Component {
   constructor(props) {
@@ -48,12 +47,11 @@ class AdminOrderList extends React.Component {
   }
 }
 
+
 const mapStateToProps = state => {
-  return state
+  const { user } = state.authentication;
+  const { isLoading } = state.loadState;
+  return { user: user.data, isLoading };
 }
 
-const mapActionsToProps = {
-
-}
-
-export default connect(mapStateToProps, mapActionsToProps)(AdminOrderList);
+export default connect(mapStateToProps)(AdminOrderList);
