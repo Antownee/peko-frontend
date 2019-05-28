@@ -32,7 +32,7 @@ class SentDocumentsTable extends React.Component {
                 <tbody>
                     {
                         displayDocuments ?
-                            displayDocuments.map((document, idx) => (
+                        displayDocuments.map((document, idx) => (
                                 <tr key={idx}>
                                     <td>{document.name}</td>
                                     <td>

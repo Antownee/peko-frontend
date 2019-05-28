@@ -1,7 +1,5 @@
 import { authHeader } from '../helpers';
-const config = {
-    apiUrl: 'http://localhost:4895'
-}
+import { config } from "../../config";
 
 export const orderService = {
     addOrder,
@@ -100,7 +98,7 @@ function addEmailAssets(email) {
         .then(msg => { return msg })
 }
 
-function populateDashboard(user){
+function populateDashboard(user) {
     const requestOptions = {
         method: 'POST',
         headers: { ...authHeader(), 'Content-Type': 'application/json' },
@@ -108,8 +106,8 @@ function populateDashboard(user){
     };
 
     return fetch(`${config.apiUrl}/admin/asset/dashboard`, requestOptions)
-    .then(handleResponse)
-    .then(msg => { return msg })
+        .then(handleResponse)
+        .then(msg => { return msg })
 }
 
 function logout() {

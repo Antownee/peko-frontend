@@ -30,7 +30,7 @@ class CustomFileUpload extends React.Component {
     const document = this.props.document;
     return (
       <div className="custom-file">
-        <input type="file" className="custom-file-input" id={document.abbrev} onChange={this.submitDocuments} />
+        <input type="file" className="custom-file-input" id={document.documentCode} onChange={this.submitDocuments} />
         <label className="custom-file-label" htmlFor="customFile2">
           {this.state.labelText}
         </label>

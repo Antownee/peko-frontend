@@ -1,24 +1,17 @@
 import React from 'react';
-import { Button } from "shards-react";
-import { clientUploads, cojUploads } from "../../documents";
+import { userUploads, adminUploads } from "../../documents";
 import { connect } from "react-redux";
+import { config } from "../../config";
+
 
 class ReceivedDocumentsTable extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            documents: []
-        }
-    }
-
-    componentDidMount() {
-        const { user } = this.props;
-        this.setState({
-            documents: user.role === "User" ? cojUploads : clientUploads
-        })
     }
 
     render() {
+        let orderID = this.props.currentOrder.orderRequestID;
+        let displayDocuments = this.props.displayDocuments;
         return (
             <table className="table mb-0">
                 <thead className="bg-light">
@@ -36,14 +29,21 @@ class ReceivedDocumentsTable extends React.Component {
                 </thead>
                 <tbody>
                     {
-                        this.state.documents.map((document, idx) => (
+                        displayDocuments.map((document, idx) => (
                             <tr>
                                 <td>{document.name}</td>
                                 <td>13/06/2018</td>
                                 <td>
-                                    <Button size="sm" theme="primary" className="mb-2 mr-1">
-                                        Download
-                        </Button>
+                                    {
+                                        document.submitted ?
+                                            <a style={{ display: "table-cell" }}
+                                                href={`${config.apiUrl}/admin/order/file?orderID=${orderID}&documentCode=${document.documentCode}`}
+                                                target="_blank">Download
+                                            </a>
+                                            :
+                                            <p>Not available</p>
+                                    }
+
                                 </td>
                             </tr>
                         ))

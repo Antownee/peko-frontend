@@ -10,7 +10,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
 import SentDocumentsTable from "../common/SentDocumentsTable";
 import { documentHandler } from '../../utils/documentHandler';
-import { clientUploads, cojUploads } from "../../documents";
+import { userUploads, adminUploads } from "../../documents";
 import ReceivedDocumentsTable from "../common/ReceivedDocumentsTable";
 
 class OrderDetails extends React.Component {
@@ -19,15 +19,18 @@ class OrderDetails extends React.Component {
         this.state = {
             backgroundImage: require("../../images/content-management/17.jpg"),
             currentOrder: this.props.order,
-            documentsToSubmit: [],
-            displayDocuments: [],
-            userUploads: clientUploads,
-            adminUploads: cojUploads
+            displaySentDocuments: [],
+            displayReceivedDocuments: [],
+            userUploads: {
+                sendDocs: userUploads, //what he is sending
+                receivedDocs: adminUploads //what he receives
+            },
+            adminUploads: {
+                sendDocs: userUploads, //what he is sending
+                receivedDocs: adminUploads //what he receives
+            }
         }
         this.confirmOrder = this.confirmOrder.bind(this);
-        this.handlesubmitDocuments = this.handlesubmitDocuments.bind(this);
-        this.submitDocuments = this.submitDocuments.bind(this);
-        this.resetChildrenStates = this.resetChildrenStates.bind(this);
         this.goBack = this.goBack.bind(this);
         this.loadDocumentTables = this.loadDocumentTables.bind(this);
 
@@ -37,12 +40,18 @@ class OrderDetails extends React.Component {
         this.loadDocumentTables();
     }
 
-    loadDocumentTables() {
-        let d = this.props.user.role === "User" ? this.state.userUploads : this.state.adminUploads;
-        documentHandler(d, this.state.currentOrder)
-            .then((res) => {
-                this.setState({ displayDocuments: res });
-            })
+    async loadDocumentTables() {
+        //if admin, set your sent and received. if user, set their sent and received
+        let received_source = this.props.user.role === "User" ? this.state.userUploads.sendDocs : this.state.adminUploads.sendDocs;
+        let sent_source = this.props.user.role === "User" ? this.state.userUploads.receivedDocs : this.state.adminUploads.receivedDocs;
+
+        let received = await documentHandler(received_source, this.state.currentOrder);
+        let sent = await documentHandler(sent_source, this.state.currentOrder)
+        
+        this.setState({ 
+            displaySentDocuments: sent ,
+            displayReceivedDocuments: received
+        });
     }
 
     confirmOrder() {
@@ -64,8 +73,14 @@ class OrderDetails extends React.Component {
         this.setState({
             documentsToSubmit: [],
             displayDocuments: [],
-            userUploads: clientUploads,
-            adminUploads: cojUploads
+            userUploads: {
+                sendDocs: [], //what he is sending
+                receivedDocs: [] //what he receives
+            },
+            adminUploads: {
+                sendDocs: [], //what he is sending
+                receivedDocs: [] //what he receives
+            }
         })
     }
 
@@ -141,11 +156,11 @@ class OrderDetails extends React.Component {
                                 <h6 className="m-0">Progress</h6>
                             </CardHeader>
                             <CardBody>
-                                <Steps current={3} style={{ marginTop: 40 }}>
-                                    <Step title="Start" description="Samples dipatched" />
-                                    <Step title="Second" description="Documents with Cup of Joe" />
-                                    <Step title="Third" description="Documents on client server" />
-                                    <Step title="Fourth" description="Tea enroute" />
+                                <Steps current={2} style={{ marginTop: 10 }}>
+                                    <Step title="Start" description="Order placed" />
+                                    <Step title="Second" description="Order confirmed awaiting customer to upload documents" />
+                                    <Step title="Third" description="Documents uploaded by customer awaiting shipping of cargo" />
+                                    <Step title="Fourth" description="Cargo shipped. ETA: 3 months" />
                                 </Steps>
                             </CardBody>
                         </Card>
@@ -153,19 +168,21 @@ class OrderDetails extends React.Component {
                         <Card small className="mb-4">
                             <Tabs>
                                 <TabList>
-                                    <Tab>Sent documents</Tab>
-                                    <Tab>Received documents</Tab>
+                                    <Tab>Sent documents (files to send to user)</Tab>
+                                    <Tab>Received documents(files you have received from user)</Tab>
                                 </TabList>
 
                                 <TabPanel>
                                     <SentDocumentsTable
                                         currentOrder={order}
-                                        displayDocuments={this.state.displayDocuments}
+                                        displayDocuments={this.state.displaySentDocuments}
                                         currentOrder={currentOrder}
                                     />
                                 </TabPanel>
                                 <TabPanel>
-                                    <ReceivedDocumentsTable />
+                                    <ReceivedDocumentsTable 
+                                    currentOrder={currentOrder}
+                                    displayDocuments={this.state.displayReceivedDocuments} />
                                 </TabPanel>
                             </Tabs>
                         </Card>

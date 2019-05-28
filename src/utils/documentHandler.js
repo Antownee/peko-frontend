@@ -13,7 +13,7 @@ function dochandler(docs, currentOrder) {
                 currentOrder.documents.map((odoc) => {
                     const code = odoc.documentCode;
 
-                    let updateddoc = nudoc.find((d) => { return d.abbrev === code })
+                    let updateddoc = nudoc.find((d) => { return d.documentCode === code })
                     if (updateddoc) {
                         updateddoc.submitted = true;
                         updateddoc.fileName = odoc.fileName;
@@ -24,3 +24,4 @@ function dochandler(docs, currentOrder) {
         }
     })
 }
+

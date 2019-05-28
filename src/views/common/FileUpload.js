@@ -37,10 +37,10 @@ class FileUpload extends React.Component {
     }
 
     render() {
-        const {document, currentOrder} = this.props;
+        const { document, currentOrder } = this.props;
         return (
-            <div className="custom-file">
-                <FilePond
+            <div className="custom-file" width={100}>
+                <FilePond 
                     server={
                         process = {
                             url: 'http://localhost:4895/admin/order/documents',
@@ -51,12 +51,14 @@ class FileUpload extends React.Component {
                     allowReplace={true}
                     labelIdle='<span class="filepond--label-action"> Upload file </span>'
                     fileRenameFunction={(file) => {
-                        return `${currentOrder.orderRequestID}_${document.abbrev}${file.extension}`;
+                        return `${currentOrder.orderRequestID}_${document.documentCode}${file.extension}`;
                     }
                     }
                     onupdatefiles={(files) => {
-                        files[0].setMetadata("documentCode", document.abbrev)
-                        files[0].setMetadata("orderID", currentOrder.orderRequestID)
+                        if (files.length > 0) {
+                            files[0].setMetadata("documentCode", document.documentCode)
+                            files[0].setMetadata("orderID", currentOrder.orderRequestID)
+                        }
                     }
                     }
                 >
