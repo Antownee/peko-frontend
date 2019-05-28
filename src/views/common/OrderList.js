@@ -1,11 +1,10 @@
 import React from "react";
-import OrderSearchTable from '../common/OrderSearchTable';
-import OrderDetails from "../common/OrderDetails"
+import OrderSearchTable from './OrderSearchTable';
+import OrderDetails from "./OrderDetails"
 import { Container } from "shards-react";
 import { connect } from "react-redux";
 
-
-class UserOrderList extends React.Component {
+class OrderList extends React.Component {
   constructor(props) {
     super(props);
 
@@ -17,7 +16,6 @@ class UserOrderList extends React.Component {
       isSearch: false,
       orders: [],
       selectedOrder: {}
-
     }
   }
 
@@ -36,10 +34,12 @@ class UserOrderList extends React.Component {
   }
 
   render() {
-    return (
+    return (      
       <Container fluid className="main-content-container">
         {
-          this.state.isSearch ? <OrderSearchTable handleSearchState={this.handleSearchState} /> : <OrderDetails order={this.state.selectedOrder} />
+          this.state.isSearch ? 
+          <OrderSearchTable handleSearchState={this.handleSearchState} /> : 
+          <OrderDetails order={this.state.selectedOrder} handleSearchState={this.handleSearchState}/>
         }
       </Container>
 
@@ -47,11 +47,11 @@ class UserOrderList extends React.Component {
   }
 }
 
+
 const mapStateToProps = state => {
   const { user } = state.authentication;
-  return {
-    user: user.data
-  };
+  const { isLoading } = state.loadState;
+  return { user: user.data, isLoading };
 }
 
-export default connect(mapStateToProps)(UserOrderList);
+export default connect(mapStateToProps)(OrderList);

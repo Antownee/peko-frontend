@@ -9,7 +9,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
 import SentDocumentsTable from "../common/SentDocumentsTable";
-import { history } from '../../redux/helpers';
+import { documentHandler } from '../../utils/documentHandler';
+import { clientUploads, cojUploads } from "../../documents";
 import ReceivedDocumentsTable from "../common/ReceivedDocumentsTable";
 
 class OrderDetails extends React.Component {
@@ -18,18 +19,31 @@ class OrderDetails extends React.Component {
         this.state = {
             backgroundImage: require("../../images/content-management/17.jpg"),
             currentOrder: this.props.order,
-            documentsToSubmit: []
+            documentsToSubmit: [],
+            displayDocuments: [],
+            userUploads: clientUploads,
+            adminUploads: cojUploads
         }
         this.confirmOrder = this.confirmOrder.bind(this);
         this.handlesubmitDocuments = this.handlesubmitDocuments.bind(this);
         this.submitDocuments = this.submitDocuments.bind(this);
-        this.resetUploadFileComponent = this.resetUploadFileComponent.bind(this);
+        this.resetChildrenStates = this.resetChildrenStates.bind(this);
         this.goBack = this.goBack.bind(this);
+        this.loadDocumentTables = this.loadDocumentTables.bind(this);
 
-        //Creating a FileUpload ref to trigger the resetState function
-        this.fileUploadClearState = React.createRef();
     }
 
+    componentDidMount() {
+        this.loadDocumentTables();
+    }
+
+    loadDocumentTables() {
+        let d = this.props.user.role === "User" ? this.state.userUploads : this.state.adminUploads;
+        documentHandler(d, this.state.currentOrder)
+            .then((res) => {
+                this.setState({ displayDocuments: res });
+            })
+    }
 
     confirmOrder() {
         orderService.confirmOrder(this.state.currentOrder)
@@ -44,45 +58,15 @@ class OrderDetails extends React.Component {
             })
     }
 
-    handlesubmitDocuments(document, id) {
-        //This function receives the files from the FileUpload component
-        this.setState(state => {
-            const documentsToSubmit = state.documentsToSubmit.concat({ document, id });
-            return {
-                documentsToSubmit
-            }
-        })
-    }
-
-    resetUploadFileComponent() {
-        //This function is called to reset the FileUpload component state to enable re-upload
-        this.fileUploadClearState.current.resetState();
-    }
-
-    submitDocuments() {
-        const docs = this.state.documentsToSubmit
-        if (docs.length > 0) {
-            orderService.uploadDocuments(this.state.documentsToSubmit, this.state.currentOrder.orderRequestID)
-                .then((res) => {
-                    //Successful document upload
-                    toast.success(res.msg);
-
-                    //reset document upload component state
-                    this.resetUploadFileComponent();
-                    return this.setState({ documentsToSubmit: [] });
-                })
-                .catch((e) => {
-                    return toast.error("Try again later");
-                })
-        } else {
-            return toast.error("First select a document");
-        }
-
-    }
-
-    goBack(){
+    goBack() {
         //Change state
-        this.props.handleSearchState(false)
+        this.props.handleSearchState(false);
+        this.setState({
+            documentsToSubmit: [],
+            displayDocuments: [],
+            userUploads: clientUploads,
+            adminUploads: cojUploads
+        })
     }
 
     render() {
@@ -97,7 +81,6 @@ class OrderDetails extends React.Component {
                 <Row noGutters className="page-header py-4">
                     <PageTitle sm="4" title="Order status" subtitle="Order Status" className="text-sm-left" />
                 </Row>
-
 
                 {/* Confirmed tab */}
                 {
@@ -128,7 +111,6 @@ class OrderDetails extends React.Component {
                         ""
                 }
 
-
                 <Row>
                     <Col>
                         <CardBody>
@@ -138,7 +120,6 @@ class OrderDetails extends React.Component {
                                         className="card-post__image"
                                         style={{ backgroundImage: `url(${this.state.backgroundImage})` }}
                                     >
-
                                     </div>
                                     <CardBody>
                                         <h5 className="card-title">
@@ -146,7 +127,6 @@ class OrderDetails extends React.Component {
                                                 {order.orderRequestID}
                                             </a>
                                         </h5>
-
                                         <p className="card-text d-inline-block mb-3">{order.teaID}</p><br />
                                         <p className="card-text d-inline-block mb-3">{order.notes}</p><br />
                                         <span className="text-muted">{format(order.requestDate, 'd-MMM-YYYY')}</span>
@@ -154,7 +134,6 @@ class OrderDetails extends React.Component {
                                 </Card>
                             </Col>
                         </CardBody>
-
 
 
                         <Card small className="mb-4">
@@ -172,38 +151,24 @@ class OrderDetails extends React.Component {
                         </Card>
 
                         <Card small className="mb-4">
-                            {
-                                true ?
-                                    <Tabs>
-                                        <TabList>
-                                            <Tab>Sent documents</Tab>
-                                            <Tab>Received documents</Tab>
-                                        </TabList>
+                            <Tabs>
+                                <TabList>
+                                    <Tab>Sent documents</Tab>
+                                    <Tab>Received documents</Tab>
+                                </TabList>
 
-                                        <TabPanel>
-                                            <SentDocumentsTable
-                                                handlesubmitDocuments={this.handlesubmitDocuments}
-                                                fileUploadClearState={this.fileUploadClearState}
-                                                currentOrder={order}
-                                            />
-                                            <Button onClick={this.submitDocuments} className="m-3">Submit documents</Button>
-                                        </TabPanel>
-                                        <TabPanel>
-                                            <ReceivedDocumentsTable />
-                                        </TabPanel>
-                                    </Tabs> :
-                                    <CardBody>
-                                        <h6 className="card-title">
-                                            <i className="material-icons">search</i>
-                                            <a className="text-fiord-blue" href="#">
-                                                You cannot view any documents yet because the order is yet to be confirmed.
-                                            </a>
-                                        </h6>
-                                    </CardBody>
-                            }
-
+                                <TabPanel>
+                                    <SentDocumentsTable
+                                        currentOrder={order}
+                                        displayDocuments={this.state.displayDocuments}
+                                        currentOrder={currentOrder}
+                                    />
+                                </TabPanel>
+                                <TabPanel>
+                                    <ReceivedDocumentsTable />
+                                </TabPanel>
+                            </Tabs>
                         </Card>
-
                     </Col>
                 </Row>
             </Container>

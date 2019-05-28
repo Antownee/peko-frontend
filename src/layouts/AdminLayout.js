@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Container, Row, Col } from "shards-react";
 import { connect } from 'react-redux';
 import MainNavbar from "../components/layout/MainNavbar/MainNavbar";
@@ -19,7 +18,7 @@ export class AdminLayout extends React.Component {
   }
 
   render() {
-    const { children, isLoading } = this.props;
+    const { children } = this.props;
     const { noNavbar, noFooter } = this.state;
     return (
       <Container fluid>
@@ -32,13 +31,9 @@ export class AdminLayout extends React.Component {
             sm="12"
             tag="main"
           >
-            {
-                <div>
-                  {!noNavbar && <MainNavbar />}
-                  {children}
-                  {!noFooter && <MainFooter />}
-                </div>
-            }
+            {!noNavbar && <MainNavbar />}
+            {children}
+            {!noFooter && <MainFooter />}
           </Col>
         </Row>
       </Container>

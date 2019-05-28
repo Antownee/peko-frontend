@@ -13,10 +13,10 @@ import ComponentsOverview from "./views/ComponentsOverview";
 import Tables from "./views/Tables";
 import BlogPosts from "./views/BlogPosts";
 import UserPlaceOrder from "./views/user/UserPlaceOrder";
-import UserOrderList from './views/user/UserOrderList';
-import AdminOrderList from "./views/admin/AdminOrderList";
 import AdminAddAssets from "./views/admin/AdminAddAssets";
 import Dashboard from "./views/common/Dashboard";
+import OrderList from "./views/common/OrderList";
+
 
 const routes = [
   {
@@ -70,7 +70,7 @@ const routes = [
     path: "/user/order-status",
     exact: true,
     layout: UserLayout,
-    component: UserOrderList
+    component: OrderList
   },
   {
     path: "/user/dashboard",
@@ -88,7 +88,7 @@ const routes = [
     path: "/admin/orders",
     exact: true,
     layout: AdminLayout,
-    component: AdminOrderList
+    component: OrderList
   },
   {
     path: "/admin/assets",

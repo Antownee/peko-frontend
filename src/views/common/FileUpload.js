@@ -1,6 +1,12 @@
 import React from "react";
 import { Button } from "shards-react";
+import { FilePond, registerPlugin } from 'react-filepond';
+import 'filepond/dist/filepond.min.css';
+import FilePondPluginFileRename from 'filepond-plugin-file-rename';
+import { authHeader } from '../../redux/helpers';
 
+
+registerPlugin(FilePondPluginFileRename); //Register plugin
 
 class FileUpload extends React.Component {
     constructor(props) {
@@ -24,22 +30,37 @@ class FileUpload extends React.Component {
     }
 
     resetState() {
-        console.log("Cleared file upload state")
         this.setState({
             documentsToSubmit: [],
             labelText: "Choose file..."
-        })
+        });
     }
 
     render() {
-        const document = this.props.document;
+        const {document, currentOrder} = this.props;
         return (
             <div className="custom-file">
-                <input type="file" className="custom-file-input" id={document.abbrev} onChange={this.submitDocuments} />
-                <label className="custom-file-label" htmlFor="customFile2">
-                    {this.state.labelText}
-                </label>
-                {/* <Button onClick={this.resetState} className="m-3">reset</Button> */}
+                <FilePond
+                    server={
+                        process = {
+                            url: 'http://localhost:4895/admin/order/documents',
+                            headers: { ...authHeader() },
+                        }
+                    }
+                    allowDrop={false}
+                    allowReplace={true}
+                    labelIdle='<span class="filepond--label-action"> Upload file </span>'
+                    fileRenameFunction={(file) => {
+                        return `${currentOrder.orderRequestID}_${document.abbrev}${file.extension}`;
+                    }
+                    }
+                    onupdatefiles={(files) => {
+                        files[0].setMetadata("documentCode", document.abbrev)
+                        files[0].setMetadata("orderID", currentOrder.orderRequestID)
+                    }
+                    }
+                >
+                </FilePond>
             </div>
         )
     }
