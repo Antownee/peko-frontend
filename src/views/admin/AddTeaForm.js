@@ -18,10 +18,11 @@ const AddTeaForm = () => (
         teaName: Yup.string().required('Cannot be empty'),
         teaDescription: Yup.string().required('Cannot be empty'),
       })}
-      onSubmit={({ teaName, teaDescription }, { setStatus, setSubmitting }) => {
+      onSubmit={({ teaName, teaDescription }, { setStatus, setSubmitting, resetForm }) => {
         setStatus();
         orderService.addTeaAssets({teaName, teaDescription})
           .then((res) => {
+            resetForm();
             setSubmitting(false);
             toast.success(res);
           })

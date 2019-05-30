@@ -34,39 +34,18 @@ class UserPlaceOrder extends React.Component {
       userID: '',
       selectedTeaItem: {},
       submitted: false,
-      teaList: [
-        {
-          backgroundImage: require("../../images/content-management/17.jpg"),
-          title: "Black Tea",
-          body:
-            "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
-          teaID: "COJ-CHAI-002",
-        },
-        {
-          backgroundImage: require("../../images/content-management/17.jpg"),
-          title: "Green Tea",
-          body:
-            "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
-          teaID: "COJ-CHAI-003",
-        },
-        {
-          backgroundImage: require("../../images/content-management/17.jpg"),
-          title: "Yellow Tea",
-          body:
-            "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
-          teaID: "COJ-CHAI-004",
-        },
-        {
-          backgroundImage: require("../../images/content-management/17.jpg"),
-          title: "White Tea",
-          body:
-            "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
-          teaID: "COJ-CHAI-005",
-        }
-      ],
+      teaList: [],
     }
+  }
 
+  componentDidMount() {
+    orderService.getTeaAssets()
+      .then((res) => {
+        this.setState({ teaList: res });
+      })
+      .catch((e) => {
 
+      })
   }
 
   teaListItemClickable(index) {
@@ -143,7 +122,7 @@ class UserPlaceOrder extends React.Component {
                   <Card small className="card-post card-post--1">
                     <div
                       className="card-post__image"
-                      style={{ backgroundImage: `url(${tea.backgroundImage})` }} 
+                      style={{ backgroundImage: `url(${require("../../images/content-management/17.jpg")})` }}
                     >
                       {
                         this.state.selectedTeaItem.teaID === tea.teaID ?
@@ -153,10 +132,11 @@ class UserPlaceOrder extends React.Component {
                     <CardBody>
                       <h5 className="card-title">
                         <a href="#" className="text-fiord-blue">
-                          {tea.title}
+                          {tea.teaName}
                         </a>
                       </h5>
-                      <p className="card-text d-inline-block mb-3">{tea.body}</p>
+                      <p className="card-text d-inline-block mb-3">{tea.teaDescription}</p>
+                      <br/>
                       <span className="text-muted">{tea.teaID}</span>
                     </CardBody>
                   </Card>

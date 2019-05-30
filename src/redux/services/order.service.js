@@ -8,7 +8,8 @@ export const orderService = {
     uploadDocuments,
     addTeaAssets,
     addEmailAssets,
-    populateDashboard
+    populateDashboard,
+    getTeaAssets
 };
 
 
@@ -84,6 +85,15 @@ function addTeaAssets(tea) {
     return fetch(`${config.apiUrl}/admin/asset/tea`, requestOptions)
         .then(handleResponse)
         .then(msg => { return msg })
+}
+
+function getTeaAssets() {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    };
+
+    return fetch(`${config.apiUrl}/admin/asset/all-tea`, requestOptions).then(handleResponse);
 }
 
 function addEmailAssets(email) {

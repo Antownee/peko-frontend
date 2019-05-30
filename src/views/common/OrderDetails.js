@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Row, Col, Card, CardHeader, CardBody, Button } from "shards-react";
 import { connect } from "react-redux";
 import Steps, { Step } from "rc-steps"
-import { format } from 'date-fns';
+import { format, parse } from 'date-fns';
 import PageTitle from "../../components/common/PageTitle";
 import { orderService } from "../../redux/services/order.service";
 import { ToastContainer, toast } from 'react-toastify';
@@ -141,8 +141,8 @@ class OrderDetails extends React.Component {
                                         </h5>
                                         <p className="card-text d-inline-block mb-3">{order.teaID}</p><br />
                                         <p className="card-text d-inline-block mb-3">{order.notes}</p><br />
-                                        <span className="text-muted">{format(order.requestDate, 'd-MMM-YYYY')}</span>
-                                        <div>
+                                        <span className="text-muted">{format(order.requestDate, 'MMMM Do, YYYY')}</span>
+                                        <div className="mt-4">
                                             {
                                                 currentOrder.confirmed ?
                                                     <Button className="mt-8" pill onClick={this.getDocument}>Download order confirmation</Button> : ""

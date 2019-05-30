@@ -30,7 +30,7 @@ const DashboardOrderTable = ({ recentOrders }) => (
                   <tr>
                     <td>{idx + 1}</td>
                     <td>{ord.orderRequestID}</td>
-                    <td>{format(ord.requestDate, 'd-MMM-YYYY')}</td>
+                    <td>{format(ord.requestDate, 'MMMM Do, YYYY')}</td>
                     <td>{ord.amount.toLocaleString()}</td>
                   </tr>
                 )

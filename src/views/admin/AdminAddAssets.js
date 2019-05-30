@@ -32,7 +32,7 @@ class AdminOrderDetails extends React.Component {
                             <CardHeader className="border-bottom">
                                 <h6 className="m-0">Tea types</h6>
                             </CardHeader>
-                            <AddTeaForm  />
+                            <AddTeaForm />
                         </Card>
                     </Col>
                     <Col lg="6">

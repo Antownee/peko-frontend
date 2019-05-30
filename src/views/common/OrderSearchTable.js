@@ -8,7 +8,6 @@ import PageTitle from "../../components/common/PageTitle";
 import { orderService } from "../../redux/services/order.service";
 import Loading from "../common/Loading";
 import { loadingActions } from "../../redux/actions"
-
 const { SearchBar } = Search;
 
 var selectRow;
@@ -58,7 +57,7 @@ class OrderSearchTable extends React.Component {
 
     dateFormatter(cell, row) {
         if (row.requestDate) {
-            return format(row.requestDate, 'd-MMM-YYYY')
+            return format(row.requestDate, 'MMMM Do, YYYY')
         }
     }
 
