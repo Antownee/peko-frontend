@@ -12,11 +12,11 @@ export const orderService = {
 };
 
 
-function addOrder(order) {
+function addOrder(order, user) {
     const requestOptions = {
         method: 'POST',
         headers: { ...authHeader(), 'Content-Type': 'application/json' },
-        body: JSON.stringify(order)
+        body: JSON.stringify({ order, user })
     };
 
     return fetch(`${config.apiUrl}/users/order-request`, requestOptions)
@@ -45,11 +45,11 @@ function getAllOrders(user) {
 }
 
 
-function confirmOrder(order) {
+function confirmOrder(order, user) {
     const requestOptions = {
         method: 'POST',
         headers: { ...authHeader(), 'Content-Type': 'application/json' },
-        body: JSON.stringify(order)
+        body: JSON.stringify({ order, user })
     };
 
     return fetch(`${config.apiUrl}/admin/order/confirm`, requestOptions)

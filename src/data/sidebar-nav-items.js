@@ -15,11 +15,6 @@ export default function (role) {
         title: "Orders",
         htmlBefore: '<i class="material-icons">assignment</i>',
         to: "/user/order-status",
-      },
-      {
-        title: "Forms & Components",
-        htmlBefore: '<i class="material-icons">view_module</i>',
-        to: "/components-overview",
       }
     ];
   } else {

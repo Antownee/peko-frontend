@@ -95,7 +95,7 @@ class UserPlaceOrder extends React.Component {
       userID: user.userID
     }
     if (amount && description && teaID) {
-      orderService.addOrder(order)
+      orderService.addOrder(order, user)
         .then(
           msg => {
             toast.success(msg);

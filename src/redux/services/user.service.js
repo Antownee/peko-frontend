@@ -1,9 +1,5 @@
 import { authHeader } from '../helpers';
-import { BehaviorSubject } from 'rxjs';
-
-const config = {
-    apiUrl: 'http://localhost:4895'
-}
+import { config } from '../../config';
 
 export const userService = {
     login,

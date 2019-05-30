@@ -12,6 +12,8 @@ import SentDocumentsTable from "../common/SentDocumentsTable";
 import { documentHandler } from '../../utils/documentHandler';
 import { userUploads, adminUploads } from "../../documents";
 import ReceivedDocumentsTable from "../common/ReceivedDocumentsTable";
+import ReactPDF from "@react-pdf/renderer";
+import MyDocument from "./MyDocument"
 
 class OrderDetails extends React.Component {
     constructor(props) {
@@ -33,7 +35,7 @@ class OrderDetails extends React.Component {
         this.confirmOrder = this.confirmOrder.bind(this);
         this.goBack = this.goBack.bind(this);
         this.loadDocumentTables = this.loadDocumentTables.bind(this);
-
+        this.getDocument = this.getDocument.bind(this);
     }
 
     componentDidMount() {
@@ -47,15 +49,15 @@ class OrderDetails extends React.Component {
 
         let received = await documentHandler(received_source, this.state.currentOrder);
         let sent = await documentHandler(sent_source, this.state.currentOrder)
-        
-        this.setState({ 
-            displaySentDocuments: sent ,
-            displayReceivedDocuments: received
+
+        this.setState({
+            displaySentDocuments: this.props.user.role === "Admin" ? sent : received,
+            displayReceivedDocuments: this.props.user.role === "Admin" ? received : sent
         });
     }
 
     confirmOrder() {
-        orderService.confirmOrder(this.state.currentOrder)
+        orderService.confirmOrder(this.state.currentOrder, this.props.user)
             .then((res) => {
                 toast.success(res);
                 let order = Object.assign({}, this.state.currentOrder);
@@ -82,6 +84,9 @@ class OrderDetails extends React.Component {
                 receivedDocs: [] //what he receives
             }
         })
+    }
+
+    getDocument() {
     }
 
     render() {
@@ -113,17 +118,9 @@ class OrderDetails extends React.Component {
                                     onClick={this.confirmOrder}>Confirm order?
                                 </div>
                             </Col>
-                            <Col className="mb-4">
-                                <div
-                                    className="bg-danger text-white text-center rounded p-3"
-                                    style={{ boxShadow: "inset 0 0 5px rgba(0,0,0,.2)" }}
-                                    onClick={this.rejectOrder}> Reject order?
-                                </div>
-                            </Col>
                             <Col className="mb-4" />
                         </Row>)
-                        :
-                        ""
+                        : ""
                 }
 
                 <Row>
@@ -145,6 +142,12 @@ class OrderDetails extends React.Component {
                                         <p className="card-text d-inline-block mb-3">{order.teaID}</p><br />
                                         <p className="card-text d-inline-block mb-3">{order.notes}</p><br />
                                         <span className="text-muted">{format(order.requestDate, 'd-MMM-YYYY')}</span>
+                                        <div>
+                                            {
+                                                currentOrder.confirmed ?
+                                                    <Button className="mt-8" pill onClick={this.getDocument}>Download order confirmation</Button> : ""
+                                            }
+                                        </div>
                                     </CardBody>
                                 </Card>
                             </Col>
@@ -165,27 +168,32 @@ class OrderDetails extends React.Component {
                             </CardBody>
                         </Card>
 
-                        <Card small className="mb-4">
-                            <Tabs>
-                                <TabList>
-                                    <Tab>Sent documents (files to send to user)</Tab>
-                                    <Tab>Received documents(files you have received from user)</Tab>
-                                </TabList>
+                        {
+                            user.role === "User" && !currentOrder.confirmed ?
+                                <p>Kindly wait for your order to be confirmed to upload documents</p> :
+                                <Card small className="mb-4">
+                                    <Tabs>
+                                        <TabList>
+                                            <Tab>Sent documents</Tab>
+                                            <Tab>Received documents</Tab>
+                                        </TabList>
 
-                                <TabPanel>
-                                    <SentDocumentsTable
-                                        currentOrder={order}
-                                        displayDocuments={this.state.displaySentDocuments}
-                                        currentOrder={currentOrder}
-                                    />
-                                </TabPanel>
-                                <TabPanel>
-                                    <ReceivedDocumentsTable 
-                                    currentOrder={currentOrder}
-                                    displayDocuments={this.state.displayReceivedDocuments} />
-                                </TabPanel>
-                            </Tabs>
-                        </Card>
+                                        <TabPanel>
+                                            <SentDocumentsTable
+                                                currentOrder={order}
+                                                displayDocuments={this.state.displaySentDocuments}
+                                                currentOrder={currentOrder}
+                                            />
+                                        </TabPanel>
+                                        <TabPanel>
+                                            <ReceivedDocumentsTable
+                                                currentOrder={currentOrder}
+                                                displayDocuments={this.state.displayReceivedDocuments} />
+                                        </TabPanel>
+                                    </Tabs>
+                                </Card>
+                        }
+
                     </Col>
                 </Row>
             </Container>
