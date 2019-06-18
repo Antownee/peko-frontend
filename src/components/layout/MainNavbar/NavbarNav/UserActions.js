@@ -43,7 +43,7 @@ class UserActions extends React.Component {
         <DropdownToggle caret tag={NavLink} className="text-nowrap px-3">
           <img
             className="user-avatar rounded-circle mr-2"
-            src={require("./../../../../images/avatars/2.png")}
+            src={require("./../../../../images/coj/user.png")}
             alt="User Avatar"
           />{" "}
           <span className="d-none d-md-inline-block">{`${currentUser.firstName} ${currentUser.lastName}`}</span>

@@ -117,7 +117,7 @@ class UserPlaceOrder extends React.Component {
                   <Card small className="card-post card-post--1">
                     <div
                       className="card-post__image"
-                      style={{ backgroundImage: `url(${require("../../images/content-management/17.jpg")})` }}
+                      style={{ backgroundImage: `url(${require("../../images/coj/tea.jpg")})` }}
                     >
                       {
                         this.state.selectedTeaItem.teaID === tea.teaID ?
