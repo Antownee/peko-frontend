@@ -4,6 +4,7 @@ import { FilePond, registerPlugin } from 'react-filepond';
 import 'filepond/dist/filepond.min.css';
 import FilePondPluginFileRename from 'filepond-plugin-file-rename';
 import { authHeader } from '../../redux/helpers';
+import { config } from '../../config';
 
 
 registerPlugin(FilePondPluginFileRename); //Register plugin
@@ -43,7 +44,7 @@ class FileUpload extends React.Component {
                 <FilePond 
                     server={
                         process = {
-                            url: 'http://localhost:4895/admin/order/documents',
+                            url: `${config.apiUrl}/admin/order/documents`,
                             headers: { ...authHeader() },
                         }
                     }

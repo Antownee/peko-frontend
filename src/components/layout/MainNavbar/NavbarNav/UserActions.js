@@ -39,7 +39,6 @@ class UserActions extends React.Component {
   render() {
     const { currentUser } = this.props;
     return (
-
       <NavItem tag={Dropdown} caret toggle={this.toggleUserActions}>
         <DropdownToggle caret tag={NavLink} className="text-nowrap px-3">
           <img
@@ -65,8 +64,7 @@ class UserActions extends React.Component {
 
 function mapStateToProps(state) {
   const { user } = state.authentication;
-  return user ? { currentUser: user.data } : {};
-
+  return user ? { currentUser: user } : {};
 }
 
 export default connect(mapStateToProps)(UserActions);

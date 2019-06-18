@@ -20,10 +20,6 @@ class UserPlaceOrder extends React.Component {
   constructor(props) {
     super(props);
 
-    const { dispatch } = this.props;
-    console.log(dispatch);
-
-    //this.teaListItemClickable = this.teaListItemClickable.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 
@@ -116,8 +112,7 @@ class UserPlaceOrder extends React.Component {
           </Row>
           <Row>
             {this.state.teaList.map((tea, idx) => (
-              <Col lg="3" md="6" sm="12" className="mb-4" key={idx}>
-
+              <Col lg="2" md="4" sm="6" className="mb-2" key={idx}>
                 <a style={{ cursor: 'pointer' }} onClick={this.teaListItemClickable.bind(this, idx)}>
                   <Card small className="card-post card-post--1">
                     <div
@@ -136,8 +131,7 @@ class UserPlaceOrder extends React.Component {
                         </a>
                       </h5>
                       <p className="card-text d-inline-block mb-3">{tea.teaDescription}</p>
-                      <br/>
-                      <span className="text-muted">{tea.teaID}</span>
+                      {/* <span className="text-muted">{tea.teaID}</span> */}
                     </CardBody>
                   </Card>
                 </a>
@@ -164,9 +158,7 @@ class UserPlaceOrder extends React.Component {
 
 function mapStateToProps(state) {
   const { user } = state.authentication;
-  return {
-    user: user.data
-  };
+  return {user};
 }
 
 

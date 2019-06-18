@@ -19,7 +19,7 @@ function login(username, password) {
             .then(
                 user => {
                     dispatch(success(user));
-                    if (user.data.role == "User") {
+                    if (user.role == "User") {
                         return history.push('/user/dashboard');
                     }
                     return history.push('/admin/dashboard');
@@ -49,9 +49,10 @@ function register(user) {
             .then(
                 user => {
                     dispatch(alertActions.success('Registration successful'));
-                    dispatch(success(user));
+                    dispatch(success(user)); //dispatch successful registration
+                    dispatch(successLogin(user))//dispatch successful logging in as well
 
-                    if (user.data.role == "User") {
+                    if (user.role == "User") {
                         return history.push('/user/dashboard');
                     }
                     return history.push('/admin/dashboard');
@@ -65,6 +66,7 @@ function register(user) {
 
     function request(user) { return { type: userConstants.REGISTER_REQUEST, user } }
     function success(user) { return { type: userConstants.REGISTER_SUCCESS, user } }
+    function successLogin(user) { return { type: userConstants.LOGIN_SUCCESS, user } }
     function failure(error) { return { type: userConstants.REGISTER_FAILURE, error } }
 }
 

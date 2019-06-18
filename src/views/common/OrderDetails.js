@@ -204,9 +204,7 @@ class OrderDetails extends React.Component {
 
 const mapStateToProps = state => {
     const { user } = state.authentication;
-    return {
-        user: user.data
-    };
+    return {user}
 }
 
 export default connect(mapStateToProps)(OrderDetails);

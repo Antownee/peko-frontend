@@ -103,7 +103,7 @@ class Dashboard extends React.Component {
 const mapStateToProps = state => {
   const { user } = state.authentication;
   const { isLoading } = state.loadState;
-  return { user: user.data, isLoading };
+  return { user, isLoading };
 }
 
 export default connect(mapStateToProps)(Dashboard);

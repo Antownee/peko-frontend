@@ -9,7 +9,7 @@ class SidebarNavItems extends React.Component {
   constructor(props) {
     super(props)
 
-    const currentUser = this.props.currentUser;
+    const {currentUser} = this.props;
     const navbarItems = getSidebarNavItems(currentUser.role);
 
     this.state = {
@@ -34,7 +34,7 @@ class SidebarNavItems extends React.Component {
 
 function mapStateToProps(state) {
   const { user } = state.authentication;
-  return user ? { currentUser: user.data } : {};
+  return user ? { currentUser: user } : {};
 }
 
 export default connect(mapStateToProps)(SidebarNavItems);

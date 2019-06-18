@@ -46,7 +46,7 @@ function mapStateToProps(state) {
   const { user } = state.authentication;
   const { isLoading } = state.loadState
 
-  return user ? { currentUser: user.data, isLoading } : {};
+  return user ? { currentUser: user, isLoading } : {};
 
 }
 
