@@ -18,17 +18,14 @@ export default class DashboardGraph extends React.Component {
           <VictoryChart
             height={300}
             width={900}
-            scale={{ x: "month" }}
+            // scale={{ x: "month" }}
             theme={VictoryTheme.material}
           >
             <VictoryAxis
               tickValues={[1, 2, 3, 4, 5]}
             />
             <VictoryAxis
-              dependentAxis
-            // tickFormat specifies how ticks should be displayed
-            // tickFormat={(x) => (`$${x / 1000}k`)}
-            />
+              dependentAxis />
             <VictoryLine
               style={{
                 data: { stroke: "#00b8d8" },

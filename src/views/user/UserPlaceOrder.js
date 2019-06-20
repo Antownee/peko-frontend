@@ -13,7 +13,7 @@ import {
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PageTitle from "../../components/common/PageTitle";
-import OrderInputDetails from "../OrderInputDetails";
+import OrderInputDetails from "./OrderInputDetails";
 import { orderService } from '../../redux/services/order.service';
 
 class UserPlaceOrder extends React.Component {
@@ -144,8 +144,7 @@ class UserPlaceOrder extends React.Component {
               <OrderInputDetails
                 handleChange={this.handleChange}
                 amount={amount}
-                description={description}
-                submitted={this.state.submitted} />
+                description={description} />
             </Col>
           </Row>
           <Button theme="accent" type="submit">Place Order</Button>
@@ -158,7 +157,7 @@ class UserPlaceOrder extends React.Component {
 
 function mapStateToProps(state) {
   const { user } = state.authentication;
-  return {user};
+  return { user };
 }
 
 

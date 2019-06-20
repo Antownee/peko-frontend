@@ -19,7 +19,7 @@ function login(username, password) {
             .then(
                 user => {
                     dispatch(success(user));
-                    if (user.role == "User") {
+                    if (user.role === "User") {
                         return history.push('/user/dashboard');
                     }
                     return history.push('/admin/dashboard');
@@ -52,7 +52,7 @@ function register(user) {
                     dispatch(success(user)); //dispatch successful registration
                     dispatch(successLogin(user))//dispatch successful logging in as well
 
-                    if (user.role == "User") {
+                    if (user.role === "User") {
                         return history.push('/user/dashboard');
                     }
                     return history.push('/admin/dashboard');

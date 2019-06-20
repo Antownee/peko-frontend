@@ -1,6 +1,6 @@
 import React from "react";
 import { Router, Route } from "react-router-dom";
-import { PrivateRoute } from "./views/PrivateRoute";
+import { PrivateRoute } from "./views/common/PrivateRoute";
 import { history } from './redux/helpers/history'
 import LoginPage from './views/common/LoginPage';
 import RegisterPage from "./views/common/RegisterPage";

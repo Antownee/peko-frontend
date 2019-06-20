@@ -27,7 +27,7 @@ const DashboardOrderTable = ({ recentOrders }) => (
             {
               recentOrders.map((ord, idx) =>
                 (
-                  <tr>
+                  <tr key={idx}>
                     <td>{idx + 1}</td>
                     <td>{ord.orderRequestID}</td>
                     <td>{format(ord.requestDate, 'MMMM Do, YYYY')}</td>

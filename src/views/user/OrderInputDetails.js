@@ -6,11 +6,7 @@ import {
   ListGroupItem,
   Row,
   Col,
-  Form,
-  FormFeedback,
   FormTextarea,
-  Button,
-  InputGroup,
   FormInput
 } from "shards-react";
 
@@ -21,7 +17,7 @@ class OrderInputDetails extends React.Component {
   }
 
   render() {
-    const { handleChange, amount, description, handleSubmit, submitted } = this.props;
+    const { handleChange, amount, description } = this.props;
 
     return (
       <Card small className="mb-4">
