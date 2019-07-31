@@ -77,9 +77,11 @@ class UserPlaceOrder extends React.Component {
             this.clearState();
           },
           error => {
-            toast.error(error.message);
+            toast.error(error);
           }
         );
+    } else{
+      toast.error("Fill in all required fields before placing the order")
     }
   }
 
