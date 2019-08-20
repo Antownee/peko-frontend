@@ -159,7 +159,7 @@ class OrderDetails extends React.Component {
                                 <h6 className="m-0">Progress</h6>
                             </CardHeader>
                             <CardBody>
-                                <Steps current={2} style={{ marginTop: 10 }}>
+                                <Steps current={currentOrder.orderPosition} style={{ marginTop: 10 }}>
                                     <Step title="Start" description="Order placed" />
                                     <Step title="Second" description="Order confirmed awaiting customer to upload documents" />
                                     <Step title="Third" description="Documents uploaded by customer awaiting shipping of cargo" />
