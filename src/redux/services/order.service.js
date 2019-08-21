@@ -9,7 +9,8 @@ export const orderService = {
     addTeaAssets,
     addEmailAssets,
     populateDashboard,
-    getTeaAssets
+    getTeaAssets,
+    shipOrder
 };
 
 
@@ -54,6 +55,18 @@ function confirmOrder(order, user) {
     };
 
     return fetch(`${config.apiUrl}/admin/order/confirm`, requestOptions)
+        .then(handleResponse)
+        .then((msg) => { return msg })
+}
+
+function shipOrder(order, user) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { ...authHeader(), 'Content-Type': 'application/json' },
+        body: JSON.stringify({ order, user })
+    };
+
+    return fetch(`${config.apiUrl}/admin/order/ship`, requestOptions)
         .then(handleResponse)
         .then((msg) => { return msg })
 }

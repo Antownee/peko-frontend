@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row, Col, Card, CardHeader, CardBody, Button } from "shards-react";
+import { Container, Row, Col, Card, CardHeader, CardBody, Button, ButtonGroup, ButtonToolbar } from "shards-react";
 import { connect } from "react-redux";
 import Steps, { Step } from "rc-steps"
 import { format, parse } from 'date-fns';
@@ -30,12 +30,14 @@ class OrderDetails extends React.Component {
             adminUploads: {
                 sendDocs: userUploads, //what he is sending
                 receivedDocs: adminUploads //what he receives
-            }
+            },
+            stepNumber: 0
         }
         this.confirmOrder = this.confirmOrder.bind(this);
         this.goBack = this.goBack.bind(this);
         this.loadDocumentTables = this.loadDocumentTables.bind(this);
         this.getDocument = this.getDocument.bind(this);
+        this.shipOrder = this.shipOrder.bind(this);
     }
 
     componentDidMount() {
@@ -62,6 +64,20 @@ class OrderDetails extends React.Component {
                 toast.success(res);
                 let order = Object.assign({}, this.state.currentOrder);
                 order["confirmed"] = true;
+                order["orderPosition"] = 1;
+                return this.setState({ currentOrder: order });
+            })
+            .catch((e) => {
+                toast.error(e.message);
+            })
+    }
+
+    shipOrder() {
+        orderService.shipOrder(this.state.currentOrder, this.props.user)
+            .then((res) => {
+                toast.success(res);
+                let order = Object.assign({}, this.state.currentOrder);
+                order["orderShipped"] = true;
                 return this.setState({ currentOrder: order });
             })
             .catch((e) => {
@@ -97,31 +113,14 @@ class OrderDetails extends React.Component {
             <Container fluid className="main-content-container">
                 {/* Page Header */}
                 <ToastContainer />
+
                 <Button className="mt-4" pill onClick={this.goBack}>&larr; Go Back</Button>
                 <Row noGutters className="page-header py-4">
                     <PageTitle sm="4" title="Order status" subtitle="Order Status" className="text-sm-left" />
                 </Row>
 
                 {/* Confirmed tab */}
-                {
-                    currentOrder.confirmed ? <span className="badge badge-success">CONFIRMED</span> : ""
-                }
 
-                {
-                    user.role === "Admin" && !currentOrder.confirmed ?
-                        (<Row>
-                            <Col className="mb-4" />
-                            <Col className="mb-4">
-                                <div
-                                    className="bg-primary text-white text-center rounded p-3 "
-                                    style={{ boxShadow: "inset 0 0 5px rgba(0,0,0,.2)" }}
-                                    onClick={this.confirmOrder}>Confirm order?
-                                </div>
-                            </Col>
-                            <Col className="mb-4" />
-                        </Row>)
-                        : ""
-                }
 
                 <Row>
                     <Col>
@@ -143,9 +142,25 @@ class OrderDetails extends React.Component {
                                         <p className="card-text d-inline-block mb-3">{order.notes}</p><br />
                                         <span className="text-muted">{format(order.requestDate, 'MMMM Do, YYYY')}</span>
                                         <div className="mt-4">
-                                            {
-                                                currentOrder.confirmed ?
-                                                    <Button className="mt-8" pill onClick={this.getDocument}>Download order confirmation</Button> : ""
+                                            <br/>
+                                            {user.role === "Admin" ?
+                                                (<Row>
+                                                    <Col className="mb-4">
+                                                        <ButtonToolbar>
+                                                            <ButtonGroup>
+                                                                {!currentOrder.confirmed ? (
+                                                                    <Button className="m-2" size="sm" onClick={this.confirmOrder}>Confirm order?</Button>
+                                                                ) : <Button className="m-2" size="sm" theme="success">ORDER CONFIRMED</Button>}
+                                                                <br />
+                                                                {!currentOrder.orderShipped ? (
+                                                                    <Button className="m-2" size="sm" onClick={this.shipOrder}>Ship order?</Button>
+                                                                ) : <Button className="m-2" size="sm" theme="success">ORDER SHIPPED</Button>}
+                                                                <br />
+                                                            </ButtonGroup>
+                                                        </ButtonToolbar>
+                                                    </Col>
+                                                </Row>)
+                                                : ""
                                             }
                                         </div>
                                     </CardBody>
@@ -204,7 +219,7 @@ class OrderDetails extends React.Component {
 
 const mapStateToProps = state => {
     const { user } = state.authentication;
-    return {user}
+    return { user }
 }
 
 export default connect(mapStateToProps)(OrderDetails);
