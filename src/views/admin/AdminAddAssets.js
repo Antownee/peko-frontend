@@ -1,8 +1,8 @@
 import React from "react";
-import { Container, Row, Col, Card, CardHeader, CardBody, Button, ListGroup, ListGroupItem } from "shards-react";
+import { Container, Row, Col, Card, CardHeader} from "shards-react";
 import { connect } from "react-redux";
 import PageTitle from "../../components/common/PageTitle";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import "react-tabs/style/react-tabs.css";
 import AddTeaForm from "./AddTeaForm";
 import AddEmailsForm from "./AddEmailsForm";

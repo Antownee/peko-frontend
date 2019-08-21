@@ -1,13 +1,9 @@
 import React from 'react';
-import { userUploads, adminUploads } from "../../documents";
 import { connect } from "react-redux";
 import { config } from "../../config";
 
 
 class ReceivedDocumentsTable extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         let orderID = this.props.currentOrder.orderRequestID;

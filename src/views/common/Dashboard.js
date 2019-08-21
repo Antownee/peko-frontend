@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Container, Row, Col, Card, CardHeader, CardBody } from "shards-react";
+import { Container, Row, Col } from "shards-react";
 import { connect } from "react-redux";
 import PageTitle from "../../components/common/PageTitle";
 import SmallStats from "../../components/common/SmallStats";
@@ -45,7 +45,7 @@ class Dashboard extends React.Component {
 
       })
       .catch((e) => {
-        var f = e
+        
       })
   }
 

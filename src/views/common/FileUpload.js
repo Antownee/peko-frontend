@@ -1,5 +1,4 @@
 import React from "react";
-import { Button } from "shards-react";
 import { FilePond, registerPlugin } from 'react-filepond';
 import 'filepond/dist/filepond.min.css';
 import FilePondPluginFileRename from 'filepond-plugin-file-rename';
