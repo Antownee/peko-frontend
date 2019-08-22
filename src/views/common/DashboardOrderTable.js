@@ -6,21 +6,23 @@ import {
   CardBody,
   Col
 } from "shards-react";
+import { FormattedMessage } from 'react-intl';
+
 
 const DashboardOrderTable = ({ recentOrders }) => (
   <Col>
     <Card small className="mb-4">
       <CardHeader className="border-bottom">
-        <h6 className="m-0">Last 5 orders made</h6>
+        <h6 className="m-0"><FormattedMessage id="dashboard.lastfiveorders"/></h6>
       </CardHeader>
       <CardBody className="p-0 pb-3">
         <table className="table mb-0">
           <thead className="bg-light">
             <tr>
               <th scope="col" className="border-0"></th>
-              <th scope="col" className="border-0">Order ID</th>
-              <th scope="col" className="border-0">Date</th>
-              <th scope="col" className="border-0">Amount (kg)</th>
+              <th scope="col" className="border-0"><FormattedMessage id="dashboard.last5orders-orderid"/></th>
+              <th scope="col" className="border-0"><FormattedMessage id="dashboard.last5orders-date" /></th>
+              <th scope="col" className="border-0"><FormattedMessage id="dashboard.last5orders-amount" /></th>
             </tr>
           </thead>
           <tbody>

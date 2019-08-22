@@ -9,6 +9,7 @@ import DashboardOrderTable from "./DashboardOrderTable";
 import { loadingActions } from "../../redux/actions"
 import { orderService } from "../../redux/services/order.service";
 import Loading from "../common/Loading";
+import { injectIntl, defineMessages } from 'react-intl';
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -45,14 +46,18 @@ class Dashboard extends React.Component {
 
       })
       .catch((e) => {
-        
+
       })
   }
 
 
   render() {
     const { smallStats, recentOrders, historicalPrices } = this.state;
-    const { isLoading } = this.props;
+    const { isLoading, intl } = this.props;
+    const messages = defineMessages({
+      header: { id: "dashboard.header" }
+    })
+    
     return (
       <div>
         {
@@ -60,7 +65,7 @@ class Dashboard extends React.Component {
             <Container fluid className="main-content-container px-4">
               {/* Page Header */}
               <Row noGutters className="page-header py-4">
-                <PageTitle title="Dashboard" className="text-sm-left mb-3" />
+                <PageTitle title={intl.formatMessage(messages.header)} className="text-sm-left mb-3" />
               </Row>
 
               {/* Small Stats Blocks */}
@@ -106,7 +111,7 @@ const mapStateToProps = state => {
   return { user, isLoading };
 }
 
-export default connect(mapStateToProps)(Dashboard);
+export default injectIntl(connect(mapStateToProps)(Dashboard));
 
 
 Dashboard.propTypes = {

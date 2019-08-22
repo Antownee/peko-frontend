@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, CardHeader, CardBody } from "shards-react";
 import { VictoryLine, VictoryChart, VictoryAxis, VictoryTheme } from 'victory';
-import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 
 export default class DashboardGraph extends React.Component {
