@@ -1,6 +1,7 @@
 import React from "react";
 import FileUpload from "./FileUpload";
 import { connect } from "react-redux";
+import { format } from 'date-fns';
 
 
 class SentDocumentsTable extends React.Component {
@@ -32,7 +33,7 @@ class SentDocumentsTable extends React.Component {
                 <tbody>
                     {
                         displayDocuments ?
-                        displayDocuments.map((document, idx) => (
+                            displayDocuments.map((document, idx) => (
                                 <tr key={idx}>
                                     <td>{document.name}</td>
                                     <td>
@@ -42,7 +43,7 @@ class SentDocumentsTable extends React.Component {
                                                 <span className="badge badge-danger">NOT SUBMITTED</span>
                                         }
                                     </td>
-                                    <td>13/06/2018</td>
+                                    <td>{(document.dateAdded) ? format(document.dateAdded, 'DD/MM/YYYY') : "N/A"}</td>
                                     <td>
                                         <FileUpload
                                             document={document}
@@ -66,7 +67,7 @@ class SentDocumentsTable extends React.Component {
 
 const mapStateToProps = state => {
     const { user } = state.authentication;
-    return {user};
+    return { user };
 }
 
 export default connect(mapStateToProps)(SentDocumentsTable);

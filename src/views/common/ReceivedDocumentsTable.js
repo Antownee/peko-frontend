@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from "react-redux";
 import { config } from "../../config";
+import { format } from 'date-fns';
 
 
 class ReceivedDocumentsTable extends React.Component {
@@ -28,13 +29,13 @@ class ReceivedDocumentsTable extends React.Component {
                         displayDocuments.map((document, idx) => (
                             <tr>
                                 <td>{document.name}</td>
-                                <td>13/06/2018</td>
+                                <td>{(document.dateAdded) ? format(document.dateAdded, 'DD/MM/YYYY') : "N/A"}</td>
                                 <td>
                                     {
                                         document.submitted ?
                                             <a style={{ display: "table-cell" }}
                                                 href={`${config.apiUrl}/admin/order/file?orderID=${orderID}&documentCode=${document.documentCode}`}
-                                                target="_blank">Download
+                                                target="_blank" rel="noopener noreferrer" >Download
                                             </a>
                                             :
                                             <p>Not available</p>
@@ -53,7 +54,7 @@ class ReceivedDocumentsTable extends React.Component {
 
 const mapStateToProps = state => {
     const { user } = state.authentication;
-    return {user}
+    return { user }
 }
 
 export default connect(mapStateToProps)(ReceivedDocumentsTable);

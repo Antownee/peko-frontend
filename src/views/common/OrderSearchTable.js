@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row, Button, Card, CardHeader, CardBody } from "shards-react";
+import { Container, Row, Button, Card } from "shards-react";
 import { connect } from "react-redux";
 import BootstrapTable from 'react-bootstrap-table-next';
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';

@@ -17,6 +17,7 @@ function dochandler(docs, currentOrder) {
                     if (updateddoc) {
                         updateddoc.submitted = true;
                         updateddoc.fileName = odoc.fileName;
+                        updateddoc.dateAdded = odoc.dateAdded;
                     }
                 })
             })

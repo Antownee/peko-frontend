@@ -1,18 +1,23 @@
 import React from "react";
-import { Card, CardHeader, CardBody, Col } from "shards-react";
-import { VictoryLine, VictoryChart, VictoryAxis, VictoryTheme, VictoryArea } from 'victory';
+import { Card, CardHeader, CardBody } from "shards-react";
+import { VictoryLine, VictoryChart, VictoryAxis, VictoryTheme } from 'victory';
+import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
+
 
 export default class DashboardGraph extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { historicalPrices } = this.props;
     return (
       <Card small >
         <CardHeader className="border-bottom">
-          <h6 className="m-0">Price of tea over the past 5 months</h6>
+          <h6 className="m-0">
+            <FormattedMessage
+              id="dashboard.graphheader"
+              defaultMessage="Price of tea over the past 5 months"
+              description="Dashboard graph header"
+            />
+          </h6>
+
         </CardHeader>
         <CardBody className="pt-0">
           <VictoryChart

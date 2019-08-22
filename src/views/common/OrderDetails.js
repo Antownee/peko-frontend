@@ -12,8 +12,7 @@ import SentDocumentsTable from "../common/SentDocumentsTable";
 import { documentHandler } from '../../utils/documentHandler';
 import { userUploads, adminUploads } from "../../documents";
 import ReceivedDocumentsTable from "../common/ReceivedDocumentsTable";
-import ReactPDF from "@react-pdf/renderer";
-import MyDocument from "./MyDocument"
+
 
 class OrderDetails extends React.Component {
     constructor(props) {

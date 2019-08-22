@@ -1,7 +1,7 @@
 import React from "react";
 import { Nav } from "shards-react";
 
-import Notifications from "./Notifications";
+// import Notifications from "./Notifications";
 import UserActions from "./UserActions";
 
 export default () => (

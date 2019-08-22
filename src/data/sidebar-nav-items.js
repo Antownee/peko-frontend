@@ -1,5 +1,5 @@
 export default function (role) {
-  if (role == "User") {
+  if (role === "User") {
     return [
       {
         title: "Dashboard",
