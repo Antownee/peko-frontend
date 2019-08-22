@@ -15,6 +15,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import PageTitle from "../../components/common/PageTitle";
 import OrderInputDetails from "./OrderInputDetails";
 import { orderService } from '../../redux/services/order.service';
+import { injectIntl, defineMessages, FormattedMessage } from 'react-intl';
+
 
 class UserPlaceOrder extends React.Component {
   constructor(props) {
@@ -80,7 +82,7 @@ class UserPlaceOrder extends React.Component {
             toast.error(error);
           }
         );
-    } else{
+    } else {
       toast.error("Fill in all required fields before placing the order")
     }
   }
@@ -95,20 +97,24 @@ class UserPlaceOrder extends React.Component {
 
   render() {
     const { amount, description } = this.state;
+    const { intl } = this.props;
+    const messages = defineMessages({
+      header: { id: "placeorder.title" },
+    })
 
     return (
       <Container fluid className="main-content-container px-4">
         <ToastContainer />
         <Form name="form" onSubmit={this.handleSubmit}>
           <Row noGutters className="page-header py-4">
-            <PageTitle title="Place Order" md="12" className="ml-sm-auto mr-sm-auto" />
+            <PageTitle title={intl.formatMessage(messages.header)} md="12" className="ml-sm-auto mr-sm-auto" />
           </Row>
 
 
           <Row>
             <Col lg="12">
               <span style={{ fontSize: "16px" }} className="d-block mb-2 text-muted">
-                <strong>Select the blend of tea by clicking on the cards below:</strong>
+                <strong><FormattedMessage id="placeorder.title2" /></strong>
               </span>
             </Col>
           </Row>
@@ -149,7 +155,7 @@ class UserPlaceOrder extends React.Component {
                 description={description} />
             </Col>
           </Row>
-          <Button theme="accent" type="submit">Place Order</Button>
+          <Button theme="accent" type="submit"><FormattedMessage id="placeorder.button-place-order"/></Button>
         </Form>
       </Container>
     )
@@ -163,4 +169,4 @@ function mapStateToProps(state) {
 }
 
 
-export default connect(mapStateToProps)(UserPlaceOrder)
+export default injectIntl(connect(mapStateToProps)(UserPlaceOrder))

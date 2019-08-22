@@ -9,6 +9,8 @@ import {
   FormTextarea,
   FormInput
 } from "shards-react";
+import { FormattedMessage } from 'react-intl';
+
 
 class OrderInputDetails extends React.Component {
   constructor(props) {
@@ -31,7 +33,7 @@ class OrderInputDetails extends React.Component {
                 <Row form>
                   {/* Amount (Kilogrammes) */}
                   <Col md="12" className="form-group">
-                    <label htmlFor="feAmount">Amount (Kilogrammes)</label>
+                    <label htmlFor="feAmount"><FormattedMessage id="placeorder.amount"/></label>
                     <FormInput
                       id="feAmount"
                       name="amount"
@@ -46,7 +48,7 @@ class OrderInputDetails extends React.Component {
                 <Row form>
                   {/* Notes */}
                   <Col md="12" className="form-group">
-                    <label htmlFor="feNotes">Notes (Add any special instructions for your order)</label>
+                    <label htmlFor="feNotes"><FormattedMessage id="placeorder.notes" /></label>
                     <FormTextarea id="feNotes" name="description" value={description} rows="5" onChange={handleChange} />
                   </Col>
                 </Row>

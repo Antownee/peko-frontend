@@ -2,7 +2,7 @@ import React from "react";
 import FileUpload from "./FileUpload";
 import { connect } from "react-redux";
 import { format } from 'date-fns';
-
+import { injectIntl, defineMessages, FormattedMessage } from 'react-intl';
 
 class SentDocumentsTable extends React.Component {
     constructor(props) {
@@ -11,7 +11,16 @@ class SentDocumentsTable extends React.Component {
     }
 
     render() {
-        const { displayDocuments } = this.props;
+        const { displayDocuments, intl } = this.props;
+
+        const messages = defineMessages({
+            CNSGN: { id: "userorderdetails.consignee-details" },
+            FWRDAGNT: { id: "userorderdetails.forward-agent-details" },
+            DESTPRT: { id: "userorderdetails.destination-port" },
+            SHPINSTR: { id: "userorderdetails.shipment-instructions" },
+            SWFTCOP: { id: "userorderdetails.swift-copies" }
+          })
+          
         return (
             <table className="table mb-0">
                 <thead className="bg-light">
@@ -35,12 +44,12 @@ class SentDocumentsTable extends React.Component {
                         displayDocuments ?
                             displayDocuments.map((document, idx) => (
                                 <tr key={idx}>
-                                    <td>{document.name}</td>
+                                    <td>{intl.formatMessage(messages[document.documentCode])}</td>
                                     <td>
                                         {
                                             document.submitted ?
-                                                <span className="badge badge-success">SUBMITTED</span> :
-                                                <span className="badge badge-danger">NOT SUBMITTED</span>
+                                                <span className="badge badge-success"><FormattedMessage id="userorderdetails.label-submitted"/></span> :
+                                                <span className="badge badge-danger"><FormattedMessage id="userorderdetails.label-not-submitted"/></span>
                                         }
                                     </td>
                                     <td>{(document.dateAdded) ? format(document.dateAdded, 'DD/MM/YYYY') : "N/A"}</td>
@@ -70,4 +79,4 @@ const mapStateToProps = state => {
     return { user };
 }
 
-export default connect(mapStateToProps)(SentDocumentsTable);
+export default injectIntl(connect(mapStateToProps)(SentDocumentsTable));

@@ -55,7 +55,10 @@ class Dashboard extends React.Component {
     const { smallStats, recentOrders, historicalPrices } = this.state;
     const { isLoading, intl } = this.props;
     const messages = defineMessages({
-      header: { id: "dashboard.header" }
+      header: { id: "dashboard.header" },
+      card1: { id: "dashboard.card1-title"},
+      card2: { id: "dashboard.card2-title"},
+      card3: { id: "dashboard.card3-title"}
     })
     
     return (
@@ -77,7 +80,7 @@ class Dashboard extends React.Component {
                       variation="1"
                       chartData={stats.datasets}
                       chartLabels={stats.chartLabels}
-                      label={stats.label}
+                      label={intl.formatMessage(messages[`card${idx + 1}`])}
                       value={stats.value}
                       increase={stats.increase}
                       decrease={stats.decrease}

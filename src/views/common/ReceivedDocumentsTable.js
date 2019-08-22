@@ -2,13 +2,28 @@ import React from 'react';
 import { connect } from "react-redux";
 import { config } from "../../config";
 import { format } from 'date-fns';
-
+import { injectIntl, defineMessages, FormattedMessage } from 'react-intl';
 
 class ReceivedDocumentsTable extends React.Component {
 
     render() {
         let orderID = this.props.currentOrder.orderRequestID;
         let displayDocuments = this.props.displayDocuments;
+        const { intl } = this.props;
+
+        const messages = defineMessages({
+            PFINV: { id: "userorderdetails.consignee-details" },
+            CMINV: { id: "userorderdetails.forward-agent-details" },
+            ORCNF: { id: "userorderdetails.destination-port" },
+            CRTORG: { id: "userorderdetails.shipment-instructions" },
+            EXPENT: { id: "userorderdetails.swift-copies" },
+            CRTINS: { id: "userorderdetails.destination-port" },
+            PCKLST: { id: "userorderdetails.shipment-instructions" },
+            ALSYSCRT: { id: "userorderdetails.swift-copies" },
+            BOL: { id: "userorderdetails.shipment-instructions" },
+            CRTPHY: { id: "userorderdetails.swift-copies" }
+        })
+
         return (
             <table className="table mb-0">
                 <thead className="bg-light">
@@ -28,7 +43,7 @@ class ReceivedDocumentsTable extends React.Component {
                     {
                         displayDocuments.map((document, idx) => (
                             <tr>
-                                <td>{document.name}</td>
+                                <td>{intl.formatMessage(messages[document.documentCode])}</td>
                                 <td>{(document.dateAdded) ? format(document.dateAdded, 'DD/MM/YYYY') : "N/A"}</td>
                                 <td>
                                     {
@@ -57,4 +72,4 @@ const mapStateToProps = state => {
     return { user }
 }
 
-export default connect(mapStateToProps)(ReceivedDocumentsTable);
+export default injectIntl(connect(mapStateToProps)(ReceivedDocumentsTable));

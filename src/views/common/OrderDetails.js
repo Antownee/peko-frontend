@@ -12,6 +12,7 @@ import SentDocumentsTable from "../common/SentDocumentsTable";
 import { documentHandler } from '../../utils/documentHandler';
 import { userUploads, adminUploads } from "../../documents";
 import ReceivedDocumentsTable from "../common/ReceivedDocumentsTable";
+import { injectIntl, defineMessages, FormattedMessage } from 'react-intl';
 
 
 class OrderDetails extends React.Component {
@@ -105,8 +106,19 @@ class OrderDetails extends React.Component {
     }
 
     render() {
-        const { order, user } = this.props;
+        const { order, user, intl } = this.props;
         const currentOrder = this.state.currentOrder;
+        const messages = defineMessages({
+            header: { id: "userorderdetails.header" },
+            progress1: { id: "userorderdetails.progress-1"},
+            progress1_text: { id: "userorderdetails.progress-1-text"},
+            progress2: { id: "userorderdetails.progress-2"},
+            progress2_text: { id: "userorderdetails.progress-2-text"},
+            progress3: { id: "userorderdetails.progress-3"},
+            progress3_text: { id: "userorderdetails.progress-3-text"},
+            progress4: { id: "userorderdetails.progress-4"},
+            progress4_text: { id: "userorderdetails.progress-4-text"},
+          })
 
         return (
             <Container fluid className="main-content-container">
@@ -115,101 +127,100 @@ class OrderDetails extends React.Component {
 
                 <Button className="mt-4" pill onClick={this.goBack}>&larr; Go Back</Button>
                 <Row noGutters className="page-header py-4">
-                    <PageTitle sm="4" title="Order status" subtitle="Order Status" className="text-sm-left" />
+                    <PageTitle sm="4" title={intl.formatMessage(messages.header)} className="text-sm-left" />
                 </Row>
 
                 {/* Confirmed tab */}
-
-
-                <Row>
-                    <Col>
-                        <CardBody>
-                            <Col lg="12" sm="12" className="mb-4" >
-                                <Card small className="card-post card-post--aside card-post--1">
-                                    <div
-                                        className="card-post__image"
-                                        style={{ backgroundImage: `url(${this.state.backgroundImage})` }}
-                                    >
+                <Col>
+                    <CardBody>
+                        <Col lg="12" sm="12" className="mb-4" >
+                            <Card small className="card-post card-post--aside card-post--1">
+                                <div
+                                    className="card-post__image"
+                                    style={{ backgroundImage: `url(${this.state.backgroundImage})` }}
+                                >
+                                </div>
+                                <CardBody>
+                                    <h5 className="card-title">
+                                        <a className="text-fiord-blue" href="#">
+                                            {order.orderRequestID}
+                                        </a>
+                                    </h5>
+                                    <p className="card-text d-inline-block mb-3">{order.teaID}</p><br />
+                                    <p className="card-text d-inline-block mb-3">{order.notes}</p><br />
+                                    <span className="text-muted">{format(order.requestDate, 'MMMM Do, YYYY')}</span>
+                                    <div className="mt-4">
+                                        {currentOrder.confirmed ?
+                                            (<Button className="" size="sm" theme="success">
+                                                <FormattedMessage id="userorderdetails.label-order-confirmed" />
+                                            </Button>) : ""}
+                                        {user.role === "Admin" ?
+                                            (<Row>
+                                                <Col className="mb-4">
+                                                    <ButtonToolbar>
+                                                        <ButtonGroup>
+                                                            {!currentOrder.confirmed ? (
+                                                                <Button className="m-2" size="sm" onClick={this.confirmOrder}>Confirm order?</Button>
+                                                            ) : <Button className="m-2" size="sm" theme="success">ORDER CONFIRMED</Button>}
+                                                            <br />
+                                                            {!currentOrder.orderShipped ? (
+                                                                <Button className="m-2" size="sm" onClick={this.shipOrder}>Ship order?</Button>
+                                                            ) : <Button className="m-2" size="sm" theme="success">ORDER SHIPPED</Button>}
+                                                            <br />
+                                                        </ButtonGroup>
+                                                    </ButtonToolbar>
+                                                </Col>
+                                            </Row>)
+                                            : ""
+                                        }
                                     </div>
-                                    <CardBody>
-                                        <h5 className="card-title">
-                                            <a className="text-fiord-blue" href="#">
-                                                {order.orderRequestID}
-                                            </a>
-                                        </h5>
-                                        <p className="card-text d-inline-block mb-3">{order.teaID}</p><br />
-                                        <p className="card-text d-inline-block mb-3">{order.notes}</p><br />
-                                        <span className="text-muted">{format(order.requestDate, 'MMMM Do, YYYY')}</span>
-                                        <div className="mt-4">
-                                            <br/>
-                                            {user.role === "Admin" ?
-                                                (<Row>
-                                                    <Col className="mb-4">
-                                                        <ButtonToolbar>
-                                                            <ButtonGroup>
-                                                                {!currentOrder.confirmed ? (
-                                                                    <Button className="m-2" size="sm" onClick={this.confirmOrder}>Confirm order?</Button>
-                                                                ) : <Button className="m-2" size="sm" theme="success">ORDER CONFIRMED</Button>}
-                                                                <br />
-                                                                {!currentOrder.orderShipped ? (
-                                                                    <Button className="m-2" size="sm" onClick={this.shipOrder}>Ship order?</Button>
-                                                                ) : <Button className="m-2" size="sm" theme="success">ORDER SHIPPED</Button>}
-                                                                <br />
-                                                            </ButtonGroup>
-                                                        </ButtonToolbar>
-                                                    </Col>
-                                                </Row>)
-                                                : ""
-                                            }
-                                        </div>
-                                    </CardBody>
-                                </Card>
-                            </Col>
+                                </CardBody>
+                            </Card>
+                        </Col>
+                    </CardBody>
+
+
+                    <Card small className="mb-4">
+                        <CardHeader className="border-bottom">
+                            <h6 className="m-0"> <FormattedMessage id="userorderdetails.progressheader" /></h6>
+                        </CardHeader>
+                        <CardBody>
+                            <Steps current={currentOrder.orderPosition} style={{ marginTop: 10 }}>
+                                <Step title={intl.formatMessage(messages.progress1)} description={intl.formatMessage(messages.progress1_text)}/>
+                                <Step title={intl.formatMessage(messages.progress2)}  description={intl.formatMessage(messages.progress2_text)}/>
+                                <Step title={intl.formatMessage(messages.progress3)} description={intl.formatMessage(messages.progress3_text)}/>
+                                <Step title={intl.formatMessage(messages.progress4)}  description={intl.formatMessage(messages.progress4_text)}/>
+                            </Steps>
                         </CardBody>
+                    </Card>
 
+                    {
+                        user.role === "User" && !currentOrder.confirmed ?
+                            <p><FormattedMessage id="userorderdetails.document-unavailable-warning"/></p> :
+                            <Card small className="mb-4">
+                                <Tabs>
+                                    <TabList>
+                                        <Tab><FormattedMessage id="userorderdetails.sent-documents-title"/></Tab>
+                                        <Tab><FormattedMessage id="userorderdetails.received-documents-title"/></Tab>
+                                    </TabList>
 
-                        <Card small className="mb-4">
-                            <CardHeader className="border-bottom">
-                                <h6 className="m-0">Progress</h6>
-                            </CardHeader>
-                            <CardBody>
-                                <Steps current={currentOrder.orderPosition} style={{ marginTop: 10 }}>
-                                    <Step title="Start" description="Order placed" />
-                                    <Step title="Second" description="Order confirmed awaiting customer to upload documents" />
-                                    <Step title="Third" description="Documents uploaded by customer awaiting shipping of cargo" />
-                                    <Step title="Fourth" description="Cargo shipped. ETA: 3 months" />
-                                </Steps>
-                            </CardBody>
-                        </Card>
+                                    <TabPanel>
+                                        <SentDocumentsTable
+                                            currentOrder={order}
+                                            displayDocuments={this.state.displaySentDocuments}
+                                            currentOrder={currentOrder}
+                                        />
+                                    </TabPanel>
+                                    <TabPanel>
+                                        <ReceivedDocumentsTable
+                                            currentOrder={currentOrder}
+                                            displayDocuments={this.state.displayReceivedDocuments} />
+                                    </TabPanel>
+                                </Tabs>
+                            </Card>
+                    }
 
-                        {
-                            user.role === "User" && !currentOrder.confirmed ?
-                                <p>Kindly wait for your order to be confirmed to upload documents</p> :
-                                <Card small className="mb-4">
-                                    <Tabs>
-                                        <TabList>
-                                            <Tab>Sent documents</Tab>
-                                            <Tab>Received documents</Tab>
-                                        </TabList>
-
-                                        <TabPanel>
-                                            <SentDocumentsTable
-                                                currentOrder={order}
-                                                displayDocuments={this.state.displaySentDocuments}
-                                                currentOrder={currentOrder}
-                                            />
-                                        </TabPanel>
-                                        <TabPanel>
-                                            <ReceivedDocumentsTable
-                                                currentOrder={currentOrder}
-                                                displayDocuments={this.state.displayReceivedDocuments} />
-                                        </TabPanel>
-                                    </Tabs>
-                                </Card>
-                        }
-
-                    </Col>
-                </Row>
+                </Col>
             </Container>
         )
 
@@ -221,4 +232,4 @@ const mapStateToProps = state => {
     return { user }
 }
 
-export default connect(mapStateToProps)(OrderDetails);
+export default injectIntl(connect(mapStateToProps)(OrderDetails));

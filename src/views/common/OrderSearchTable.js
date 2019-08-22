@@ -8,6 +8,8 @@ import PageTitle from "../../components/common/PageTitle";
 import { orderService } from "../../redux/services/order.service";
 import Loading from "../common/Loading";
 import { loadingActions } from "../../redux/actions"
+import { injectIntl, defineMessages, FormattedMessage } from 'react-intl';
+
 const { SearchBar } = Search;
 
 var selectRow;
@@ -49,9 +51,9 @@ class OrderSearchTable extends React.Component {
 
     statusFormatter(cell, row) {
         if (row.confirmed) {
-            return (<Button size="sm" theme="success" className="mb-2 mr-1">CONFIRMED</Button>)
+            return (<Button size="sm" theme="success" className="mb-2 mr-1"><FormattedMessage id="userorderslist.label-confirmed" /></Button>)
         } else {
-            return (<Button size="sm" theme="warning" className="mb-2 mr-1">PENDING</Button>)
+            return (<Button size="sm" theme="warning" className="mb-2 mr-1"><FormattedMessage id="userorderslist.label-pending" /></Button>)
         }
     }
 
@@ -85,7 +87,10 @@ class OrderSearchTable extends React.Component {
     }
 
     render() {
-        const { isLoading } = this.props;
+        const { isLoading, intl } = this.props;
+        const messages = defineMessages({
+            header: { id: "userorderslist.searchorders" }
+        })
 
         return (
             <div>
@@ -93,7 +98,7 @@ class OrderSearchTable extends React.Component {
                     isLoading ? <Loading /> :
                         <Container fluid className="main-content-container px-4">
                             <Row noGutters className="page-header py-4">
-                                <PageTitle sm="4" title="Search orders" subtitle="Order Status" className="text-sm-left" />
+                                <PageTitle sm="4" title={intl.formatMessage(messages.header)} className="text-sm-left" />
                             </Row>
                             <Card>
                                 <ToolkitProvider
@@ -132,4 +137,4 @@ const mapStateToProps = state => {
     return { user, isLoading };
 }
 
-export default connect(mapStateToProps)(OrderSearchTable);
+export default injectIntl(connect(mapStateToProps)(OrderSearchTable));

@@ -11,6 +11,7 @@ import {
   NavItem,
   NavLink
 } from "shards-react";
+import { FormattedMessage } from 'react-intl';
 
 class UserActions extends React.Component {
   constructor(props) {
@@ -54,7 +55,7 @@ class UserActions extends React.Component {
           </DropdownItem>
           <DropdownItem divider /> */}
           <DropdownItem tag={Link} to="/" className="text-danger">
-            <i className="material-icons text-danger">&#xE879;</i> Logout
+            <i className="material-icons text-danger">&#xE879;</i> <FormattedMessage id="navbar.logout"/>
           </DropdownItem>
         </Collapse>
       </NavItem>
