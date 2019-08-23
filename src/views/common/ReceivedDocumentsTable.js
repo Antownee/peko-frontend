@@ -12,16 +12,16 @@ class ReceivedDocumentsTable extends React.Component {
         const { intl } = this.props;
 
         const messages = defineMessages({
-            PFINV: { id: "userorderdetails.consignee-details" },
-            CMINV: { id: "userorderdetails.forward-agent-details" },
-            ORCNF: { id: "userorderdetails.destination-port" },
-            CRTORG: { id: "userorderdetails.shipment-instructions" },
-            EXPENT: { id: "userorderdetails.swift-copies" },
-            CRTINS: { id: "userorderdetails.destination-port" },
-            PCKLST: { id: "userorderdetails.shipment-instructions" },
-            ALSYSCRT: { id: "userorderdetails.swift-copies" },
-            BOL: { id: "userorderdetails.shipment-instructions" },
-            CRTPHY: { id: "userorderdetails.swift-copies" }
+            PFINV: { id: "userorderdetails.proforma-invoice" },
+            CMINV: { id: "userorderdetails.commercial-invoice" },
+            ORCNF: { id: "userorderdetails.order-confirmation" },
+            CRTORG: { id: "userorderdetails.certificate-origin" },
+            EXPENT: { id: "userorderdetails.export-entry" },
+            CRTINS: { id: "userorderdetails.certificate-of-inspection" },
+            PCKLST: { id: "userorderdetails.packing-list" },
+            ALSYSCRT: { id: "userorderdetails.analysis-certificate" },
+            BOL: { id: "userorderdetails.bill-of-lading" },
+            CRTPHY: { id: "userorderdetails.phytosanitary-certificate" }
         })
 
         return (

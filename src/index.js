@@ -15,7 +15,7 @@ const messages = {
 
 ReactDOM.render(
     <Provider store={store}>
-        <IntlProvider locale='en' messages={messages['fa']}>
+        <IntlProvider locale='en' messages={messages['en']}>
             <App />
         </IntlProvider>
     </Provider>,
