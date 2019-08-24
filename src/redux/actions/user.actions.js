@@ -1,6 +1,7 @@
 import { userConstants } from '../constants';
 import { userService } from '../services';
 import { alertActions } from './';
+import { loadingActions } from './';
 import { history } from '../helpers';
 
 export const userActions = {
@@ -27,6 +28,7 @@ function login(username, password) {
                 error => {
                     dispatch(failure(error.toString()));
                     dispatch(alertActions.error(error.toString()));
+                    dispatch(loadingActions.error(error.toString()));
                 }
             );
     };

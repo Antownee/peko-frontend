@@ -1,7 +1,11 @@
 import React from "react";
 import { NavItem, NavLink, Badge, Collapse, DropdownItem } from "shards-react";
+import ReactFlagsSelect from 'react-flags-select';
+import 'react-flags-select/css/react-flags-select.css';
+import { switchLanguageActions } from "../../../../redux/actions"
+import { connect } from "react-redux";
 
-export default class Notifications extends React.Component {
+class Notifications extends React.Component {
   constructor(props) {
     super(props);
 
@@ -10,6 +14,13 @@ export default class Notifications extends React.Component {
     };
 
     this.toggleNotifications = this.toggleNotifications.bind(this);
+    this.onSelectFlag = this.onSelectFlag.bind(this);
+  }
+
+  onSelectFlag(countryCode) {
+    //set language to the selected one
+    let code = countryCode === "IR" ? "fa" : "en";
+    this.props.dispatch(switchLanguageActions.setLanguage(code));
   }
 
   toggleNotifications() {
@@ -20,57 +31,19 @@ export default class Notifications extends React.Component {
 
   render() {
     return (
-      <NavItem className="border-right dropdown notifications">
-        <NavLink
-          className="nav-link-icon text-center"
-          onClick={this.toggleNotifications}
-        >
-          <div className="nav-link-icon__wrapper">
-            <i className="material-icons">&#xE7F4;</i>
-            <Badge pill theme="danger">
-              2
-            </Badge>
-          </div>
-        </NavLink>
-        <Collapse
-          open={this.state.visible}
-          className="dropdown-menu dropdown-menu-small"
-        >
-          <DropdownItem>
-            <div className="notification__icon-wrapper">
-              <div className="notification__icon">
-                <i className="material-icons">&#xE6E1;</i>
-              </div>
-            </div>
-            <div className="notification__content">
-              <span className="notification__category">Analytics</span>
-              <p>
-                Your website’s active users count increased by{" "}
-                <span className="text-success text-semibold">28%</span> in the
-                last week. Great job!
-              </p>
-            </div>
-          </DropdownItem>
-          <DropdownItem>
-            <div className="notification__icon-wrapper">
-              <div className="notification__icon">
-                <i className="material-icons">&#xE8D1;</i>
-              </div>
-            </div>
-            <div className="notification__content">
-              <span className="notification__category">Sales</span>
-              <p>
-                Last week your store’s sales count decreased by{" "}
-                <span className="text-danger text-semibold">5.52%</span>. It
-                could have been worse!
-              </p>
-            </div>
-          </DropdownItem>
-          <DropdownItem className="notification__all text-center">
-            View all Notifications
-          </DropdownItem>
-        </Collapse>
-      </NavItem>
+      <ReactFlagsSelect
+        countries={["GB", "IR"]}
+        placeholder="Select Language"
+        showSelectedLabel={true}
+        showOptionLabel={false}
+        selectedSize={14}
+        optionsSize={14}
+        showSelectedLabel={false}
+        onSelect={this.onSelectFlag}
+        defaultCountry="GB" />
+
     );
   }
 }
+
+export default connect()(Notifications);

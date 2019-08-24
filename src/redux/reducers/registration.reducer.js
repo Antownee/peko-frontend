@@ -10,7 +10,10 @@ export function registration(state = {}, action) {
         user: action.user
       };
     case userConstants.REGISTER_FAILURE:
-      return {};
+      return {
+        loggedIn: false,
+        error: action.error
+      };
     default:
       return state
   }
