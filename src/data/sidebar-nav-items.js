@@ -24,16 +24,19 @@ export default function (role) {
     return [
       {
         title: "Dashboard",
+        id: "dashboard",
         htmlBefore: '<i class="material-icons">home</i>',
         to: "/admin/dashboard",
       },
       {
         title: "Orders",
+        id: "orders",
         htmlBefore: '<i class="material-icons">assignment</i>',
         to: "/admin/orders",
       },
       {
         title: "Assets",
+        id: "assets",
         htmlBefore: '<i class="material-icons">settings</i>',
         to: "/admin/assets",
       }

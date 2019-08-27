@@ -50,10 +50,14 @@ class ReceivedDocumentsTable extends React.Component {
                                         document.submitted ?
                                             <a style={{ display: "table-cell" }}
                                                 href={`${config.apiUrl}/admin/order/file?orderID=${orderID}&documentCode=${document.documentCode}`}
-                                                target="_blank" rel="noopener noreferrer" >Download
+                                                target="_blank" rel="noopener noreferrer" ><FormattedMessage
+                                                id="userorderdetails.label-download"
+                                                defaultMessage="Download" />
                                             </a>
                                             :
-                                            <p>Not available</p>
+                                            <FormattedMessage
+                                                id="userorderdetails.label-not_available"
+                                                defaultMessage="Unavailable" />
                                     }
 
                                 </td>

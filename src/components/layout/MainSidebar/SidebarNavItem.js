@@ -15,7 +15,8 @@ class SidebarNavItem extends React.Component {
     const messages = defineMessages({
       dashboard: { id: "user_sidebar.dashboard" },
       place_order: { id: "user_sidebar.orders" },
-      orders: { id: "user_sidebar.place_order" }
+      orders: { id: "user_sidebar.place_order" },
+      assets: {id: "user_sidebar.assets"}
     })
 
     return (
@@ -28,7 +29,7 @@ class SidebarNavItem extends React.Component {
             />
           )}
           {/* {item.title && <span>{item.title}</span>} */}
-          {item.title && <span>{intl.formatMessage(messages[item.id])}</span>}
+          {item.title && <span>{intl.formatMessage(messages[item.id]) || item.title}</span>}
           {item.htmlAfter && (
             <div
               className="d-inline-block item-icon-wrapper"
