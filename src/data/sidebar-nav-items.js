@@ -3,16 +3,19 @@ export default function (role) {
     return [
       {
         title: "Dashboard",
+        id: "dashboard",
         htmlBefore: '<i class="material-icons">home</i>',
         to: "/user/dashboard",
       },
       {
         title: "Place Order",
+        id: "place_order",
         htmlBefore: '<i class="material-icons">note_add</i>',
         to: "/user/place-order",
       },
       {
         title: "Orders",
+        id: "orders",
         htmlBefore: '<i class="material-icons">assignment</i>',
         to: "/user/order-status",
       }
