@@ -78,6 +78,7 @@ class OrderDetails extends React.Component {
                 toast.success(res);
                 let order = Object.assign({}, this.state.currentOrder);
                 order["orderShipped"] = true;
+                order["orderPosition"] = 3;
                 return this.setState({ currentOrder: order });
             })
             .catch((e) => {
@@ -150,7 +151,7 @@ class OrderDetails extends React.Component {
                                     <p className="card-text d-inline-block mb-3">{order.notes}</p><br />
                                     <span className="text-muted">{format(order.requestDate, 'MMMM Do, YYYY')}</span>
                                     <div className="mt-4">
-                                        {currentOrder.confirmed ?
+                                        {currentOrder.confirmed && user.role === "User" ?
                                             (<Button className="" size="sm" theme="success">
                                                 <FormattedMessage id="userorderdetails.label-order-confirmed" />
                                             </Button>) : ""}

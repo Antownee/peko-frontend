@@ -18,7 +18,17 @@ class SentDocumentsTable extends React.Component {
             FWRDAGNT: { id: "userorderdetails.forward-agent-details" },
             DESTPRT: { id: "userorderdetails.destination-port" },
             SHPINSTR: { id: "userorderdetails.shipment-instructions" },
-            SWFTCOP: { id: "userorderdetails.swift-copies" }
+            SWFTCOP: { id: "userorderdetails.swift-copies" },
+            PFINV: { id: "userorderdetails.proforma-invoice" },
+            CMINV: { id: "userorderdetails.commercial-invoice" },
+            ORCNF: { id: "userorderdetails.order-confirmation" },
+            CRTORG: { id: "userorderdetails.certificate-origin" },
+            EXPENT: { id: "userorderdetails.export-entry" },
+            CRTINS: { id: "userorderdetails.certificate-of-inspection" },
+            PCKLST: { id: "userorderdetails.packing-list" },
+            ALSYSCRT: { id: "userorderdetails.analysis-certificate" },
+            BOL: { id: "userorderdetails.bill-of-lading" },
+            CRTPHY: { id: "userorderdetails.phytosanitary-certificate" }
           })
           
         return (

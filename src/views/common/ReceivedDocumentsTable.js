@@ -12,6 +12,11 @@ class ReceivedDocumentsTable extends React.Component {
         const { intl } = this.props;
 
         const messages = defineMessages({
+            CNSGN: { id: "userorderdetails.consignee-details" },
+            FWRDAGNT: { id: "userorderdetails.forward-agent-details" },
+            DESTPRT: { id: "userorderdetails.destination-port" },
+            SHPINSTR: { id: "userorderdetails.shipment-instructions" },
+            SWFTCOP: { id: "userorderdetails.swift-copies" },
             PFINV: { id: "userorderdetails.proforma-invoice" },
             CMINV: { id: "userorderdetails.commercial-invoice" },
             ORCNF: { id: "userorderdetails.order-confirmation" },
