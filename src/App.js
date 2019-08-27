@@ -23,27 +23,27 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
-    this.onChangeLanguage = this.onChangeLanguage.bind(this);
+    // this.onChangeLanguage = this.onChangeLanguage.bind(this);
   }
 
-  onChangeLanguage(lang) {
-    switch (lang) {
-      case 'FA': i18nConfig.messages = messages_fa; break;
-      case 'EN': i18nConfig.messages = messages_en; break;
-      default: i18nConfig.messages = messages_en; break;
-    }
-    this.setState({ locale: lang });
-    i18nConfig.locale = lang;
-  }
+  // onChangeLanguage(lang) {
+  //   switch (lang) {
+  //     case 'FA': i18nConfig.messages = messages_fa; break;
+  //     case 'EN': i18nConfig.messages = messages_en; break;
+  //     default: i18nConfig.messages = messages_en; break;
+  //   }
+  //   this.setState({ locale: lang });
+  //   i18nConfig.locale = lang;
+  // }
 
   render() {
     const { currentLanguage } = this.props;
     switch (currentLanguage) {
-      case 'fa': i18nConfig.messages = messages_fa; break;
-      case 'en': i18nConfig.messages = messages_en; break;
+      case 'FA': i18nConfig.messages = messages_fa; break;
+      case 'EN': i18nConfig.messages = messages_en; break;
       default: i18nConfig.messages = messages_en; break;
     }
-    
+
     return (
       <IntlProvider key={i18nConfig.locale} locale={i18nConfig.locale} messages={i18nConfig.messages}>
         <Router basename={process.env.REACT_APP_BASENAME || ""} history={history}>
@@ -75,7 +75,7 @@ class App extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const { currentLanguage } = state.languageSwitch;
+  const { currentLanguage } = state.currentLanguage;
   return { currentLanguage }
 }
 

@@ -10,7 +10,7 @@ const rootReducer = combineReducers({
   registration,
   alert,
   loadState,
-  languageSwitch
+  currentLanguage: languageSwitch
 });
 
 export default rootReducer;

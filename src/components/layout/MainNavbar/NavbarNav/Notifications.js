@@ -1,8 +1,5 @@
 import React from "react";
 import { NavItem, NavLink, Badge, Collapse, DropdownItem } from "shards-react";
-import ReactFlagsSelect from 'react-flags-select';
-import 'react-flags-select/css/react-flags-select.css';
-import { switchLanguageActions } from "../../../../redux/actions"
 import { connect } from "react-redux";
 
 class Notifications extends React.Component {
@@ -14,14 +11,8 @@ class Notifications extends React.Component {
     };
 
     this.toggleNotifications = this.toggleNotifications.bind(this);
-    this.onSelectFlag = this.onSelectFlag.bind(this);
-  }
-
-  onSelectFlag(countryCode) {
-    //set language to the selected one
-    let code = countryCode === "IR" ? "fa" : "en";
-    this.props.dispatch(switchLanguageActions.setLanguage(code));
-  }
+  } 
+ 
 
   toggleNotifications() {
     this.setState({
@@ -31,19 +22,10 @@ class Notifications extends React.Component {
 
   render() {
     return (
-      <ReactFlagsSelect
-        countries={["GB", "IR"]}
-        placeholder="Select Language"
-        showSelectedLabel={true}
-        showOptionLabel={false}
-        selectedSize={14}
-        optionsSize={14}
-        showSelectedLabel={false}
-        onSelect={this.onSelectFlag}
-        defaultCountry="GB" />
-
-    );
+      <div></div>
+    )
   }
 }
 
-export default connect()(Notifications);
+
+export default Notifications;

@@ -2,6 +2,6 @@ export const switchLanguageActions = {
     setLanguage
 };
 
-function setLanguage(message) {
-    return { type: "SET_LANGUAGE", language: message };
+function setLanguage(language) {
+    return { type: "SET_LANGUAGE", language };
 }
