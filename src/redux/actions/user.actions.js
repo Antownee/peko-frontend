@@ -1,8 +1,7 @@
 import { userConstants } from '../constants';
 import { userService } from '../services';
-import { alertActions } from './';
-import { loadingActions } from './';
 import { history } from '../helpers';
+import { toast } from "react-toastify";
 
 export const userActions = {
     login,
@@ -27,6 +26,7 @@ function login(username, password) {
                 },
                 error => {
                     dispatch(failure(error.toString())); //Failed login
+                    toast.error(error.toString());
                 }
             );
     };
@@ -58,6 +58,7 @@ function register(user) {
                 },
                 error => {
                     dispatch(failure(error.toString())); //Failed registration
+                    toast.error(error.toString());
                 }
             );
     };
@@ -74,8 +75,13 @@ function getAll() {
 
         userService.getAll()
             .then(
-                users => dispatch(success(users)),
-                error => dispatch(failure(error.toString()))
+                users => {
+                    dispatch(success(users));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    toast.error(error.toString());
+                }
             );
     };
 

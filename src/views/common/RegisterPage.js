@@ -110,9 +110,8 @@ class RegisterPage extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const { registering, loggedIn, error } = state.userRegistration;
-    return { registering, loggedIn, error };
+    const { registering } = state.userRegistration;
+    return { registering };
 }
 
-const connectedRegisterPage = connect(mapStateToProps)(RegisterPage);
-export default connectedRegisterPage;
+export default connect(mapStateToProps)(RegisterPage);

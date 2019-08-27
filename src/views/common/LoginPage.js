@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Col, Alert } from "shards-react";
 import { connect } from 'react-redux';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import { userActions } from '../../redux/actions';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
@@ -20,12 +20,10 @@ class LoginPage extends React.Component {
     }
 
     render() {
-        const { dispatch, loggedIn, loginError } = this.props;
+        const { dispatch } = this.props;
         return (
             <div>
-                {loggedIn === false ?
-                    <Alert theme="danger">{loginError}</Alert> : ""
-                }
+                <ToastContainer/>
 
                 <div className="row d-flex justify-content-center pt-5">
                     <div className="col-md-3">
@@ -78,9 +76,5 @@ class LoginPage extends React.Component {
     }
 }
 
-function mapStateToProps(state) {
-    const { loggedIn, error } = state.userLogin;
-    return { loggedIn, loginError: error };
-}
 
-export default connect(mapStateToProps)(LoginPage);
+export default connect()(LoginPage);

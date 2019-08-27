@@ -9,6 +9,7 @@ import routes from "./routes";
 import withTracker from "./withTracker";
 import { connect } from "react-redux";
 import { IntlProvider } from "react-intl";
+import { ToastContainer } from "react-toastify";
 import messages_fa from "./translations/fa.json";
 import messages_en from "./translations/en.json";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -46,6 +47,8 @@ class App extends React.Component {
 
     return (
       <IntlProvider key={i18nConfig.locale} locale={i18nConfig.locale} messages={i18nConfig.messages}>
+        <ToastContainer />
+
         <Router basename={process.env.REACT_APP_BASENAME || ""} history={history}>
           <div>
             <Route path="/login" component={LoginPage} />

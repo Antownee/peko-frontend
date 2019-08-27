@@ -14,8 +14,8 @@ class SidebarNavItem extends React.Component {
 
     const messages = defineMessages({
       dashboard: { id: "user_sidebar.dashboard" },
-      place_order: { id: "user_sidebar.orders" },
-      orders: { id: "user_sidebar.place_order" },
+      place_order: { id: "user_sidebar.place_order" },
+      orders: { id: "user_sidebar.orders" },
       assets: {id: "user_sidebar.assets"}
     })
 
