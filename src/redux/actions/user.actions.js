@@ -19,16 +19,14 @@ function login(username, password) {
         userService.login(username, password)
             .then(
                 user => {
-                    dispatch(success(user));
+                    dispatch(success(user)); //Successful login
                     if (user.role === "User") {
                         return history.push('/user/dashboard');
                     }
                     return history.push('/admin/dashboard');
                 },
                 error => {
-                    dispatch(failure(error.toString()));
-                    dispatch(alertActions.error(error.toString()));
-                    dispatch(loadingActions.error(error.toString()));
+                    dispatch(failure(error.toString())); //Failed login
                 }
             );
     };
@@ -50,7 +48,6 @@ function register(user) {
         userService.register(user)
             .then(
                 user => {
-                    dispatch(alertActions.success('Registration successful'));
                     dispatch(success(user)); //dispatch successful registration
                     dispatch(successLogin(user))//dispatch successful logging in as well
 
@@ -60,8 +57,7 @@ function register(user) {
                     return history.push('/admin/dashboard');
                 },
                 error => {
-                    dispatch(failure(error.toString()));
-                    dispatch(alertActions.error(error.toString()));
+                    dispatch(failure(error.toString())); //Failed registration
                 }
             );
     };

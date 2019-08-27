@@ -2,15 +2,15 @@ import { combineReducers } from 'redux';
 import { authentication } from './authentication.reducer';
 import { registration } from './registration.reducer';
 import { loadState } from './isLoading.reducer';
-import { alert } from './alert.reducer';
 import { languageSwitch } from './languageSwitch.reducer';
+import { users } from './users.reducer'
 
 const rootReducer = combineReducers({
   authentication,
-  registration,
-  alert,
+  userRegistration: registration,
   loadState,
-  currentLanguage: languageSwitch
+  currentLanguage: languageSwitch,
+  userLogin: users
 });
 
 export default rootReducer;
