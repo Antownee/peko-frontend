@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "homepage": "/",
-  "proxy": "http://localhost:4985",
+  "proxy": "http://localhost:5000",
   "dependencies": {
     "@react-pdf/renderer": "^1.6.4",
+    "@sentry/browser": "^5.6.3",
     "camelize": "^1.0.0",
     "chart.js": "^2.8.0",
     "classnames": "^2.2.6",
@@ -50,7 +51,8 @@
     "yup": "^0.27.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node server.js",
+    "start-local": "react-scripts start",
     "build:prod": "cross-env REACT_APP_BASENAME=cup-of-joe-dashboard npm run build",
     "build": "cross-env REACT_APP_BASENAME=cup-of-joe-dashboard react-scripts build",
     "test": "react-scripts test",

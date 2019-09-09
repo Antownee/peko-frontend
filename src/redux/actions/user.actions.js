@@ -26,7 +26,8 @@ function login(username, password) {
                 },
                 error => {
                     dispatch(failure(error.toString())); //Failed login
-                    toast.error(error.toString());
+                    let err = error.message === "Failed to fetch" ? "Try logging in again later." : error.toString();
+                    toast.error(err);
                 }
             );
     };
@@ -58,7 +59,8 @@ function register(user) {
                 },
                 error => {
                     dispatch(failure(error.toString())); //Failed registration
-                    toast.error(error.toString());
+                    let err = error.message === "Failed to fetch" ? "Try logging in again later." : error.toString();
+                    toast.error(err);
                 }
             );
     };
