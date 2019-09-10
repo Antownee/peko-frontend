@@ -51,8 +51,7 @@
     "yup": "^0.27.0"
   },
   "scripts": {
-    "start": "node server.js",
-    "start-local": "react-scripts start",
+    "start": "react-scripts start",
     "build:prod": "cross-env REACT_APP_BASENAME=cup-of-joe-dashboard npm run build",
     "build": "cross-env REACT_APP_BASENAME=cup-of-joe-dashboard react-scripts build",
     "test": "react-scripts test",
