@@ -1,5 +1,5 @@
 import { authHeader } from '../helpers';
-import { config } from '../../config';
+import { apiUrl } from '../../config';
 
 export const userService = {
     login,
@@ -17,8 +17,9 @@ function login(username, password) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
     };
+    let v = apiUrl;
 
-    return fetch(`${config.apiUrl}/users/auth/authenticate`, requestOptions)
+    return fetch(`${apiUrl}/users/auth/authenticate`, requestOptions)
         .then(handleResponse)
         .then(user => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
@@ -35,7 +36,7 @@ function register(user) {
         body: JSON.stringify(user)
     };
 
-    return fetch(`${config.apiUrl}/users/auth/register`, requestOptions)
+    return fetch(`${apiUrl}/users/auth/register`, requestOptions)
         .then(handleResponse)
         .then(user => {
             localStorage.setItem('user', JSON.stringify(user));
@@ -55,7 +56,7 @@ function getAll() {
         headers: authHeader()
     };
 
-    return fetch(`${config.apiUrl}/users`, requestOptions).then(handleResponse);
+    return fetch(`${apiUrl}/users`, requestOptions).then(handleResponse);
 }
 
 function getById(id) {
@@ -64,7 +65,7 @@ function getById(id) {
         headers: authHeader()
     };
 
-    return fetch(`${config.apiUrl}/users/${id}`, requestOptions).then(handleResponse);
+    return fetch(`${apiUrl}/users/${id}`, requestOptions).then(handleResponse);
 }
 
 function update(user) {
@@ -74,7 +75,7 @@ function update(user) {
         body: JSON.stringify(user)
     };
 
-    return fetch(`${config.apiUrl}/users/${user.id}`, requestOptions).then(handleResponse);;
+    return fetch(`${apiUrl}/users/${user.id}`, requestOptions).then(handleResponse);;
 }
 
 // prefixed function name with underscore because delete is a reserved word in javascript
@@ -84,7 +85,7 @@ function _delete(id) {
         headers: authHeader()
     };
 
-    return fetch(`${config.apiUrl}/users/${id}`, requestOptions).then(handleResponse);
+    return fetch(`${apiUrl}/users/${id}`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {

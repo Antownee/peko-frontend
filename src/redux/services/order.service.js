@@ -1,5 +1,5 @@
 import { authHeader } from '../helpers';
-import { config } from "../../config";
+import { apiUrl } from "../../config";
 
 export const orderService = {
     addOrder,
@@ -21,7 +21,7 @@ function addOrder(order, user) {
         body: JSON.stringify({ order, user })
     };
 
-    return fetch(`${config.apiUrl}/users/order-request`, requestOptions)
+    return fetch(`${apiUrl}/users/order-request`, requestOptions)
         .then(handleResponse)
         .then(msg => { return msg })
 }
@@ -35,12 +35,12 @@ function getAllOrders(user) {
     };
 
     if (user.role === "Admin") {
-        return fetch(`${config.apiUrl}/admin/order/all`, requestOptions)
+        return fetch(`${apiUrl}/admin/order/all`, requestOptions)
             .then(handleResponse)
             .then(msg => { return msg })
     } else {
 
-        return fetch(`${config.apiUrl}/users/order-request/all`, requestOptions)
+        return fetch(`${apiUrl}/users/order-request/all`, requestOptions)
             .then(handleResponse)
             .then(msg => { return msg })
     }
@@ -54,7 +54,7 @@ function confirmOrder(order, user) {
         body: JSON.stringify({ order, user })
     };
 
-    return fetch(`${config.apiUrl}/admin/order/confirm`, requestOptions)
+    return fetch(`${apiUrl}/admin/order/confirm`, requestOptions)
         .then(handleResponse)
         .then((msg) => { return msg })
 }
@@ -66,7 +66,7 @@ function shipOrder(order, user) {
         body: JSON.stringify({ order, user })
     };
 
-    return fetch(`${config.apiUrl}/admin/order/ship`, requestOptions)
+    return fetch(`${apiUrl}/admin/order/ship`, requestOptions)
         .then(handleResponse)
         .then((msg) => { return msg })
 }
@@ -84,7 +84,7 @@ function uploadDocuments(documents, orderid) {
         body: formData
     };
 
-    return fetch(`${config.apiUrl}/admin/order/documents`, requestOptions)
+    return fetch(`${apiUrl}/admin/order/documents`, requestOptions)
         .then(handleResponse)
 }
 
@@ -95,7 +95,7 @@ function addTeaAssets(tea) {
         body: JSON.stringify(tea)
     };
 
-    return fetch(`${config.apiUrl}/admin/asset/tea`, requestOptions)
+    return fetch(`${apiUrl}/admin/asset/tea`, requestOptions)
         .then(handleResponse)
         .then(msg => { return msg })
 }
@@ -106,7 +106,7 @@ function getTeaAssets() {
         headers: authHeader()
     };
 
-    return fetch(`${config.apiUrl}/admin/asset/all-tea`, requestOptions).then(handleResponse);
+    return fetch(`${apiUrl}/admin/asset/all-tea`, requestOptions).then(handleResponse);
 }
 
 function addEmailAssets(email) {
@@ -116,7 +116,7 @@ function addEmailAssets(email) {
         body: JSON.stringify(email)
     };
 
-    return fetch(`${config.apiUrl}/admin/asset/email`, requestOptions)
+    return fetch(`${apiUrl}/admin/asset/email`, requestOptions)
         .then(handleResponse)
         .then(msg => { return msg })
 }
@@ -128,7 +128,7 @@ function populateDashboard(user) {
         body: JSON.stringify(user)
     };
 
-    return fetch(`${config.apiUrl}/admin/asset/dashboard`, requestOptions)
+    return fetch(`${apiUrl}/admin/asset/dashboard`, requestOptions)
         .then(handleResponse)
         .then(msg => { return msg })
 }

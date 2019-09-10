@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
-import { config } from "../../config";
+import { apiUrl } from "../../config";
 import { format } from 'date-fns';
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl';
 
@@ -54,7 +54,7 @@ class ReceivedDocumentsTable extends React.Component {
                                     {
                                         document.submitted ?
                                             <a style={{ display: "table-cell" }}
-                                                href={`${config.apiUrl}/admin/order/file?orderID=${orderID}&documentCode=${document.documentCode}`}
+                                                href={`${apiUrl}/admin/order/file?orderID=${orderID}&documentCode=${document.documentCode}`}
                                                 target="_blank" rel="noopener noreferrer" ><FormattedMessage
                                                 id="userorderdetails.label-download"
                                                 defaultMessage="Download" />
