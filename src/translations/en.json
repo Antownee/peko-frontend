@@ -43,7 +43,7 @@
 	"userorderdetails.progress-2": "Second",
 	"userorderdetails.progress-2-text": "Order confirmed awaiting customer to upload documents",
 	"userorderdetails.progress-3": "Third",
-	"userorderdetails.progress-3-text": "Documents uploaded by customer awaiting shipping of cargo",
+	"userorderdetails.progress-3-text": "Documents uploaded. Awaiting shipping of cargo",
 	"userorderdetails.progress-4": "Fourth",
 	"userorderdetails.progress-4-text": "Cargo shipped. ETA: 3 months",
 	"userorderdetails.progressheader": "Progress",

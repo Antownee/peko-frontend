@@ -43,7 +43,7 @@
 	"userorderdetails.progress-2": "دومین",
 	"userorderdetails.progress-2-text": "سفارش در انتظار مشتری برای بارگذاری اسناد تأیید شد",
 	"userorderdetails.progress-3": "سوم",
-	"userorderdetails.progress-3-text": "اسناد بارگذاری شده توسط مشتری در انتظار ارسال محموله",
+	"userorderdetails.progress-3-text": "اسناد بارگذاری شد. در انتظار حمل بار",
 	"userorderdetails.progress-4": "چهارم",
 	"userorderdetails.progress-4-text": "حمل بار. ETA: 3 ماه",
 	"userorderdetails.progressheader": "پیش رفتن",
