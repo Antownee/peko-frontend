@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row, Col, Card, CardHeader, CardBody, Button, ButtonGroup, ButtonToolbar } from "shards-react";
+import { Container, Row, Col, Card, CardHeader, CardBody, Button, ButtonGroup, ButtonToolbar, Modal, ModalHeader, ModalBody, ModalFooter } from "shards-react";
 import { connect } from "react-redux";
 import Steps, { Step } from "rc-steps"
 import { format, parse } from 'date-fns';
@@ -31,13 +31,16 @@ class OrderDetails extends React.Component {
                 sendDocs: userUploads, //what he is sending
                 receivedDocs: adminUploads //what he receives
             },
-            stepNumber: 0
+            stepNumber: 0,
+            modalOpen: false
         }
         this.confirmOrder = this.confirmOrder.bind(this);
         this.goBack = this.goBack.bind(this);
         this.loadDocumentTables = this.loadDocumentTables.bind(this);
         this.getDocument = this.getDocument.bind(this);
         this.shipOrder = this.shipOrder.bind(this);
+        this.deleteOrder = this.deleteOrder.bind(this);
+        this.toggleModal = this.toggleModal.bind(this);
     }
 
     componentDidMount() {
@@ -58,10 +61,23 @@ class OrderDetails extends React.Component {
         });
     }
 
+    deleteOrder() {
+        const f = this.state;
+        orderService.deleteOrder(this.state.currentOrder)
+            .then((res) => {
+                toast.success(res.msg);
+                this.setState({ currentOrder: {} });
+                return this.props.handleSearchState(false);//go back
+            })
+            .catch((e) => {
+                toast.error(e.message);
+            })
+    }
+
     confirmOrder() {
         orderService.confirmOrder(this.state.currentOrder, this.props.user)
             .then((res) => {
-                toast.success(res);
+                toast.success(res.msg);
                 let order = Object.assign({}, this.state.currentOrder);
                 order["confirmed"] = true;
                 order["orderPosition"] = 1;
@@ -75,7 +91,7 @@ class OrderDetails extends React.Component {
     shipOrder() {
         orderService.shipOrder(this.state.currentOrder, this.props.user)
             .then((res) => {
-                toast.success(res);
+                toast.success(res.msg);
                 let order = Object.assign({}, this.state.currentOrder);
                 order["orderShipped"] = true;
                 order["orderPosition"] = 3;
@@ -106,25 +122,42 @@ class OrderDetails extends React.Component {
     getDocument() {
     }
 
+    toggleModal() {
+        this.setState({
+            modalOpen: !this.state.modalOpen
+        });
+    }
+
     render() {
         const { order, user, intl } = this.props;
-        const currentOrder = this.state.currentOrder;
+        const { currentOrder, modalOpen } = this.state;
         const messages = defineMessages({
             header: { id: "userorderdetails.header" },
-            progress1: { id: "userorderdetails.progress-1"},
-            progress1_text: { id: "userorderdetails.progress-1-text"},
-            progress2: { id: "userorderdetails.progress-2"},
-            progress2_text: { id: "userorderdetails.progress-2-text"},
-            progress3: { id: "userorderdetails.progress-3"},
-            progress3_text: { id: "userorderdetails.progress-3-text"},
-            progress4: { id: "userorderdetails.progress-4"},
-            progress4_text: { id: "userorderdetails.progress-4-text"},
-          })
+            progress1: { id: "userorderdetails.progress-1" },
+            progress1_text: { id: "userorderdetails.progress-1-text" },
+            progress2: { id: "userorderdetails.progress-2" },
+            progress2_text: { id: "userorderdetails.progress-2-text" },
+            progress3: { id: "userorderdetails.progress-3" },
+            progress3_text: { id: "userorderdetails.progress-3-text" },
+            progress4: { id: "userorderdetails.progress-4" },
+            progress4_text: { id: "userorderdetails.progress-4-text" },
+        })
 
         return (
             <Container fluid className="main-content-container">
                 {/* Page Header */}
                 <ToastContainer />
+
+                <Modal size="sm" open={modalOpen} toggle={this.toggleModal}>
+                    <ModalHeader>Warning!</ModalHeader>
+                    <ModalBody>
+                        Are you sure you want to delete this order?
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button className="" size="sm" theme="danger " onClick={this.deleteOrder}>Yes</Button>
+                        <Button className="m-2" size="sm" theme="light " onClick={this.toggleModal}>No</Button>
+                    </ModalFooter>
+                </Modal>
 
                 <Button className="mt-4" pill onClick={this.goBack}>&larr; Go Back</Button>
                 <Row noGutters className="page-header py-4">
@@ -161,13 +194,14 @@ class OrderDetails extends React.Component {
                                                     <ButtonToolbar>
                                                         <ButtonGroup>
                                                             {!currentOrder.confirmed ? (
-                                                                <Button className="m-2" size="sm" onClick={this.confirmOrder}>Confirm order?</Button>
+                                                                <Button className="m-2" size="sm" onClick={this.confirmOrder}>Confirm order</Button>
                                                             ) : <Button className="m-2" size="sm" theme="success">ORDER CONFIRMED</Button>}
                                                             <br />
                                                             {!currentOrder.orderShipped ? (
-                                                                <Button className="m-2" size="sm" onClick={this.shipOrder}>Ship order?</Button>
+                                                                <Button className="m-2" size="sm" onClick={this.shipOrder}>Ship order</Button>
                                                             ) : <Button className="m-2" size="sm" theme="success">ORDER SHIPPED</Button>}
                                                             <br />
+                                                            <Button className="m-2" size="sm" theme="danger " onClick={this.toggleModal}>Delete order</Button>
                                                         </ButtonGroup>
                                                     </ButtonToolbar>
                                                 </Col>
@@ -187,22 +221,22 @@ class OrderDetails extends React.Component {
                         </CardHeader>
                         <CardBody>
                             <Steps current={currentOrder.orderPosition} style={{ marginTop: 10 }}>
-                                <Step title={intl.formatMessage(messages.progress1)} description={intl.formatMessage(messages.progress1_text)}/>
-                                <Step title={intl.formatMessage(messages.progress2)}  description={intl.formatMessage(messages.progress2_text)}/>
-                                <Step title={intl.formatMessage(messages.progress3)} description={intl.formatMessage(messages.progress3_text)}/>
-                                <Step title={intl.formatMessage(messages.progress4)}  description={intl.formatMessage(messages.progress4_text)}/>
+                                <Step title={intl.formatMessage(messages.progress1)} description={intl.formatMessage(messages.progress1_text)} />
+                                <Step title={intl.formatMessage(messages.progress2)} description={intl.formatMessage(messages.progress2_text)} />
+                                <Step title={intl.formatMessage(messages.progress3)} description={intl.formatMessage(messages.progress3_text)} />
+                                <Step title={intl.formatMessage(messages.progress4)} description={intl.formatMessage(messages.progress4_text)} />
                             </Steps>
                         </CardBody>
                     </Card>
 
                     {
                         user.role === "User" && !currentOrder.confirmed ?
-                            <p><FormattedMessage id="userorderdetails.document-unavailable-warning"/></p> :
+                            <p><FormattedMessage id="userorderdetails.document-unavailable-warning" /></p> :
                             <Card small className="mb-4">
                                 <Tabs>
                                     <TabList>
-                                        <Tab><FormattedMessage id="userorderdetails.sent-documents-title"/></Tab>
-                                        <Tab><FormattedMessage id="userorderdetails.received-documents-title"/></Tab>
+                                        <Tab><FormattedMessage id="userorderdetails.sent-documents-title" /></Tab>
+                                        <Tab><FormattedMessage id="userorderdetails.received-documents-title" /></Tab>
                                     </TabList>
 
                                     <TabPanel>

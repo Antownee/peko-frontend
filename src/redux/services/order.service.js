@@ -3,6 +3,7 @@ import { apiUrl } from "../../config";
 
 export const orderService = {
     addOrder,
+    deleteOrder,
     getAllOrders,
     confirmOrder,
     uploadDocuments,
@@ -46,6 +47,17 @@ function getAllOrders(user) {
     }
 }
 
+function deleteOrder(order) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { ...authHeader(), 'Content-Type': 'application/json' },
+        body: JSON.stringify({ order })
+    };
+
+    return fetch(`${apiUrl}/admin/order/delete`, requestOptions)
+        .then(handleResponse)
+        .then((msg) => { return msg })
+}
 
 function confirmOrder(order, user) {
     const requestOptions = {
