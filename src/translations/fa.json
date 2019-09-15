@@ -1,7 +1,7 @@
 {
 	"dashboard.card1-title": "تعداد سفارشات انجام شده",
 	"dashboard.card2-title": "سفارشات در حال انتظار",
-	"dashboard.card3-title": "قیمت چای کنیا (هر کیلوگرم)",
+	"dashboard.card3-title": "وزن کل سفارشات انجام شده",
 	"dashboard.graphheader": "قیمت چای طی 5 ماه گذشته",
 	"dashboard.header": "داشبورد",
 	"dashboard.last5orders-amount": "مقدار (کیلوگرم)",

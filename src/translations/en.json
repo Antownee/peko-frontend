@@ -1,7 +1,7 @@
 {
 	"dashboard.card1-title": "No. of orders made",
 	"dashboard.card2-title": "Pending orders",
-	"dashboard.card3-title": "Price of Kenyan tea ($ per KG)",
+	"dashboard.card3-title": "Total weight of orders made",
 	"dashboard.graphheader": "Price of tea over the past 5 months",
 	"dashboard.header": "Dashboard",
 	"dashboard.last5orders-amount": "Amount(kg)",

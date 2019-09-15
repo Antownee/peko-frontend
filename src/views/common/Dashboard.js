@@ -35,8 +35,8 @@ class Dashboard extends React.Component {
         smallStats[0].value = res.numberOfOrders;
         //pending orders
         smallStats[1].value = res.pendingOrders;
-        //price of tea
-        smallStats[2].value = res.priceOfTea;
+        //total weight of orders
+        smallStats[2].value = res.totalOrderWeight;
 
         this.setState({
           smallStats,

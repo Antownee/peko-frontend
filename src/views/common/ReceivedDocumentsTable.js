@@ -63,7 +63,7 @@ class ReceivedDocumentsTable extends React.Component {
                                             :
                                             <FormattedMessage
                                                 id="userorderdetails.label-not_available"
-                                                defaultMessage="Unavailable" />
+                                                defaultMessage="Unavailble" />
                                     }
 
                                 </td>
