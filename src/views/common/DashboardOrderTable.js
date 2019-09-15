@@ -10,7 +10,6 @@ import { FormattedMessage } from 'react-intl';
 
 
 const DashboardOrderTable = ({ recentOrders }) => (
-  <Col>
     <Card small className="mb-4">
       <CardHeader className="border-bottom">
         <h6 className="m-0"><FormattedMessage id="dashboard.lastfiveorders"/></h6>
@@ -42,7 +41,6 @@ const DashboardOrderTable = ({ recentOrders }) => (
         </table>
       </CardBody>
     </Card>
-  </Col>
 );
 
 

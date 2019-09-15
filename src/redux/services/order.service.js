@@ -114,11 +114,13 @@ function addTeaAssets(tea) {
 
 function getTeaAssets() {
     const requestOptions = {
-        method: 'GET',
-        headers: authHeader()
+        method: 'POST',
+        headers: { ...authHeader(), 'Content-Type': 'application/json' }
     };
 
-    return fetch(`${apiUrl}/admin/asset/all-tea`, requestOptions).then(handleResponse);
+    return fetch(`${apiUrl}/admin/asset/alltea`, requestOptions)
+        .then(handleResponse)
+        .then(msg => { return msg })
 }
 
 function addEmailAssets(email) {
